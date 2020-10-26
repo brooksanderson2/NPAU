@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NoPoorAfrica", "NoPoorAfrica\NoPoorAfrica.csproj", "{0D2B8F6B-9BDB-4EC0-A258-1F198A1BADA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoPoorAfrica.DataAccess", "NoPoorAfrica.DataAccess\NoPoorAfrica.DataAccess.csproj", "{90AD77D7-E4E1-40E6-A66C-8DB6848E6A86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NoPoorAfrica.DataAccess", "NoPoorAfrica.DataAccess\NoPoorAfrica.DataAccess.csproj", "{90AD77D7-E4E1-40E6-A66C-8DB6848E6A86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoPoorAfrica.Models", "NoPoorAfrica.Models\NoPoorAfrica.Models.csproj", "{F283CD9D-91DB-4563-9F62-684037D5DEC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NoPoorAfrica.Models", "NoPoorAfrica.Models\NoPoorAfrica.Models.csproj", "{F283CD9D-91DB-4563-9F62-684037D5DEC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoPoorAfrica.Utility", "NoPoorAfrica.Utility\NoPoorAfrica.Utility.csproj", "{02A90E15-81B3-4771-894F-D914A81D5722}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NoPoorAfrica.Utility", "NoPoorAfrica.Utility\NoPoorAfrica.Utility.csproj", "{02A90E15-81B3-4771-894F-D914A81D5722}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
