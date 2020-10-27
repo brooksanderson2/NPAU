@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace NoPoorAfrica.Pages.Store
+namespace NoPoorAfrica.Pages.Admin.Category
 {
-    public class UpsertModel : PageModel
+    public class IndexModel : PageModel
     {
         public void OnGet()
         {

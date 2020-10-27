@@ -9,7 +9,7 @@ namespace NoPoorAfrica.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StoreController : Controller
+    public class StoreItemController : Controller
     {
     }
 }
