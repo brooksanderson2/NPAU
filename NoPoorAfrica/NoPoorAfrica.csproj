@@ -22,10 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\NoPoorAfrica.DataAccess\NoPoorAfrica.DataAccess.csproj" />
     <ProjectReference Include="..\NoPoorAfrica.Models\NoPoorAfrica.Models.csproj" />
     <ProjectReference Include="..\NoPoorAfrica.Utility\NoPoorAfrica.Utility.csproj" />
