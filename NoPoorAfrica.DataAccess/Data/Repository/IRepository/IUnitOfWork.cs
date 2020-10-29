@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NoPoorAfrica.DataAccess.Repository.IRepository;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,6 +7,13 @@ namespace NoPoorAfrica.DataAccess.Data.Repository.IRepository
 {
     public interface IUnitOfWork : IDisposable
     {
+
+
+        IShoppingCartRepository ShoppingCart { get; }
+        IOrderDetailsRepository OrderDetails { get; }
+        IOrderHeaderRepository OrderHeader { get; }
+        IPurchaseHistoryRepository PurchaseHistory { get; }
+
         void Save();
     }
 }

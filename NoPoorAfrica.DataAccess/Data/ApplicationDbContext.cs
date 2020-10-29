@@ -16,5 +16,9 @@ namespace NoPoorAfrica.DataAccess.Data
 
        public DbSet <StoreItem> StoreItem { get; set; }
        public DbSet <Category> Category { get; set; }
+       public DbSet <PurchaseHistory> PurchaseHistory { get; set; }
+       public DbSet <ShoppingCart> ShoppingCart { get; set; }
+       public DbSet <OrderDetails> OrderDetails { get; set; }
+       public DbSet <OrderHeader> OrderHeader { get; set; }
     }
 }
