@@ -11,7 +11,8 @@ namespace NoPoorAfrica.Models.Models
     {
         [Key]
         public int Id { get; set; }
-
+        [Required]
+        public string Address { get; set; }
         public string UserId { get; set; }
 
         [ForeignKey("UserId")]

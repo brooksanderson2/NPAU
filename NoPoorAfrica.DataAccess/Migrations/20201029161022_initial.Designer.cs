@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NoPoorAfrica.DataAccess.Data;
 
 namespace NoPoorAfrica.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201029161022_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -237,77 +239,6 @@ namespace NoPoorAfrica.DataAccess.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("NoPoorAfrica.Models.Models.Donation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CauseId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("DonationAmount")
-                        .HasColumnType("float");
-
-                    b.Property<int?>("DonationCauseId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("EmailAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("FollowUp")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("HowDidYouHear")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DonationCauseId");
-
-                    b.ToTable("Donation");
-                });
-
-            modelBuilder.Entity("NoPoorAfrica.Models.Models.DonationCause", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("FromDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("FundingGoal")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ToDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DonationCause");
-                });
-
             modelBuilder.Entity("NoPoorAfrica.Models.Models.OrderDetails", b =>
                 {
                     b.Property<int>("Id")
@@ -512,13 +443,6 @@ namespace NoPoorAfrica.DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("NoPoorAfrica.Models.Models.Donation", b =>
-                {
-                    b.HasOne("NoPoorAfrica.Models.Models.DonationCause", "DonationCause")
-                        .WithMany()
-                        .HasForeignKey("DonationCauseId");
                 });
 
             modelBuilder.Entity("NoPoorAfrica.Models.Models.OrderDetails", b =>
