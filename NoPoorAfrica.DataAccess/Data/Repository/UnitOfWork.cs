@@ -14,6 +14,7 @@ namespace NoPoorAfrica.DataAccess.Data.Repository
         public IOrderDetailsRepository OrderDetails { get; private set; }
         public IOrderHeaderRepository OrderHeader { get; private set; }
         public IPurchaseHistoryRepository PurchaseHistory { get; private set; }
+        public IDonationCauseRepository DonationCause { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
@@ -22,6 +23,7 @@ namespace NoPoorAfrica.DataAccess.Data.Repository
             OrderDetails = new OrderDetailsRepository(_db);
             OrderHeader = new OrderHeaderRepository(_db);
             PurchaseHistory = new PurchaseHistoryRepository(_db);
+            DonationCause = new DonationCauseRepository(_db);
         }
 
         public void Dispose()
