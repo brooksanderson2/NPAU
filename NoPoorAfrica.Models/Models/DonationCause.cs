@@ -15,5 +15,6 @@ namespace NoPoorAfrica.Models.Models
         public DateTime ToDate { get; set; }
         public double FundingGoal { get; set; }
         public string Country { get; set; }
+        public string Image { get; set; }
     }
 }
