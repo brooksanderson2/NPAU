@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace NoPoorAfrica.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class StoreItemController : Controller
-    {
-    }
-}
+//namespace NoPoorAfrica.Controllers
+//{
+//    [Route("api/[controller]")]
+//    [ApiController]
+//    public class StoreItemController : Controller
+//    {
+//    }
+//}
