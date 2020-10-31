@@ -1,0 +1,39 @@
+﻿
+
+@page
+@model NoPoorAfrica.Pages.Admin.IndexModel
+@{
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - NoPoorAfrica</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+
+    <div class="text-center m-3 p-3">
+        <h1>Welcome Admin</h1>
+    </div>
+    <div class="container justify-content-center">
+        <div class="row justify-content-center">
+            <div>
+                <a asp-area="" asp-page="./DonationCause/Index" class="btn bg-warning rounded m-3 p-3 text-dark">Donations</a>
+            </div>
+            <div>
+                <a asp-area="" asp-page="./Purchases/Index" class="btn bg-warning rounded m-3 p-3 text-dark">Purchases</a>
+            </div>
+            <div>
+                <a asp-area="" asp-page="./StoreItems/Index" class="btn bg-warning rounded m-3 p-3 text-dark">Store Items</a>
+            </div>
+            <div>
+                <a asp-area="" asp-page="./Category/Index" class="btn bg-warning rounded m-3 p-3 text-dark">Store Categories</a>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

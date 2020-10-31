@@ -1,4 +1,13 @@
 ﻿@page
-@model NoPoorAfrica.Pages.Store.Cart.OrderConfirmationModel
+@model NoPoorAfrica.Pages.User.Cart.OrderConfirmationModel
 @{
+    ViewData["Title"] = "OrderConfirmation";
 }
+
+<div class="container row center-screen">
+    <h5 class="bg-warning rounded center-screen">Order Number #: @Model.orderId </h5>
+    <div class="col-12 text-center">
+        <h1 class="text-dark text-center m-2 p-2 mb-3">Order has been completed!</h1>
+    </div>
+</div> 
+
