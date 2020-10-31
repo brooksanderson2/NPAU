@@ -1,6 +1,34 @@
 ﻿@page
-@model NoPoorAfrica.Pages.Store.Admin.Purchases.IndexModel
-@{
-}
+@model NoPoorAfrica.Pages.Admin.Purchases.IndexModel
 
-@*This page will display a data table of all store purchaes for the admin to view*@
+<div class="container border backgroundWhite">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-dark">Purchase History</h2>
+        </div>
+    </div>
+    <br /><br />
+
+    <table id="DT_load" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    User Id
+                </th>
+                <th>
+                    Store Item Id
+                </th>
+                <th>
+                    Count
+                </th>
+                <th>
+                    Purchase Date
+                </th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+@section Scripts{
+    <script src="~/js/purchaseHistory.js"></script>
+}
