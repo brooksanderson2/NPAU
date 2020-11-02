@@ -2,3 +2,101 @@
 @model NoPoorAfrica.Pages.Admin.DonationCause.UpsertModel
 @{
 }
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+	<div class="container">
+		<div class="row px-2 mx-2 backgroundWhite border">
+			<div asp-validation-summary="ModelOnly" class="text-danger">
+			</div>
+			<div class="col-12 px-3" style="border-bottom:1px solid #325d88">
+				<h2 class="text-primary">@(Model.DonationCauseObj.Id !=0 ? "Update" : "Create") Donation Cause</h2>
+			</div>
+
+			<div class="col-8 pt-3">
+				<div class="form-group row">
+					<div class="col-3">
+						<label asp-for="DonationCauseObj.Title"></label>
+					</div>
+					<div class="col-9">
+						<input class="form-control" asp-for="DonationCauseObj.Title" />
+						<span class="text-danger" asp-validation-for="DonationCauseObj.Title"></span>
+					</div>
+					@if (Model.DonationCauseObj.Id != 0)
+					{
+						<input type="hidden" asp-for="DonationCauseObj.Id" />
+					}
+				</div>
+				<div class="form-group row">
+					<div class="col-3">
+						<label asp-for="DonationCauseObj.FundingGoal"></label>
+					</div>
+					<div class="col-9">
+						<input class="form-control" asp-for="DonationCauseObj.FundingGoal" />
+						<span class="text-danger" asp-validation-for="DonationCauseObj.FundingGoal"></span>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-3">
+						<label asp-for="DonationCauseObj.Description"></label>
+					</div>
+					<div class="col-9">
+						<textarea class="form-control" asp-for="DonationCauseObj.Description" id="txtDesc" style="height:200px"></textarea>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-3">
+						<label asp-for="DonationCauseObj.Image"></label>
+					</div>
+					<div class="col-9">
+						<input type="file" class="form-control" id="uploadBox" name="files" />
+
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-9 offset-3">
+						<div class="row">
+							<div class="col-6">
+								@if (Model.DonationCauseObj.Id != 0)
+								{
+									<button type="submit" class="btn btn-primary form-control">Update</button>
+								}
+								else
+								{
+									<button type="submit" class="btn btn-primary form-control" onclick="return ValidateInput()">Create</button>
+								}
+							</div>
+							<div class="col-6">
+								<a asp-page="./Index" class="btn btn-success form-control">Back to List</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			@if (Model.DonationCauseObj != null)
+			{
+				<div class="col-4 p-4">
+					<img src="@Model.DonationCauseObj.Image" style="border-radius:5px; width:100%; border: 1px solid #bbb9b9" />
+				</div>
+			}
+		</div>
+	</div>
+</form>
+
+@section Scripts {
+	<script>
+
+		tinymce.init({
+			selector: 'textarea',
+			plugins: "lists",
+			menubar: 'file edit format'
+		});
+
+		function ValidateInput() {
+			if (document.getElementById("uploadBox").value == "") {
+				swal('Error', 'Please Select an Image', 'error')
+				return false;
+			}
+			return true;
+		}
+	</script>
+}
