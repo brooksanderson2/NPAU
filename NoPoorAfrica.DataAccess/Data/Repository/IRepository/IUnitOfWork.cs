@@ -17,6 +17,7 @@ namespace NoPoorAfrica.DataAccess.Data.Repository.IRepository
         IDonationRepository Donation { get; }
         IStoreItemRepository StoreItem { get; }
         IApplicationUserRepository ApplicationUser { get; }
+        ICategoryRepository Category { get; }
         
         void Save();
     }
