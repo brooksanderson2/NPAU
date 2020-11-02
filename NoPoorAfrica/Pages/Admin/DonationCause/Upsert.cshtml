@@ -28,11 +28,36 @@
 				</div>
 				<div class="form-group row">
 					<div class="col-3">
-						<label asp-for="DonationCauseObj.FundingGoal"></label>
+						<label>Funding Goal</label>
 					</div>
 					<div class="col-9">
 						<input class="form-control" asp-for="DonationCauseObj.FundingGoal" />
 						<span class="text-danger" asp-validation-for="DonationCauseObj.FundingGoal"></span>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-3">
+						<label asp-for="DonationCauseObj.Country"></label>
+					</div>
+					<div class="col-9">
+						<input class="form-control" asp-for="DonationCauseObj.Country" />
+						<span class="text-danger" asp-validation-for="DonationCauseObj.Country"></span>
+					</div>
+				</div>
+				<div class="row my-1">
+					<div class="col-3">
+						<label>Start Date</label>
+					</div>
+					<div class="col-9">
+						<input id="datepicker" value="" asp-for="@Model.DonationCauseObj.FromDate" type="text" class="form-control" />
+					</div>
+				</div>
+				<div class="row my-1">
+					<div class="col-3">
+						<label>End Date</label>
+					</div>
+					<div class="col-9">
+						<input id="datepicker2" value="" asp-for="@Model.DonationCauseObj.ToDate" type="text" class="form-control" />
 					</div>
 				</div>
 				<div class="form-group row">
@@ -94,6 +119,34 @@
 		function ValidateInput() {
 			if (document.getElementById("uploadBox").value == "") {
 				swal('Error', 'Please Select an Image', 'error')
+				return false;
+			}
+			return true;
+		}
+
+		$(function () {
+			$("#datepicker").datepicker();
+		});
+
+
+		function validateInput() {
+			var dt = document.getElementById("datepicker").value;
+			if (dt.toString() == '') {
+				swal("Error", "Please select Delivery Date", "error");
+				return false;
+			}
+			return true;
+		}
+
+		$(function () {
+			$("#datepicker2").datepicker();
+		});
+
+
+		function validateInput() {
+			var dt = document.getElementById("datepicker2").value;
+			if (dt.toString() == '') {
+				swal("Error", "Please select Delivery Date", "error");
 				return false;
 			}
 			return true;
