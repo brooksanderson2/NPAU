@@ -4,52 +4,63 @@
     ViewData["Title"] = "Recent Articles";
 }
 
+@using System.Net
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 <div class="container">
-    <div class="row">
-        <h1>Recent Articles *under construction*</h1>
-    </div>
+    @if (Model.DetailedView == false)
+    {
+        <div class="row">
+            <h1>News Articles</h1>
+        </div><br />
+        <!--for each article provided by controller, add a row here containing an article with a "read more"-->
+        @foreach (NoPoorAfrica.Models.Models.Article article in Model.ArticlesList.Articles)
+        {
+            <div class="row">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-8">
+                            <h2>@article.Title</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10">
+                            @Html.Raw(@WebUtility.HtmlDecode(article.Body))
+                        </div>
+                    </div>
+                    <div class="row">
+                        <a href="#">Read more</a> <!--temp href-->
+                    </div>
+                </div>
+            </div><br />
+        }
+    }
+    else
+    {
+        switch (Model.DetailedArticle.Template)
+        {
+            default:
+            case "template_1":
+                <div class="container">
+                    <div class="row">
+                        <h1>@Model.DetailedArticle.Title</h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-11 offset-1">
+                            @Html.Raw(@WebUtility.HtmlDecode(Model.DetailedArticle.Body))
+                        </div>
+                    </div>
+                </div>
+                break;
 
-    <div class="row">
-        <h2>Placeholder data</h2>
-    </div>
-    <!--for each article provided by controller, add a row here containing an article with a "read more"-->
-    <div class="row">
-        <div class="container">
-            <div class="row">
-                <div class="col-8">
-                    <h2>Article 1</h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-10">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                </div>
-            </div>
-            <div class="row">
-                <a href="#">Read more</a>
-            </div>
-        </div>
-        <hr />
-    </div>
+            case "template_2":
+                <div></div>
+                break;
 
-    <div class="row">
-        <div class="container">
-            <div class="row">
-                <div class="col-8">
-                    <h2>Article 2</h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-10">
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
-                </div>
-            </div>
-            <div class="row">
-                <a href="#">Read more</a>
-            </div>
-        </div>
-        <hr />
-    </div>
-
+            case "template_3:":
+                <div></div>
+                break;
+        }
+    }
     <!-- paginate at the bottom to view more articles? -->
 </div>
