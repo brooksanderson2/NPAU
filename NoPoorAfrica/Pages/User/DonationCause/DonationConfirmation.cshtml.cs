@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace NoPoorAfrica.Pages.User.DonationCause
 {
-    public class DonatioConfirmationModel : PageModel
+    public class DonationConfirmationModel : PageModel
     {
         public void OnGet()
         {

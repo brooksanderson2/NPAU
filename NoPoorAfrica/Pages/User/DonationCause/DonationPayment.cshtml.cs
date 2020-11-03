@@ -87,7 +87,7 @@ namespace NoPoorAfrica.Pages.User.DonationCause
             }
             _unitOfWork.DonationDetails.Add(DonationDetails);
             _unitOfWork.Save();
-            return RedirectToPage("/User/DonationCause/DonationConfirmation", new { id = DonationDetails.Id });
+            return RedirectToPage("/User/DonationCause/DonationConfirmation");
         }
     }
 }

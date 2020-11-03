@@ -7,6 +7,7 @@ namespace NoPoorAfrica.Models.Models
 {
     public class DonationDetails
     {
+        [Key]
         public int Id { get; set; }
         public string UserId { get; set; }
 
