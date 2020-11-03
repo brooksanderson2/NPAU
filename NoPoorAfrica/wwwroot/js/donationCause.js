@@ -13,9 +13,13 @@ function loadList() {
 		},
 		"columns": [
 			{ "data": "title", width: "15%" },
-			{ "data": "fromDate", "width": "20%" },
-			{ "data": "toDate", "width": "20%" },
-			{ "data": "fundingGoal", "width": "5%" },
+			{"data": "fromDate", "render": function (data, type) {
+					return type === 'sort' ? data : moment(data).format('MM/DD/YYYY');
+				},"width": "20%" },
+			{"data": "toDate", "render": function (data, type) {
+					return type === 'sort' ? data : moment(data).format('MM/DD/YYYY');
+				},"width": "20%" },
+			{ "data": "fundingGoal", render: $.fn.dataTable.render.number(',', '.', 2, '$'), "width": "5%" },
 			{ "data": "country", "width": "5%" },
 			{ "data": "description", "width": "20%" },
 			{
