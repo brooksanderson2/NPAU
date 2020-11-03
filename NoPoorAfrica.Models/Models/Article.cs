@@ -58,6 +58,12 @@ namespace NoPoorAfrica.Models.Models
         IEnumerable<string> Images { get; set; }
 
         /// <summary>
+        /// Date of article
+        /// </summary>
+        [Display(Name = "Date")]
+        public DateTime Date { get; set; }
+
+        /// <summary>
         /// Used for routing inside the Article page controller, since the page is dynamic.
         /// </summary>
         public string RouteName { get; set; }

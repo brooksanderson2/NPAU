@@ -15,12 +15,11 @@ namespace NoPoorAfrica.DataAccess.Data.Repository.IRepository
         IPurchaseHistoryRepository PurchaseHistory { get; }
         IDonationCauseRepository DonationCause { get; }
         IDonationRepository Donation { get; }
+        IArticleRepository Article { get; }
         IStoreItemRepository StoreItem { get; }
         IApplicationUserRepository ApplicationUser { get; }
         ICategoryRepository Category { get; }
         ISizeRepository Size { get; }
-        IArticleRepository Article { get; }
-
         void Save();
     }
 }

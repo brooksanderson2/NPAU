@@ -1,0 +1,71 @@
+﻿@page
+@model NoPoorAfrica.Pages.Admin.Articles.UpsertModel
+<form method="post" asp-action="Upsert">
+    <div class="container">
+        <div class="row px-1 mx-1 backgroundWhite border">
+            <div asp-validation-summary="ModelOnly" class="text-danger">
+            </div>
+
+            <div class="col-12 px-1" style="border-bottom:1px solid #325d88">
+                <h2 class="text-primary">@(Model.ArticleObj.Id !=0 ? "Update Article" : "Create New Article")</h2>
+            </div>
+            
+            <div class="col-12 pt-1">
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="ArticleObj.Title"></label>
+                    </div>
+                    <div class="col-7">
+                        <input class="form-control" asp-for="ArticleObj.Title" />
+                        <span class="text-danger" asp-validation-for="ArticleObj.Title"></span>
+                    </div>
+                    @if (Model.ArticleObj.Id != 0)
+                    {
+                        <input type="hidden" asp-for="ArticleObj.Id" />
+                    }
+                </div>
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="ArticleObj.Body"></label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12">
+                        <textarea class="form-control" asp-for="ArticleObj.Body" id="txtDesc" style="height:800px"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-9 offset-3">
+                        <div class="row">
+                            <div class="col-6">
+                                @if (Model.ArticleObj.Id != 0)
+                                {
+                                    <button type="submit" class="btn btn-primary form-control">Update</button>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="btn btn-primary form-control" onclick="return ValidateInput()">Create</button>
+                                }
+                            </div>
+                            <div class="col-6">
+                                <a asp-page="./Index" class="btn btn-success form-control">Back to Articles</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <script>
+    tinymce.init({
+        selector: 'textarea',
+        plugins: "lists, hr",
+        toolbar: "hr",
+        menubar: 'file edit format'
+    });
+    
+    </script>
+}

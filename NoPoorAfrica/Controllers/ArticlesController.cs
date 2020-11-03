@@ -3,43 +3,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using NoPoorAfrica.DataAccess.Data.Repository;
+using NoPoorAfrica.DataAccess.Data.Repository.IRepository;
+using NoPoorAfrica.Models.Models;
 
 namespace NoPoorAfrica.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ArticlesController : ControllerBase
+    public class ArticlesController : Controller
     {
+        private readonly IUnitOfWork _unitOfWork;
+        public ArticlesController (IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
         // GET: api/<ArticlesController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            return Json(new { data = _unitOfWork.Article.GetAll() });
         }
 
-        // GET api/<ArticlesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<ArticlesController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<ArticlesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<ArticlesController>/5
+        // GET api/<ArticlesController>/id
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var objFromDb = _unitOfWork.Article.GetFirstOrDefault(u => u.Id == id);
+
+            if (objFromDb == null)
+                return Json(new { success = false, message = "Error while deleting." });
+
+            _unitOfWork.Article.Remove(objFromDb);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Delete successful." });
         }
     }
 }

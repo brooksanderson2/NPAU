@@ -1,0 +1,29 @@
+﻿@page
+@model NoPoorAfrica.Pages.Admin.Articles.IndexModel
+
+<h1>Modify or Create Articles</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-right">
+            <a asp-page="Upsert" class="btn btn-primary"><i class="fas fa-plus"></i>&nbsp;Create New</a>
+        </div>
+    </div>
+</div>
+<table id="DT_load" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Update
+            </th>
+        </tr>
+    </thead>
+</table>
+@section Scripts{
+    <script src="~/js/adminArticles.js"></script>
+}
