@@ -21,12 +21,15 @@ namespace NoPoorAfrica.Pages.User.DonationCause
             _unitOfWork = unitOfWork;
         }
 
+        [BindProperty]
+        public Models.Models.DonationCause DonationCauseObj { get; set; }
 
         [BindProperty]
         public DonationDetails DonationDetails { get; set; }
 
-        public void OnGet()
+        public void OnGet(int id)
         {
+            DonationCauseObj = _unitOfWork.DonationCause.GetFirstOrDefault(c => c.Id == id);
             DonationDetails = new DonationDetails();
             if (User.Identity.IsAuthenticated)
             {
@@ -40,8 +43,6 @@ namespace NoPoorAfrica.Pages.User.DonationCause
                     DonationDetails.DonorName = applicationUser.FullName;
                 }
             }
-
-
         }
 
         public IActionResult OnPost(string stripeToken)
@@ -58,6 +59,7 @@ namespace NoPoorAfrica.Pages.User.DonationCause
             }
             DonationDetails.PaymentStatus = SD.PaymentStatusPending;
             DonationDetails.DonationDate = DateTime.Now;
+            DonationDetails.DonationCauseId = DonationCauseObj.Id;
             if (stripeToken != null)
             {
                 var options = new ChargeCreateOptions
