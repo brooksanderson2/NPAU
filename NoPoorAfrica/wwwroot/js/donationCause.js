@@ -12,14 +12,13 @@ function loadList() {
 			"datatype": "json"
 		},
 		"columns": [
-			{ "data": "title", width: "15%" },
-			{ "data": "fromDate", "width": "20%" },
-			{ "data": "toDate", "width": "20%" },
+			{ "data": "title", "width": "15%" },
+			{ "data": "fromDate", "width": "15%" },
+			{ "data": "toDate", "width": "15%" },
 			{ "data": "fundingGoal", "width": "5%" },
 			{ "data": "country", "width": "5%" },
 			{ "data": "description", "width": "20%" },
-			{
-				data: "id",
+			{  "data": "id",
 				"render": function (data) {
 					return `
 						<div class="text-center">
@@ -34,7 +33,7 @@ function loadList() {
 							Delete
 							</a>
 						</div>`;
-				}, width: "15%"
+				}, width: "25%"
 			}
 		],
 		"language": {
