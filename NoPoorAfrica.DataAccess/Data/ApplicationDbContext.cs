@@ -22,5 +22,6 @@ namespace NoPoorAfrica.DataAccess.Data
        public DbSet <OrderHeader> OrderHeader { get; set; }
        public DbSet <Donation> Donation { get; set; }
        public DbSet <DonationCause> DonationCause { get; set; }
+       public DbSet <DonationDetails> DonationDetails { get; set; }
     }
 }

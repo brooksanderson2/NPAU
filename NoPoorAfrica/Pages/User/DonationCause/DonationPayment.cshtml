@@ -1,15 +1,12 @@
 ﻿@page
 @model NoPoorAfrica.Pages.User.DonationCause.DonationPaymentModel
-@{
-}
+@using NoPoorAfrica.Utility
+@using Microsoft.Extensions.Options
+@inject IOptions<NoPoorAfrica.Utility.StripeSettings> Stripe
 
 
 <form method="post">
 	<br />
-
-	@if (Model.OrderDetailsCart.ListCart.Count > 0)
-	{
-		<input asp-for="@Model.OrderDetailsCart.ListCart[0].ApplicationUserId" hidden />
 		<div class="backgroundWhiteBorder">
 			<div class="container">
 				<div class="card">
@@ -36,71 +33,25 @@
 											<label>Name</label>
 										</div>
 										<div class="col-9">
-											<input id="txtName" asp-for="@Model.OrderDetailsCart.OrderHeader.DeliveryName" type="text" class="form-control" />
+											<input id="txtName" asp-for="@Model.DonationDetails.DonorName" type="text" class="form-control" />
 										</div>
 									</div>
 									<div class="row my-1">
 										<div class="col-3">
-											<label>Phone Number</label>
+											<label>Donation Amount</label>
 										</div>
 										<div class="col-9">
-											<input id="txtPhone" asp-for="@Model.OrderDetailsCart.OrderHeader.PhoneNumber" type="text" class="form-control" />
+											<input id="txtPhone" asp-for="@Model.DonationDetails.DonationTotal" type="text" class="form-control" />
 										</div>
 									</div>
 									<div class="row my-1">
 										<div class="col-3">
-											<label>Delivery Date</label>
+											<label>Email</label>
 										</div>
 										<div class="col-9">
-											<input id="datepicker" value="" asp-for="@Model.OrderDetailsCart.OrderHeader.DeliveryDate" type="text" class="form-control" />
+											<input id="txtEmail" value="" asp-for="@Model.DonationDetails.Email" type="text" class="form-control" />
 										</div>
 									</div>
-									<div class="row my-1">
-										<div class="col-3">
-											<label>Delivery Time</label>
-										</div>
-										<div class="col-9">
-											<input id="timepicker" value="" asp-for="@Model.OrderDetailsCart.OrderHeader.DeliveryTime" type="text" class="form-control" />
-										</div>
-									</div>
-									<div class="row my-1">
-										<div class="col-3">
-											<label>Additional Instructions: </label>
-										</div>
-										<div class="col-9">
-											<textarea asp-for="@Model.OrderDetailsCart.OrderHeader.Comments" style="height:100px;" class="form-control"></textarea>
-										</div>
-									</div>
-								</div>
-
-								<div class="col-12 col-lg-5 offset-lg-1">
-									<h4 class="d-flex justify-content-between align-items-center mb-3">
-										<span class="text-info">Order Summary:</span>
-									</h4>
-									<ul class="list-group mb-3">
-										@{ var total = 0.0;}
-										@foreach (var details in Model.OrderDetailsCart.ListCart)
-										{
-											<li class="list-group-item d-flex justify-content-between">
-												<div>
-													<h6 class="my-0">@details.MenuItem.Name</h6>
-													<small class="text-muted">Quantity: @details.Count</small>
-												</div>
-												<span class="text-muted">$@((details.MenuItem.Price * details.Count).ToString("0.00"))</span>
-												@{ total += (details.MenuItem.Price * details.Count);}
-											</li>
-										}
-										<li class="list-group-item d-flex justify-content-between bg-light">
-											<small class="text-info">Sales Tax (@SD.SalesTaxRate%)</small>
-											@{ var salesTax = Math.Round((total * SD.SalesTaxPercent), 2);}
-											<strong class="text-info">$@salesTax.ToString("0.00")</strong>
-										</li>
-										<li class="list-group-item d-flex justify-content-between bg-light">
-											<small class="text-info">Total (USD)</small>
-											@{ total += salesTax;}
-											<strong class="text-info">$@total.ToString("0.00")</strong>
-										</li>
-									</ul>
 								</div>
 							</div>
 						</div>
@@ -109,15 +60,15 @@
 						<div class="row">
 							<div class="col-12 col-md-4 offset-md-8">
 								@{
-									var OrderTotalForStripe = Math.Round((Model.OrderDetailsCart.OrderHeader.OrderTotal * 100), 0); //convert to cents
+									var OrderTotalForStripe = Math.Round((Model.DonationDetails.DonationTotal * 100), 0); //convert to cents
 								}
 								<script src="https://checkout.stripe.com/checkout.js"
 										class="stripe-button"
 										data-key="@Stripe.Value.PublishableKey"
 										data-amount="@OrderTotalForStripe"
-										data-name="4790 Food Delivery Demo"
-										data-label="Place Order"
-										data-description="Good Food, Delivered Fast."
+										data-name="No Poor Africa"
+										data-label="Place Donation"
+										data-description="No Poor Among Us"
 										data-locale="auto"
 										data-allow-remember-me="false"
 										data-image="https://stripe.com/img/documentation/checkout/marketplace.png">
@@ -131,5 +82,4 @@
 				</div>
 			</div>
 		</div>
-	}
 </form>
