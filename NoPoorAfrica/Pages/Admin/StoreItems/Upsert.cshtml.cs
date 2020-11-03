@@ -30,7 +30,8 @@ namespace NoPoorAfrica.Pages.Admin.StoreItems
             StoreItemObj = new StoreItemVM
             {
                 StoreItem = new Models.Models.StoreItem(),
-                CategoryList = _unitOfWork.Category.GetCategoryListForDropDown()
+                CategoryList = _unitOfWork.Category.GetCategoryListForDropDown(),
+                SizeList = _unitOfWork.Size.GetSizeListForDropDown()
             };
             if(id != null)
             {
