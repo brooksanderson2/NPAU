@@ -12,14 +12,19 @@ function loadList() {
 			"datatype": "json"
 		},
 		"columns": [
-			{ "data": "title", width: "15%" },
-			{ "data": "fromDate", "width": "20%" },
-			{ "data": "toDate", "width": "20%" },
-			{ "data": "fundingGoal", "width": "5%" },
+			{ "data": "title", "width": "15%" },
+			{ "data": "fromDate", "render": function (data, type) {
+			  return type === 'sort' ? data : moment(data).format('MM/DD/YYYY');
+				}, "width": "10%"
+			},
+			{ "data": "toDate", "render": function (data, type) {
+			  return type === 'sort' ? data : moment(data).format('MM/DD/YYYY');
+				}, "width": "10%"
+			},
+			{ "data": "fundingGoal", render: $.fn.dataTable.render.number(',', '.', 2, '$'), "width": "5%" },
 			{ "data": "country", "width": "5%" },
-			{ "data": "description", "width": "20%" },
-			{
-				data: "id",
+			{ "data": "description", "width": "35%" },
+			{ "data": "id",
 				"render": function (data) {
 					return `
 						<div class="text-center">
@@ -34,7 +39,7 @@ function loadList() {
 							Delete
 							</a>
 						</div>`;
-				}, width: "15%"
+				}, width: "20%"
 			}
 		],
 		"language": {
