@@ -10,5 +10,6 @@ namespace NoPoorAfrica.Models.ViewModels
     {
         public StoreItem StoreItem { get; set; }
         public IEnumerable<SelectListItem> CategoryList { get; set; }
+        public IEnumerable<SelectListItem> SizeList { get; set; }
     }
 }

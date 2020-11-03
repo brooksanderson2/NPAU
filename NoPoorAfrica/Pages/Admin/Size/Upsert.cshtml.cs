@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NoPoorAfrica.DataAccess.Data.Repository.IRepository;
 
-namespace NoPoorAfrica.Pages.Admin.Category
+namespace NoPoorAfrica.Pages.Admin.Size
 {
     public class UpsertModel : PageModel
     {
@@ -18,16 +18,16 @@ namespace NoPoorAfrica.Pages.Admin.Category
         }
 
         [BindProperty]
-        public Models.Models.Category CategoryObj { get; set; }
+        public Models.Models.Size SizeObj { get; set; }
 
         public IActionResult OnGet(int? id)
         {
-            CategoryObj = new Models.Models.Category();
+            SizeObj = new Models.Models.Size();
 
             if (id != null)
             {
-                CategoryObj = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
-                if (CategoryObj == null)
+                SizeObj = _unitOfWork.Size.GetFirstOrDefault(u => u.Id == id);
+                if (SizeObj == null)
                 {
                     return NotFound();
                 }
@@ -42,14 +42,14 @@ namespace NoPoorAfrica.Pages.Admin.Category
                 return Page();
             }
 
-            if (CategoryObj.Id == 0) //means a brand new category
+            if (SizeObj.Id == 0) //means a brand new Size
             {
-                _unitOfWork.Category.Add(CategoryObj);
+                _unitOfWork.Size.Add(SizeObj);
             }
 
             else
             {
-                _unitOfWork.Category.Update(CategoryObj);
+                _unitOfWork.Size.Update(SizeObj);
             }
 
             _unitOfWork.Save();

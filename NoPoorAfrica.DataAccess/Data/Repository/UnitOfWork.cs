@@ -17,6 +17,10 @@ namespace NoPoorAfrica.DataAccess.Data.Repository
         public IPurchaseHistoryRepository PurchaseHistory { get; private set; }
         public IDonationRepository Donation { get; private set; }
         public IDonationCauseRepository DonationCause { get; private set; }
+        public IStoreItemRepository StoreItem { get; private set; }
+        public IApplicationUserRepository ApplicationUser { get; private set; }
+        public ICategoryRepository Category { get; private set; }
+        public ISizeRepository Size { get; private set; }
         public IArticleRepository Article { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
@@ -28,6 +32,10 @@ namespace NoPoorAfrica.DataAccess.Data.Repository
             PurchaseHistory = new PurchaseHistoryRepository(_db);
             Donation = new DonationRepository(_db);
             DonationCause = new DonationCauseRepository(_db);
+            StoreItem = new StoreItemRepository(_db);
+            ApplicationUser = new ApplicationUserRepository(_db);
+            Category = new CategoryRepository(_db);
+            Size = new SizeRepository(_db);
             Article = new ArticleRepository(_db);
         }
 

@@ -2,5 +2,127 @@
 @model NoPoorAfrica.Pages.Admin.StoreItems.UpsertModel
 @{
 }
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+    <div class="container">
+        <div class="row px-2 mx-2 backgroundWhite border">
+            <div asp-validation-summary="ModelOnly" class="text-danger">
+            </div>
 
-@*This page will allow the admin to add new items to the store or edit existing items*@
+            <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
+                <h2 class="text-primary">@(Model.StoreItemObj.StoreItem.Id !=0 ? "Update" : "Create") Store Item</h2>
+            </div>
+
+            <div class="col-8 pt-3">
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="StoreItemObj.StoreItem.Name"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="StoreItemObj.StoreItem.Name" />
+                        <span class="text-danger" asp-validation-for="StoreItemObj.StoreItem.Name"></span>
+                    </div>
+                    @if (Model.StoreItemObj.StoreItem.Id != 0)
+                    {
+                        <input type="hidden" asp-for="StoreItemObj.StoreItem.Id" />
+                    }
+                </div>
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="StoreItemObj.StoreItem.Price"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="StoreItemObj.StoreItem.Price" />
+                        <span class="text-danger" asp-validation-for="StoreItemObj.StoreItem.Price"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="StoreItemObj.StoreItem.Description"></label>
+                    </div>
+                    <div class="col-9">
+                        <textarea class="form-control" asp-for="StoreItemObj.StoreItem.Description" id="txtDesc" style="height:200px;"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="StoreItemObj.StoreItem.Image"></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="file" class="form-control" id="uploadBox" name="files" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="StoreItemObj.StoreItem.CategoryId"></label>
+                    </div>
+                    <div class="col-9">
+                        @Html.DropDownListFor(m => m.StoreItemObj.StoreItem.CategoryId,
+                                                Model.StoreItemObj.CategoryList,
+                                                "- Please select a category - ",
+                                                new { @class = "form-control" })
+                        <span class="text-danger" asp-validation-for="StoreItemObj.StoreItem.CategoryId"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="StoreItemObj.StoreItem.SizeId"></label>
+                    </div>
+                    <div class="col-9">
+                        @Html.DropDownListFor(s => s.StoreItemObj.StoreItem.SizeId,
+                                                Model.StoreItemObj.SizeList,
+                                                "- Please select a Size - ",
+                                                new { @class = "form-control" })
+                        <span class="text-danger" asp-validation-for="StoreItemObj.StoreItem.SizeId"></span>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <div class="col-9 offset-3">
+                        <div class="row">
+                            <div class="col-6">
+                                @if (Model.StoreItemObj.StoreItem.Id != 0)
+                                {
+                                    <button type="submit" class="btn btn-primary form-control">Update</button>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="btn btn-primary form-control" onclick="return ValidateInput() ">Create</button>
+                                }
+
+                            </div>
+                            <div class="col-6">
+                                <a asp-page="./Index" class="btn btn-success form-control">Back to List</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if (Model.StoreItemObj.StoreItem != null)
+            {
+                <div class=" col-4 p-4">
+                    <img src="@Model.StoreItemObj.StoreItem.Image" style=" border-radius:5px; width:100%; border: 1px solid #bbb9b9" />
+                </div>
+            }
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        });
+
+        function ValidateInput() {
+            if (document.getElementById("uploadBox").value == "") {
+                swal('Error', 'Please Select and Image', 'error')
+                return false;
+            }
+            return true;
+        }
+
+    </script>
+}

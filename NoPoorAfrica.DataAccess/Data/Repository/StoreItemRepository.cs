@@ -24,6 +24,7 @@ namespace NoPoorAfrica.DataAccess.Data.Repository
             storeItemFromDb.CategoryId = storeItem.CategoryId;
             storeItemFromDb.Description = storeItem.Description;
             storeItemFromDb.Price = storeItem.Price;
+            storeItemFromDb.SizeId = storeItem.SizeId;
 
             if (storeItem.Image != null)
             {
