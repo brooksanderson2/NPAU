@@ -28,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Articles\NewFolder\" />
     <Folder Include="wwwroot\Images\DonationCauses\" />
     <Folder Include="wwwroot\Images\storeitems\" />
   </ItemGroup>

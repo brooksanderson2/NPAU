@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NoPoorAfrica.DataAccess.Data.Repository.IRepository;
 using NoPoorAfrica.Models.Models;
+using System.Web;
 
 
 namespace NoPoorAfrica.DataAccess.Data.Repository
@@ -32,13 +33,29 @@ namespace NoPoorAfrica.DataAccess.Data.Repository
         {
             var objFromDb = _db.Article.FirstOrDefault(s => s.Id == article.Id);
 
-            objFromDb.Title = article.Title;
             objFromDb.TitleFont = article.TitleFont;
             objFromDb.Body = article.Body;
             objFromDb.BodyFont = article.BodyFont;
             objFromDb.BodyTextSize = article.BodyTextSize;
-            objFromDb.RouteName = article.RouteName;
+            objFromDb.Date = article.Date;
+
+            if (objFromDb.Title == article.Title && objFromDb.RouteName != null)
+            // Don't change the route name if it's already been set and the title hasn't changed.
+            {
+
+            }
+            else if (_db.Article.Any(i => i.RouteName == HttpUtility.UrlEncode(article.Title) && i.Id != article.Id) == false) 
+            //Check if route already exists based on title, so that two routes cannot be the same.
+            {
+                objFromDb.RouteName = HttpUtility.UrlEncode(article.Title);
+            }
+            else
+            {
+                objFromDb.RouteName = HttpUtility.UrlEncode( (article.Date.ToShortDateString() + "-" + article.Title) );
+            }
+
             objFromDb.Template = article.Template;
+            objFromDb.Title = article.Title;
 
             _db.SaveChanges();
         }

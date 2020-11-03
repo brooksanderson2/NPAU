@@ -21,6 +21,7 @@ namespace NoPoorAfrica.Pages.Admin.Articles
         [BindProperty]
         public Article ArticleObj { get; set; }
 
+
         public IActionResult OnGet(int? id)
         {
             ArticleObj = new Article();
