@@ -13,12 +13,18 @@ function loadList() {
 		},
 		"columns": [
 			{ "data": "title", "width": "15%" },
-			{ "data": "fromDate", "width": "15%" },
-			{ "data": "toDate", "width": "15%" },
-			{ "data": "fundingGoal", "width": "5%" },
+			{ "data": "fromDate", "render": function (data, type) {
+			  return type === 'sort' ? data : moment(data).format('MM/DD/YYYY');
+				}, "width": "10%"
+			},
+			{ "data": "toDate", "render": function (data, type) {
+			  return type === 'sort' ? data : moment(data).format('MM/DD/YYYY');
+				}, "width": "10%"
+			},
+			{ "data": "fundingGoal", render: $.fn.dataTable.render.number(',', '.', 2, '$'), "width": "5%" },
 			{ "data": "country", "width": "5%" },
-			{ "data": "description", "width": "20%" },
-			{  "data": "id",
+			{ "data": "description", "width": "35%" },
+			{ "data": "id",
 				"render": function (data) {
 					return `
 						<div class="text-center">
@@ -33,7 +39,7 @@ function loadList() {
 							Delete
 							</a>
 						</div>`;
-				}, width: "25%"
+				}, width: "20%"
 			}
 		],
 		"language": {
