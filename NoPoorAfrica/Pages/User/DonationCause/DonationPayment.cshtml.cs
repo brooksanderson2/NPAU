@@ -59,6 +59,7 @@ namespace NoPoorAfrica.Pages.User.DonationCause
             }
             DonationDetails.PaymentStatus = SD.PaymentStatusPending;
             DonationDetails.DonationDate = DateTime.Now;
+            DonationDetails.DonationCauseId = DonationCauseObj.Id;
             if (stripeToken != null)
             {
                 var options = new ChargeCreateOptions
