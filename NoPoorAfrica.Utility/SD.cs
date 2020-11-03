@@ -6,7 +6,7 @@ namespace NoPoorAfrica.Utility
 {
     public class SD
     {
-        public const string AdminRole = "Amdin";
+        public const string AdminRole = "Admin";
         public const string CustomerRole = "Customer";
 
         public const string ShoppingCart = "ShoppingCart"; //SessionNameId

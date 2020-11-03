@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace NoPoorAfrica.Pages.Admin.DonationCause
+namespace NoPoorAfrica.Pages.Admin
 {
     public class IndexModel : PageModel
     {
