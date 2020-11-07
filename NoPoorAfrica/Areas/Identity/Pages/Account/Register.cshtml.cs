@@ -87,7 +87,7 @@ namespace NoPoorAfrica.Areas.Identity.Pages.Account
             //retrieve the role from the form
             string role = Request.Form["rdUserRole"].ToString();
             if (role == "")
-            { role = SD.AdminRole; } //make the first login a manager)
+            { role = SD.CustomerRole; } //make the first login a manager)
             returnUrl = returnUrl ?? Url.Content("~/"); //null-coalescing assignment operator ??= assigns the value of right-hand operand to its left-hand operand only if the left-hand is nulll
             if (ModelState.IsValid)
             {
