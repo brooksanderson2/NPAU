@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace NoPoorAfrica.Models.Models
@@ -21,5 +22,7 @@ namespace NoPoorAfrica.Models.Models
 
         public string TransactionId { get; set; }
         public DateTime DonationDate { get; set; }
+        [ForeignKey("DonationCauseId")]
+        public virtual DonationCause DonationCause { get; set; }
     }
 }

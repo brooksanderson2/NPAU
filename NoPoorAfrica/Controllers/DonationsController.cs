@@ -24,7 +24,7 @@ namespace NoPoorAfrica.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Json(new { data = _unitOfWork.DonationDetails.GetAll(null, null, null) });
+            return Json(new { data = _unitOfWork.DonationDetails.GetAll(null, null, "DonationCause") });
         }
     }
 }
