@@ -16,7 +16,7 @@
 
 				<div class="card-body px-lg-5 pt-4">
 					<form method="post" autocomplete="off" asp-route-returnUrl="@Model.ReturnUrl">
-						<h3 class="col-12 text-success text-center py-4">
+						<h3 class="col-12 text-dark text-center py-4">
 							@if (User.IsInRole(SD.AdminRole))
 							{
 								<strong>Register an Employee</strong>
@@ -64,7 +64,7 @@
 							</div>
 						}
 						<div class="py-2">
-							<button type="submit" class="btn btn-success form-control">Register</button>
+							<button type="submit" class="btn btn-dark form-control">Register</button>
 						</div>
 
 					</form>

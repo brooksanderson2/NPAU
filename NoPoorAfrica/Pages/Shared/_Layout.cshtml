@@ -18,58 +18,71 @@
 </head>
 <body>
 	<header>
-		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow mb-3">
-			<div class="container">
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-						aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse justify-content-center justify-content-between">
-					<ul class="navbar-nav flex-grow-1 justify-content-center justify-content-between">
-						@*<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-							</li>*@
-						<li>
-							<a class="navbar-brand" asp-area="" asp-page="/Index">NoPoorAfrica</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-page="/User/Store/Index">Store</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-page="/User/DonationCause/Index">Donations</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-page="/Articles/Index">News Articles</a>
-						</li>
-						@if (HttpContextAccessor.HttpContext.Session.GetInt32(SD.ShoppingCart) != null)
-						{
-							<li>
-								<a class="nav-link" asp-area="" asp-page="/User/Cart/Index">
-									@{
-										var count = HttpContextAccessor.HttpContext.Session.GetInt32(SD.ShoppingCart); }
+		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light navBackground border-bottom box-shadow mb-3">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse justify-content-center justify-content-between text-white">
+                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav flex-grow-1 justify-content-center justify-content-between text-white">
+                        <li class="npauLogo mb-2">
+                            <a class="navbar-brand npauLogo" asp-area="" asp-page="/Index"><img class="npauLogo" src="~/images/npau.png" alt="npaulogo" /> </a>
+                        </li>
+                        <li class="nav-item m-3 p-3 mt-4 border border-warning rounded shadow">
+                            <a class="nav-link text-white" asp-area="" asp-page="/User/DonationCause/Index">Donate Now</a>
+                        </li>
+                        <li class="nav-item m-3 p-3 mt-4">
+                            <a class="nav-link text-white" asp-area="" asp-page="/Articles/Index">News Articles</a>
+                        </li>
 
-									<i class="fas fa-shopping-cart"></i>&nbsp; (@count)
-								</a>
+                        <li class="nav-item m-3 p-3 mt-4">
+                            <a class="nav-link text-white" asp-area="" asp-page="/User/Store/Index">Store</a>
+                        </li>
+                        @if (HttpContextAccessor.HttpContext.Session.GetInt32(SD.ShoppingCart) != null)
+                        {
+                            <li class="m-3 p-3">
+                                <a class="nav-link text-white" asp-area="" asp-page="/User/Cart/Index">
+                                    @{
+                                        var count = HttpContextAccessor.HttpContext.Session.GetInt32(SD.ShoppingCart); }
 
-							</li>
-						}
-						else
-						{
-							<li>
-								<a class="nav-link" asp-page="/User/Cart/Index">
+                                    <i class="fas fa-shopping-cart"></i>&nbsp; (@count)
+                                </a>
+
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="m-3 p-3 mt-4">
+                                <a class="nav-link text-white" asp-page="/User/Cart/Index">
 
 
-									<i class="fas fa-shopping-cart"></i>&nbsp; (0)
-								</a>
+                                    <i class="fas fa-shopping-cart"></i>&nbsp; (0)
+                                </a>
 
-							</li>
-						}
-					</ul>
-				</div>
-			</div>
+                            </li>
+                        }
+                        @if (User.IsInRole(SD.AdminRole))
+                        {
+                            <li class="nav-item dropdown m-3 p-3 mt-4">
+                                <a class="nav-link text-white dropdown-toggle" href="#" id="navbarDropDown" data-toggle="dropdown">
+                                    Admin
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item text-black" asp-page="/Admin/Donations/Index">Donations</a>
+                                    <a class="dropdown-item text-black" asp-page="/Admin/DonationCause/Index">Donation Cause</a>
+                                    <a class="dropdown-item text-black" asp-page="/Admin/Articles/Index">News Articles</a>
+                                    <a class="dropdown-item text-black" asp-page="/Admin/Category/Index">Category</a>
+                                    <a class="dropdown-item text-black" asp-page="/Admin/Size/Index">Store Sizes</a>
+                                    <a class="dropdown-item text-black" asp-page="/Admin/StoreItems/Index">Store Items</a>
+                                    <a class="dropdown-item text-black" asp-page="/Admin/Purchases/Index">Store Purchases</a>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
 		</nav>
 	</header>
 	<div class="container">
@@ -78,7 +91,7 @@
 		</main>
 	</div>
 
-	<footer class="border-top footer text-muted">
+	<footer class="border-top footer text-muted navBackground">
 		<div class="container">
 			&copy; 2020 - NoPoorAfrica - <a asp-area="" asp-page="/Privacy">Privacy</a>
 		</div>
