@@ -22,7 +22,7 @@ function loadList() {
 				}, "width": "20%"
 			},
 			{ "data": "email", "width": "20%" },
-			{"data": "donationCauseId", "width": "20%" },
+			{"data": "donationCause.title", "width": "20%" },
 		],
 		"language": {
 			"emptyTable": "no data found."
