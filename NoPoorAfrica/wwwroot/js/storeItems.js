@@ -14,9 +14,10 @@ function loadList() {
         },
         "columns": [
             //should not be capital
-            { "data": "name", "width": "30%" },
+            { "data": "name", "width": "20%" },
             { "data": "price", render: $.fn.dataTable.render.number(',', '.', 2, '$'), "width": "20%" },
             { "data": "category.name", "width": "20%" },
+            {"data": "inventory", "width": "20%"},
             {
                 "data": "id",
                 "render": function (data) {
@@ -29,7 +30,7 @@ function loadList() {
                                 </a>
                             </div> `;
 
-                }, "width": "30%"
+                }, "width": "20%"
             }
 
 

@@ -37,6 +37,15 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-3">
+                        <label asp-for="StoreItemObj.StoreItem.Inventory"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="StoreItemObj.StoreItem.Inventory" />
+                        <span class="text-danger" asp-validation-for="StoreItemObj.StoreItem.Inventory"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-3">
                         <label asp-for="StoreItemObj.StoreItem.Description"></label>
                     </div>
                     <div class="col-9">
@@ -63,18 +72,7 @@
                         <span class="text-danger" asp-validation-for="StoreItemObj.StoreItem.CategoryId"></span>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-3">
-                        <label asp-for="StoreItemObj.StoreItem.SizeId"></label>
-                    </div>
-                    <div class="col-9">
-                        @Html.DropDownListFor(s => s.StoreItemObj.StoreItem.SizeId,
-                                                Model.StoreItemObj.SizeList,
-                                                "- Please select a Size - ",
-                                                new { @class = "form-control" })
-                        <span class="text-danger" asp-validation-for="StoreItemObj.StoreItem.SizeId"></span>
-                    </div>
-                </div>
+        
 
 
                 <div class="form-group row">

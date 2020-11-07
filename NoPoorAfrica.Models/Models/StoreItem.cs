@@ -20,14 +20,16 @@ namespace NoPoorAfrica.Models.Models
         [Display(Name = "Category Type")]
         public int CategoryId { get; set; }
 
-       [Display(Name = "Size")]
-      public int SizeId { get; set; }
+        [Display(Name = "Size")]
+        public int SizeId { get; set; }
 
         [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
 
-       [ForeignKey("SizeId")]
+        [ForeignKey("SizeId")]
         public virtual Size Size { get; set; }
 
+
+        public int Inventory { get; set; }
     }
 }

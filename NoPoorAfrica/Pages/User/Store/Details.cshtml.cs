@@ -37,11 +37,39 @@ namespace NoPoorAfrica.Pages.User.Store
 
         public IActionResult OnPost()
         {
-            
+
+
+            if (ModelState.IsValid)
+            {
+                //Determind the GUID of the logged in user
+                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+                var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+                ShoppingCartObj.ApplicationUserId = claim.Value;
+
+                ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.GetFirstOrDefault(c => c.ApplicationUserId == ShoppingCartObj.ApplicationUserId && c.StoreItemId == ShoppingCartObj.StoreItemId);
+                if (cartFromDb == null)
+                {
+                    _unitOfWork.ShoppingCart.Add(ShoppingCartObj);
+                }
+                else //update
+                {
+                    _unitOfWork.ShoppingCart.IncrementCount(cartFromDb, ShoppingCartObj.Count);
+                }
+                _unitOfWork.Save();
+
+                var count = _unitOfWork.ShoppingCart.GetAll(c => c.ApplicationUserId == ShoppingCartObj.ApplicationUserId).ToList().Count;
                 //Establish the session
-                //HttpContext.Session.SetInt32(SD.ShoppingCart, count);
+                HttpContext.Session.SetInt32(SD.ShoppingCart, count);
                 return RedirectToPage("Index");
-          
+            }
+            else
+            {
+                ShoppingCartObj.StoreItem = _unitOfWork.StoreItem.GetFirstOrDefault(includeProperties: "Category",
+                filter: c => c.Id == ShoppingCartObj.StoreItem.Id);
+
+
+                return Page();
+            }
 
         }
     }
