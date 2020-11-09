@@ -7,47 +7,35 @@ $(document).ready(function () {
 function loadList() {
 	dataTable = $('#DT_load').DataTable({
 		"ajax": {
-			"url": "/api/donationCause",
+			"url": "/api/donationCauseCategory",
 			"type": "GET",
 			"datatype": "json"
 		},
 		"columns": [
-			{ "data": "title", "width": "10%" },
-			{ "data": "fromDate", "render": function (data, type) {
-			  return type === 'sort' ? data : moment(data).format('MM/DD/YYYY');
-				}, "width": "10%"
-			},
-			{ "data": "toDate", "render": function (data, type) {
-			  return type === 'sort' ? data : moment(data).format('MM/DD/YYYY');
-				}, "width": "10%"
-			},
-			{ "data": "fundingGoal", render: $.fn.dataTable.render.number(',', '.', 2, '$'), "width": "5%" },
-			{ "data": "country", "width": "5%" },
-			{ "data": "description", "width": "30%" },
-			{ "data": "donationCauseCategory.name", "width": "15%" },
-			{ "data": "id",
+			{ data: "name", width: "70%" },
+			{
+				data: "id",
 				"render": function (data) {
 					return `
 						<div class="text-center">
-							<a href="/Admin/DonationCause/Upsert?id=${data}"
+							<a href="/Admin/DonationCauseCategory/Upsert?id=${data}"
 							class="btn btn-success text-white style="cursor:pointer; width:100px;">
 							<i class="far fa-edit"></i>
 							Edit
 							</a>
-							<a onClick=Delete('/api/DonationCause/'+${data})
+							<a onClick=Delete('/api/donationCauseCategory/'+${data})
 							class="btn btn-danger text-white style="cursor:pointer; width:100px;">
 							<i class="far fa-trash-alt"></i>
 							Delete
 							</a>
 						</div>`;
-				}, width: "15%"
+				}, width: "30%"
 			}
 		],
 		"language": {
 			"emptyTable": "no data found."
 		},
-		"width": "100%",
-		"order": [[2, "asc"]]
+		"width": "100%"
 	});
 }
 

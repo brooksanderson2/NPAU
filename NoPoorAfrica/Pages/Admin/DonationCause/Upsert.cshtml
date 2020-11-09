@@ -9,21 +9,21 @@
 			<div asp-validation-summary="ModelOnly" class="text-danger">
 			</div>
 			<div class="col-12 px-3" style="border-bottom:1px solid #325d88">
-				<h2 class="text-primary">@(Model.DonationCauseObj.Id !=0 ? "Update" : "Create") Donation Cause</h2>
+				<h2 class="text-primary">@(Model.DonationCauseObj.DonationCause.Id !=0 ? "Update" : "Create") Donation Cause</h2>
 			</div>
 
 			<div class="col-8 pt-3">
 				<div class="form-group row">
 					<div class="col-3">
-						<label asp-for="DonationCauseObj.Title"></label>
+						<label asp-for="DonationCauseObj.DonationCause.Title"></label>
 					</div>
 					<div class="col-9">
-						<input class="form-control" asp-for="DonationCauseObj.Title" />
-						<span class="text-danger" asp-validation-for="DonationCauseObj.Title"></span>
+						<input class="form-control" asp-for="DonationCauseObj.DonationCause.Title" />
+						<span class="text-danger" asp-validation-for="DonationCauseObj.DonationCause.Title"></span>
 					</div>
-					@if (Model.DonationCauseObj.Id != 0)
+					@if (Model.DonationCauseObj.DonationCause.Id != 0)
 					{
-						<input type="hidden" asp-for="DonationCauseObj.Id" />
+						<input type="hidden" asp-for="DonationCauseObj.DonationCause.Id" />
 					}
 				</div>
 				<div class="form-group row">
@@ -31,17 +31,17 @@
 						<label>Funding Goal</label>
 					</div>
 					<div class="col-9">
-						<input class="form-control" asp-for="DonationCauseObj.FundingGoal" />
-						<span class="text-danger" asp-validation-for="DonationCauseObj.FundingGoal"></span>
+						<input class="form-control" asp-for="DonationCauseObj.DonationCause.FundingGoal" />
+						<span class="text-danger" asp-validation-for="DonationCauseObj.DonationCause.FundingGoal"></span>
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-3">
-						<label asp-for="DonationCauseObj.Country"></label>
+						<label asp-for="DonationCauseObj.DonationCause.Country"></label>
 					</div>
 					<div class="col-9">
-						<input class="form-control" asp-for="DonationCauseObj.Country" />
-						<span class="text-danger" asp-validation-for="DonationCauseObj.Country"></span>
+						<input class="form-control" asp-for="DonationCauseObj.DonationCause.Country" />
+						<span class="text-danger" asp-validation-for="DonationCauseObj.DonationCause.Country"></span>
 					</div>
 				</div>
 				<div class="row my-1">
@@ -49,7 +49,7 @@
 						<label>Start Date</label>
 					</div>
 					<div class="col-9">
-						<input id="datepicker" value="" asp-for="@Model.DonationCauseObj.FromDate" type="text" class="form-control" />
+						<input id="datepicker" value="" asp-for="@Model.DonationCauseObj.DonationCause.FromDate" type="text" class="form-control" />
 					</div>
 				</div>
 				<div class="row my-1">
@@ -57,20 +57,32 @@
 						<label>End Date</label>
 					</div>
 					<div class="col-9">
-						<input id="datepicker2" value="" asp-for="@Model.DonationCauseObj.ToDate" type="text" class="form-control" />
+						<input id="datepicker2" value="" asp-for="@Model.DonationCauseObj.DonationCause.ToDate" type="text" class="form-control" />
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-3">
-						<label asp-for="DonationCauseObj.Description"></label>
+						<label asp-for="DonationCauseObj.DonationCause.DonationCauseCategoryId"></label>
 					</div>
 					<div class="col-9">
-						<textarea class="form-control" asp-for="DonationCauseObj.Description" id="txtDesc" style="height:200px"></textarea>
+						@Html.DropDownListFor(m => m.DonationCauseObj.DonationCause.DonationCauseCategoryId,
+												Model.DonationCauseObj.DonationCauseCategoryList,
+												"- Please select a Category - ",
+												new { @class = "form-control" })
+						<span class="text-danger" asp-validation-for="DonationCauseObj.DonationCause.DonationCauseCategoryId"></span>
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-3">
-						<label asp-for="DonationCauseObj.Image"></label>
+						<label asp-for="DonationCauseObj.DonationCause.Description"></label>
+					</div>
+					<div class="col-9">
+						<textarea class="form-control" asp-for="DonationCauseObj.DonationCause.Description" id="txtDesc" style="height:200px"></textarea>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-3">
+						<label asp-for="DonationCauseObj.DonationCause.Image"></label>
 					</div>
 					<div class="col-9">
 						<input type="file" class="form-control" id="uploadBox" name="files" />
@@ -81,7 +93,7 @@
 					<div class="col-9 offset-3">
 						<div class="row">
 							<div class="col-6">
-								@if (Model.DonationCauseObj.Id != 0)
+								@if (Model.DonationCauseObj.DonationCause.Id != 0)
 								{
 									<button type="submit" class="btn btn-primary form-control">Update</button>
 								}
@@ -100,7 +112,7 @@
 			@if (Model.DonationCauseObj != null)
 			{
 				<div class="col-4 p-4">
-					<img src="@Model.DonationCauseObj.Image" style="border-radius:5px; width:100%; border: 1px solid #bbb9b9" />
+					<img src="@Model.DonationCauseObj.DonationCause.Image" style="border-radius:5px; width:100%; border: 1px solid #bbb9b9" />
 				</div>
 			}
 		</div>

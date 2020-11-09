@@ -25,5 +25,6 @@ namespace NoPoorAfrica.DataAccess.Data
        public DbSet <Size> Size { get; set; }
        public DbSet<DonationDetails> DonationDetails { get; set; }
        public DbSet <Article> Article { get; set; }
+       public DbSet <DonationCauseCategory> DonationCauseCategory { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿@page
-
-<h1>Donation Cause List</h1>
+@model NoPoorAfrica.Pages.Admin.DonationCauseCategory.IndexModel
+@{
+}
+<h1>Donation Cause Categories</h1>
 <div class="container">
 	<div class="row">
 		<div class="col-12 text-right">
@@ -12,30 +14,12 @@
 	<thead>
 		<tr>
 			<th>
-				Title
-			</th>
-			<th>
-				FromDate
-			</th>
-			<th>
-				ToDate
-			</th>
-			<th>
-				Funding Goal
-			</th>
-			<th>
-				Country
-			</th>
-			<th>
-				Description
-			</th>
-			<th>
-				Category
+				Category Name
 			</th>
 			<th></th>
 		</tr>
 	</thead>
 </table>
 @section Scripts{
-	<script src="~/js/donationCause.js"></script>
+	<script src="~/js/donationCauseCategory.js"></script>
 }

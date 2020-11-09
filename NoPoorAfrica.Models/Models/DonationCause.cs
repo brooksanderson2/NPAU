@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace NoPoorAfrica.Models.Models
@@ -16,5 +17,9 @@ namespace NoPoorAfrica.Models.Models
         public double FundingGoal { get; set; }
         public string Country { get; set; }
         public string Image { get; set; }
+        [Display(Name = "Donation Cause Category Type")]
+        public int DonationCauseCategoryId { get; set; }
+        [ForeignKey("DonationCauseCategoryId")]
+        public virtual DonationCauseCategory DonationCauseCategory { get; set; }
     }
 }
