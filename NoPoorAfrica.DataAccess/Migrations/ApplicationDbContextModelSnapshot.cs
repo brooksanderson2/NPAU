@@ -380,6 +380,8 @@ namespace NoPoorAfrica.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DonationCauseId");
+
                     b.ToTable("DonationDetails");
                 });
 
@@ -537,9 +539,14 @@ namespace NoPoorAfrica.DataAccess.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
+                    b.Property<int>("SizeId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("SizeId");
 
                     b.ToTable("StoreItem");
                 });
@@ -615,6 +622,15 @@ namespace NoPoorAfrica.DataAccess.Migrations
                         .HasForeignKey("DonationCauseId");
                 });
 
+            modelBuilder.Entity("NoPoorAfrica.Models.Models.DonationDetails", b =>
+                {
+                    b.HasOne("NoPoorAfrica.Models.Models.DonationCause", "DonationCause")
+                        .WithMany()
+                        .HasForeignKey("DonationCauseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("NoPoorAfrica.Models.Models.OrderDetails", b =>
                 {
                     b.HasOne("NoPoorAfrica.Models.Models.OrderHeader", "OrderHeader")
@@ -642,6 +658,12 @@ namespace NoPoorAfrica.DataAccess.Migrations
                     b.HasOne("NoPoorAfrica.Models.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("NoPoorAfrica.Models.Models.Size", "Size")
+                        .WithMany()
+                        .HasForeignKey("SizeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
