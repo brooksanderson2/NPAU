@@ -72,7 +72,19 @@
                         <span class="text-danger" asp-validation-for="StoreItemObj.StoreItem.CategoryId"></span>
                     </div>
                 </div>
-        
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="StoreItemObj.StoreItem.SizeId"></label>
+                    </div>
+                    <div class="col-9">
+                        @Html.DropDownListFor(m => m.StoreItemObj.StoreItem.SizeId,
+                                                Model.StoreItemObj.SizeList,
+                                                "- Please select a category - ",
+                                                new { @class = "form-control" })
+                        <span class="text-danger" asp-validation-for="StoreItemObj.StoreItem.SizeId"></span>
+                    </div>
+                </div>
+
 
 
                 <div class="form-group row">
