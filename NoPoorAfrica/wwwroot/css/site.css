@@ -75,7 +75,7 @@ body {
 }
 
 .backgroundWhite {
-    background-color: #CCD1D1;
+    background-color: white;
     padding: 30px;
     border-radius: 10px;
     margin-bottom: 30px;
@@ -212,4 +212,28 @@ hr {
 
 .navBackground {
     background-color: #1e2022;
+}
+
+.jumbotron {
+    background-image: url("../images/Girls-.jpg");
+    background-repeat: no-repeat;
+   /* background-size: cover;
+    background-position: center;*/
+    height: 550px;
+    width: 500px;
+}
+
+.storeItemImageTable {
+    height: 400px;
+    width: 375px;
+}
+
+.storeHomePageImage {
+    height: 400px;
+    /*width: 300px;*/
+}
+
+.storeHeaderImage{
+    height: 350px;
+    width: 600px;
 }
