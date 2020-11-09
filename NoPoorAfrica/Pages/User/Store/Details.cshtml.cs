@@ -28,7 +28,7 @@ namespace NoPoorAfrica.Pages.User.Store
         {
             ShoppingCartObj = new ShoppingCart()
             {
-                StoreItem = _unitOfWork.StoreItem.GetFirstOrDefault(includeProperties: "Category",
+                StoreItem = _unitOfWork.StoreItem.GetFirstOrDefault(includeProperties: "Category,Size",
                 filter: c => c.Id == id),
                 StoreItemId = id
             };
@@ -64,7 +64,7 @@ namespace NoPoorAfrica.Pages.User.Store
             }
             else
             {
-                ShoppingCartObj.StoreItem = _unitOfWork.StoreItem.GetFirstOrDefault(includeProperties: "Category",
+                ShoppingCartObj.StoreItem = _unitOfWork.StoreItem.GetFirstOrDefault(includeProperties: "Category,Size",
                 filter: c => c.Id == ShoppingCartObj.StoreItem.Id);
 
 

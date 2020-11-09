@@ -26,25 +26,34 @@
                                     <div class="col-12">
 
                                         <h3 class="text-success"></h3>
-                                        <h3>StoreItem Description </h3>
-                                        <span class="badge badge-info h3">@Model.ShoppingCartObj.StoreItem.Category.Name</span>
+                                        <h3>Details </h3>
                                         <div class="border border-dark bg m-3 p-3 backgroundWhite">
 
                                             <p class="text-secondary">@Html.Raw(Model.ShoppingCartObj.StoreItem.Description)</p>
 
                                         </div>
+                                        @if (@Model.ShoppingCartObj.StoreItem.Size.Name != "N/A")
+                                        {
+                                            <h3>Size</h3>
+                                            <div class="border border-dark bg m-3 p-3 backgroundWhite">
+                                                <p class="text-secondary">@Html.Raw(Model.ShoppingCartObj.StoreItem.Size.Name)</p>
+                                                </div>
+                                         }
+                                         else
+                                          {
 
-                                        <div class="row">
-                                            <div class="col border border-dark bg m-3 p-3 rounded">
-                                                <div class="col"><label asp-for="ShoppingCartObj.Count" class="h3"></label></div>
-                                                <div class="col">
-                                                    <input type="number" min="1" value="1" asp-for="ShoppingCartObj.Count" class="form-control rounded" />
-                                                    <span asp-validation-for="ShoppingCartObj.Count" class="text-danger"></span>
+                                          }
+                                                <div class="row">
+                                                    <div class="col border border-dark bg m-3 p-3 rounded">
+                                                        <div class="col"><label asp-for="ShoppingCartObj.Count" class="h3"></label></div>
+                                                        <div class="col">
+                                                            <input type="number" min="1" value="1" asp-for="ShoppingCartObj.Count" class="form-control rounded" />
+                                                            <span asp-validation-for="ShoppingCartObj.Count" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
                             </div>
                             <div class="col-12 col-lg-4 p-1 text-center">
 
@@ -65,7 +74,7 @@
 
             <div class="col-12 col-md-6 ">
                 <button type="submit" class="btn btn-primary btn-square form-control btn-lg" style="height:50px;">Add to Cart</button>
-            </div>
+            </div> 
 
                     </div>
                 </div>
