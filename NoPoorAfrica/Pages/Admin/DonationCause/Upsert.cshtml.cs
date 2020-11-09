@@ -8,6 +8,7 @@ using NoPoorAfrica.Models.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using NoPoorAfrica.Models.ViewModels;
 
 namespace NoPoorAfrica.Pages.Admin.DonationCause
 {
@@ -22,15 +23,19 @@ namespace NoPoorAfrica.Pages.Admin.DonationCause
             _hostingEnvironment = hostingEnvironment;
         }
         [BindProperty]
-        public Models.Models.DonationCause DonationCauseObj { get; set; }
+        public DonationCauseVM DonationCauseObj { get; set; }
 
         public IActionResult OnGet(int? id)
         {
-            DonationCauseObj = new Models.Models.DonationCause();
+            DonationCauseObj = new DonationCauseVM
+            {
+                DonationCause = new Models.Models.DonationCause(),
+                DonationCauseCategoryList = _unitOfWork.DonationCauseCategory.GetDonationCauseCategoryListForDropDown()
+            };
 
             if (id != null) //edit menu item
             {
-                DonationCauseObj = _unitOfWork.DonationCause.GetFirstOrDefault(u => u.Id == id);
+                DonationCauseObj.DonationCause = _unitOfWork.DonationCause.GetFirstOrDefault(u => u.Id == id);
                 if (DonationCauseObj == null)
                 {
                     return NotFound();
@@ -51,7 +56,7 @@ namespace NoPoorAfrica.Pages.Admin.DonationCause
                 return Page();
             }
 
-            if (DonationCauseObj.Id == 0) //means new menu item
+            if (DonationCauseObj.DonationCause.Id == 0) //means new menu item
             {
                 //Physically upload and save image
                 string fileName = Guid.NewGuid().ToString();
@@ -64,14 +69,14 @@ namespace NoPoorAfrica.Pages.Admin.DonationCause
                 }
 
                 //save the string data path
-                DonationCauseObj.Image = @"\Images\DonationCauses\" + fileName + extension;
+                DonationCauseObj.DonationCause.Image = @"\Images\DonationCauses\" + fileName + extension;
 
-                _unitOfWork.DonationCause.Add(DonationCauseObj);
+                _unitOfWork.DonationCause.Add(DonationCauseObj.DonationCause);
             }
 
             else //update
             {
-                var objFromDb = _unitOfWork.DonationCause.Get(DonationCauseObj.Id);
+                var objFromDb = _unitOfWork.DonationCause.Get(DonationCauseObj.DonationCause.Id);
                 if (files.Count > 0)
                 {
                     //Physically upload and save image
@@ -91,13 +96,13 @@ namespace NoPoorAfrica.Pages.Admin.DonationCause
                         files[0].CopyTo(fileStream);
                     }
                     //save the string data path
-                    DonationCauseObj.Image = @"\Images\DonationCauses\" + fileName + extension;
+                    DonationCauseObj.DonationCause.Image = @"\Images\DonationCauses\" + fileName + extension;
                 }
                 else
                 {
-                    DonationCauseObj.Image = objFromDb.Image;
+                    DonationCauseObj.DonationCause.Image = objFromDb.Image;
                 }
-                _unitOfWork.DonationCause.Update(DonationCauseObj);
+                _unitOfWork.DonationCause.Update(DonationCauseObj.DonationCause);
             }
 
             _unitOfWork.Save();
