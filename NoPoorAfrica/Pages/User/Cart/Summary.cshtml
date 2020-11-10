@@ -29,13 +29,13 @@
                         <div class="card-body">
                             <div class="container rounded p-2">
                                 <div class="row">
-                                    @*<div class="col-12 col-lg-6 pb-4">
+                                    <div class="col-12 col-lg-6 pb-4">
                                         <div class="row">
                                             <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                                <span class="text-info">Delivery Details:</span>
+                                                <span class="text-info">Order Details:</span>
                                             </h4>
                                         </div>
-                                        <div class="row my-1">
+                                        @*<div class="row my-1">
                                             <div class="col-3">
                                                 <label>Name</label>
                                             </div>
@@ -50,32 +50,40 @@
                                             <div class="col-9">
                                                 <input id="txtPhone" asp-for="@Model.OrderDetailsCart.OrderHeader.PhoneNumber" type="text" class="form-control" />
                                             </div>
-                                        </div>
-                                        <div class="row my-1">
+                                        </div>*@
+                                        @*<div class="row my-1">
                                             <div class="col-3">
                                                 <label>Delivery Date</label>
                                             </div>
                                             <div class="col-9">
-                                                <input id="datepicker" value="" asp-for="@Model.OrderDetailsCart.OrderHeader.DeliveryDate" type="text" class="form-control" />
+                                                <input id="datepicker" value="" asp-for="@Model.OrderDetailsCart.OrderHeader.PurchaseDate" type="text" class="form-control" />
                                             </div>
-                                        </div>
-                                        <div class="row my-1">
+                                        </div>*@
+                                        @*<div class="row my-1">
                                             <div class="col-3">
-                                                <label>Delivery Time</label>
+                                                <label>Order Date</label>
                                             </div>
                                             <div class="col-9">
-                                                <input id="timepicker" value="" asp-for="@Model.OrderDetailsCart.OrderHeader.DeliveryTime" type="text" class="form-control" />
+                                                <input id="timepicker" value="" asp-for="@Model.OrderDetailsCart.OrderHeader.PurchaseDate" type="text" class="form-control" />
+                                            </div>
+                                        </div>*@
+                                        <div class="row my-1">
+                                            <div class="col-3">
+                                                <label>Address</label>
+                                            </div>
+                                            <div class="col-9">
+                                                <input asp-for="@Model.OrderDetailsCart.OrderHeader.Address" style="height:100px;" class="form-control"/>
                                             </div>
                                         </div>
                                         <div class="row my-1">
                                             <div class="col-3">
-                                                <label>Additional Instructions: </label>
+                                                <label>Additional Instructions:</label>
                                             </div>
                                             <div class="col-9">
                                                 <textarea asp-for="@Model.OrderDetailsCart.OrderHeader.Comments" style="height:100px;" class="form-control"></textarea>
                                             </div>
                                         </div>
-                                    </div>*@
+                                    </div>
 
                                     <div class="col-12 col-lg-5 offset-lg-1">
                                         <h4 class="d-flex justify-content-between align-items-center mb-3">
@@ -119,9 +127,9 @@
                                             class="stripe-button"
                                             data-key="@Stripe.Value.PublishableKey"
                                             data-amount="@OrderTotalForStripe"
-                                            data-name="4790 Food Delivery Demo"
+                                            data-name="No Poor Amoung Us"
                                             data-label="Place Order"
-                                            data-description="Good Food, Delivered Fast."
+                                            data-description="Empower a Woman, Lift a Nation!"
                                             data-locale="auto"
                                             data-allow-remember-me="false"
                                             data-image="https://stripe.com/img/documentation/checkout/marketplace.png">

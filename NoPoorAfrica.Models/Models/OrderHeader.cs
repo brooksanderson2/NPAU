@@ -14,6 +14,8 @@ namespace NoPoorAfrica.Models.Models
         [Required]
         public string Address { get; set; }
         public string UserId { get; set; }
+        //[Display(Name ="Order Name")]
+        //public string OrderName { get; set; }
 
         [ForeignKey("UserId")]
         public virtual ApplicationUser ApplicationUser { get; set; }
