@@ -74,9 +74,14 @@ namespace NoPoorAfrica.Models.Models
         public string RouteName { get; set; }
 
         /// <summary>
+        /// ArticleCategory foreign key
+        /// </summary>
+        public int ArticleCategoryId { get; set; }
+
+        /// <summary>
         /// Foreign key to ArticleCategory
         /// </summary>
-        [ForeignKey("ArticleCategory")]
+        [ForeignKey("ArticleCategoryId")]
         public virtual ArticleCategory ArticleCategory { get; set; }
     }
 }

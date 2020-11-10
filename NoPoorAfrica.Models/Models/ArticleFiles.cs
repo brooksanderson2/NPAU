@@ -12,7 +12,6 @@ namespace NoPoorAfrica.Models.Models
         /// Foreign key to Article
         /// </summary>
         [Required]
-        [ForeignKey("ArticleId")]
         public virtual int ArticleId { get; set; }
 
         /// <summary>
@@ -20,5 +19,11 @@ namespace NoPoorAfrica.Models.Models
         /// </summary>
         [Required]
         public string File { get; set; }
+
+        /// <summary>
+        /// Object of Article FK using ArticleId
+        /// </summary>
+        [ForeignKey("ArticleId")]
+        public virtual Article Article { get; set; }
     }
 }
