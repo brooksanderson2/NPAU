@@ -46,7 +46,7 @@
                         <h1>@Model.DetailedArticle.Title</h1>
                     </div>
                     <div class="row">
-                        <div class="col-11 offset-1">
+                        <div class="article-body col-11 offset-1" style="height:256px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                             @Html.Raw(@WebUtility.HtmlDecode(Model.DetailedArticle.Body))
                         </div>
                     </div>
