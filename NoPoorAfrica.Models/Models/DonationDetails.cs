@@ -19,6 +19,8 @@ namespace NoPoorAfrica.Models.Models
         public double DonationTotal { get; set; }
         public string PaymentStatus { get; set; }
         public string Email { get; set; }
+        public string Comments { get; set; }
+        public bool FollowUp { get; set; }
 
         public string TransactionId { get; set; }
         public DateTime DonationDate { get; set; }

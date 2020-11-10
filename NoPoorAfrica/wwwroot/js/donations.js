@@ -12,17 +12,19 @@ function loadList() {
 			"datatype": "json"
 		},
 		"columns": [
-			{ "data": "donorName", width: "20%" },
+			{ "data": "donorName", width: "15%" },
 			{
-				"data": "donationTotal", render: $.fn.dataTable.render.number(',', '.', 2, '$'), width: "20%"
+				"data": "donationTotal", render: $.fn.dataTable.render.number(',', '.', 2, '$'), width: "15%"
 			},
 			{
 				"data": "donationDate", "render": function (data, type) {
 					return type === 'sort' ? data : moment(data).format('MM/DD/YYYY');
-				}, "width": "20%"
+				}, "width": "15%"
 			},
-			{ "data": "email", "width": "20%" },
-			{"data": "donationCause.title", "width": "20%" },
+			{ "data": "email", "width": "15%" },
+			{ "data": "donationCause.title", "width": "15%" },
+			{ "data": "comments", "width": "15%" },
+			{ "data": "followUp", "width": "15%" },
 		],
 		"language": {
 			"emptyTable": "no data found."
