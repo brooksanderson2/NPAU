@@ -7,12 +7,12 @@ $(document).ready(function () {
 function loadList() {
 	dataTable = $('#DT_load').DataTable({
 		"ajax": {
-			"url": "/api/donations",
+			"url": "/api/donationHistory",
 			"type": "GET",
 			"datatype": "json"
 		},
 		"columns": [
-			{ "data": "donorName", width: "15%" },
+			{ "data": "donationCause.title", "width": "15%" },
 			{
 				"data": "donationTotal", render: $.fn.dataTable.render.number(',', '.', 2, '$'), width: "15%"
 			},
@@ -21,10 +21,7 @@ function loadList() {
 					return type === 'sort' ? data : moment(data).format('MM/DD/YYYY');
 				}, "width": "15%"
 			},
-			{ "data": "email", "width": "15%" },
-			{ "data": "donationCause.title", "width": "15%" },
 			{ "data": "comments", "width": "15%" },
-			{ "data": "followUp", "width": "15%" },
 		],
 		"language": {
 			"emptyTable": "no data found."
