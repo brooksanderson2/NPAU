@@ -4,33 +4,15 @@
     ViewData["Title"] = "Index";
 }
 
-@*@foreach(var item in Model.StoreItemList)
-    {
-    <div class="col-lg-3 col-xl-3 col-md-6 pb-4">
-        <div class="card" style="border:2px solid #008cba; border-radius: 5px; ">
-            <div class="pl-3 pt-1 text-center">
-                <h3 class="card-title text-primary"><b>@item.Name</b></h3>
-            </div>
-            <div class="d-flex justify-content-between form-control" style="border:0px;">
-                <div class="col-6 badge badge-warning text-center" style="font-size:14px;">
-                    @item.Category.Name
-                </div>
-                <div class="col-6 text-right h4" style="color:maroon;"><b>$@item.Price.ToString("0.00")</b></div>
-            </div>
-            <img src="@item.Image" class="card-img-top p-2 rounded" />
-
-            <a asp-page="Details" class="btn btn-primary" style="border-radius:2px;" asp-route-id="@item.Id">Details</a>
-
-        </div>
-    </div>
-    }*@
 
 <div>
     <h1 class="display-4 text-warning rounded m-2 p-2 center-screen">Store</h1>
 </div>
+
 <div>
     <h5 class="font-italic center-screen">Our products are 100% designed and sewn in Mozambique by women who have gone through the sewing courses.</h5>
 </div>
+
 <div class="row">
 
     <div class="col-6">
@@ -42,120 +24,95 @@
     </div>
 
 </div>
+
 <div>
     <div>&nbsp;</div>
 </div>
-<form asp-page="./Index" method="get">
-    <div class="form-actions search-background container center-screen">
-        <div class="row">
-            <div class="col">
-                <h5>Search by Item:&nbsp;&nbsp;&nbsp;</h5>
-            </div>
-            <div class="row">
-                <p>
-                    <input type="text" name="SearchString" value="@Model.CurrentFilter" />
-                    <input type="submit" value="Search" class="btn btn-dark" />
-                    <a asp-page="./Index">Clear Search</a>
-                </p>
-            </div>
-        </div>
 
-    </div>
-</form>
-
-<div class="container center-screen">
-    <div class="row">
-        <h5>Sort by:&nbsp;&nbsp; </h5>
-        <div>
-            <a asp-page="./Index" asp-route-sortOrder="@Model.NameSort"
-               asp-route-currentFilter="@Model.CurrentFilter">
-                @Html.DisplayNameFor(model => model.StoreItem[0].Name)
-            </a>
-        </div>
-        <div>
-            <p>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</p>
-        </div>
-        <div>
-            <a asp-page="./Index" asp-route-sortOrder="@Model.PriceSort"
-               asp-route-currentFilter="@Model.CurrentFilter">
-                @Html.DisplayNameFor(model => model.StoreItem[0].Price)
-            </a>
-        </div>
-    </div>
-</div>
 
 
 <table class="table center-screen">
-    <!--<thead class="center-screen">
+    <thead>
         <tr>
-            <th class="text-light">-->
-    @*<a asp-page="./Index" asp-route-sortOrder="@Model.NameSort"
-           asp-route-currentFilter="@Model.CurrentFilter">
-            @Html.DisplayNameFor(model => model.Movie[0].MovieTitle)
-        </a>*@
-    <!--</th>
-    <th>-->
-    @*@Html.DisplayNameFor(model => model.Movie[0].MovieImage)*@
-    <!--</th>
-    <th>
-        <a-->
-    @*asp-page="./Index" asp-route-sortOrder="@Model.PriceSort"
-        asp-route-currentFilter="@Model.CurrentFilter">
-         @Html.DisplayNameFor(model => model.Movie[0].Price)*@
-    <!--</a>
-    </th>-->
-    @*<th></th>*@
-    <!--</tr>
-    </thead>-->
-    <tbody class="center-screen">
-        @foreach (var item in Model.StoreItem)
-        {
-            @*<tr class="col-6" style="white-space:nowrap;">*@
-        <td class="hidden">
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td class="storeItemImageTable">
-            <div class="card" style="border:2px solid #0F0F0F; border-radius: 5px;">
-                <div class="pl-3 pt-1 text-center">
-                    <h3 class="card-title text-dark"><b>@item.Name</b></h3>
+            <th>
+                <form asp-page="./Index" method="get">
+                    Search:
+                    <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+                    <input type="submit" value="Search" class="btn btn-dark" /> |
+                    <a class="text-dark" asp-page="./Index">Clear</a>
+                </form>
+            </th>
+            <th>
+                &nbsp;&nbsp;
+            </th>
+            <th class="mb-3 pb-4">
+                Sort by:&nbsp;&nbsp;
+                <a class="text-dark" asp-page="./Index" asp-route-sortOrder="@Model.NameSort">
+                    @*@Html.DisplayNameFor(model => model.StoreItem[0].Name)*@ Product &nbsp;
+                </a>
+                |
+                <a class="text-dark" asp-page="./Index" asp-route-sortOrder="@Model.CategorySort">
+                    @*@Html.DisplayNameFor(model => model.StoreItem[0].Category.Name)*@ &nbsp; Category &nbsp;
+                </a>
+                |
+                <a class="text-dark" asp-page="./Index" asp-route-sortOrder="@Model.PriceSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                   &nbsp; @Html.DisplayNameFor(model => model.StoreItem[0].Price)
+                </a>
+            </th>
+            <th>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </th>
+            <th>
+                @{
+                    var prevDisabled = !Model.StoreItem.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.StoreItem.HasNextPage ? "disabled" : "";
+                }
+
+                <a asp-page="./Index"
+                   asp-route-sortOrder="@Model.CurrentSort"
+                   asp-route-pageIndex="@(Model.StoreItem.PageIndex - 1)"
+                   asp-route-currentFilter="@Model.CurrentFilter"
+                   class="btn btn-dark @prevDisabled">
+                    Previous
+                </a>
+                <a asp-page="./Index"
+                   asp-route-sortOrder="@Model.CurrentSort"
+                   asp-route-pageIndex="@(Model.StoreItem.PageIndex + 1)"
+                   asp-route-currentFilter="@Model.CurrentFilter"
+                   class="btn btn-dark @nextDisabled">
+                    Next
+                </a>
+            </th>
+        </tr>
+    </thead>
+</table>
+<div class="row container pb-3 c">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-12">
+                <div class="row my-3">
+                    @foreach (var item in Model.StoreItem)
+                    {
+                        <div class="col-lg-3 col-xl-3 col-md-6 pb-4 ">
+                            <div class="card" style="border:2px solid #0F0F0F; border-radius: 5px;">
+                                <div class="pl-3 pt-1 text-center">
+                                    <h3 class="card-title text-dark"><b>@item.Name</b></h3>
+                                </div>
+
+                                <img src="@item.Image" class="card-img-top p-2 rounded storeHomePageImage" />
+
+                                <div class="badge center-screen" style="border:0px;">
+                                    <div class="h5 rounded" style="color:dark;"><b>$@item.Price.ToString("0.00")</b></div>
+                                </div>
+
+                                <a asp-page="Details" class="btn btn-dark" style="border-radius:2px;" asp-route-id="@item.Id">More Info</a>
+
+                            </div>
+                        </div>
+                    }
                 </div>
-
-
-                <img src="@item.Image" class="card-img-top p-2 rounded storeHomePageImage"  />
-
-                <div class="badge center-screen" style="border:0px;">
-                    <div class="h5 rounded" style="color:dark;"><b>$@item.Price.ToString("0.00")</b></div>
-                </div>
-
-                <a asp-page="Details" class="btn btn-dark" style="border-radius:2px;" asp-route-id="@item.Id">More Info</a>
-
             </div>
-        </td>
-        <td class="hidden">
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        @*</tr>*@
-    }
-        </tbody>
-    </table>
-
-
-    @{ var prevDisabled = !Model.StoreItem.HasPreviousPage ? "disabled" : "";
-        var nextDisabled = !Model.StoreItem.HasNextPage ? "disabled" : ""; }
-
-    <div class="center-screen">
-        <a asp-page="./Index"
-           asp-route-sortOrder="@Model.CurrentSort"
-           asp-route-pageIndex="@(Model.StoreItem.PageIndex - 1)"
-           asp-route-currentFilter="@Model.CurrentFilter"
-           class="btn btn-dark @prevDisabled">
-            Previous
-        </a>
-        <a asp-page="./Index"
-           asp-route-sortOrder="@Model.CurrentSort"
-           asp-route-pageIndex="@(Model.StoreItem.PageIndex + 1)"
-           asp-route-currentFilter="@Model.CurrentFilter"
-           class="btn btn-dark @nextDisabled">
-            Next
-        </a>
+        </div>
     </div>
+</div>
