@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NoPoorAfrica.Models.Models
@@ -18,7 +19,10 @@ namespace NoPoorAfrica.Models.Models
         /// Path to file
         /// </summary>
         [Required]
-        public string File { get; set; }
+        public string FileName { get; set; }
+
+        [Required]
+        public byte[] File { get; set; }
 
         /// <summary>
         /// Object of Article FK using ArticleId
