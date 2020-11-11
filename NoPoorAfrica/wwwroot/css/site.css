@@ -229,11 +229,16 @@ hr {
 }
 
 .storeHomePageImage {
-    height: 400px;
+    height: 300px;
     /*width: 300px;*/
 }
 
 .storeHeaderImage{
     height: 350px;
     width: 600px;
+}
+
+.storeImageTable {
+    height: 400px;
+    width: 375px;
 }

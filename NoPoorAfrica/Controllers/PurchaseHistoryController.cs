@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NoPoorAfrica.DataAccess.Data.Repository.IRepository;
@@ -15,10 +16,12 @@ namespace NoPoorAfrica.Controllers
     public class PurchaseHistoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IWebHostEnvironment _hostingEnvionment;
 
-        public PurchaseHistoryController(IUnitOfWork unitOfWork)
+        public PurchaseHistoryController(IUnitOfWork unitOfWork, IWebHostEnvironment hostingEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _hostingEnvionment = hostingEnvironment;
 
         }
 
@@ -31,7 +34,7 @@ namespace NoPoorAfrica.Controllers
             if (User.IsInRole(SD.AdminRole))
             {
 
-                return Json(new { data = _unitOfWork.PurchaseHistory.GetAll() });
+                return Json(new { data = _unitOfWork.PurchaseHistory.GetAll(null, null, "StoreItem") });
 
             }
 

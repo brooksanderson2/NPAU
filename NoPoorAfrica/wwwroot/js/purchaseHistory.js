@@ -13,8 +13,8 @@ function loadList() {
         },
         "columns": [
 
-            { "data": "applicationUserId", "width": "25%" },
-            { "data": "storeItemId", "width": "25%" },
+            { "data": "applicationUser.fullname", "width": "25%" },
+            { "data": "storeItem.name", "width": "25%" },
             { "data": "count", "width": "25%" },
             {
                 "data": "purchaseDate",
@@ -22,29 +22,6 @@ function loadList() {
                     return type === 'sort' ? data : moment(data).format('MM/DD/YYYY');
                 }, width: "25%"
             },
-            //{
-            //    data: "id",
-            //    "render": function (data) {
-            //        return `
-            //            <div class="text-center">
-
-            //                <a href="/Admin/MenuItem/Upsert?id=${data}"
-            //                class="btn btn-success text-white style="cursor:pointer; width:100px;">
-            //                <i class="far fa-edit"></i>
-            //                Edit
-            //                </a>
-
-            //                <a onClick=Delete('/api/MenuItem/'+${data})
-            //                class="btn btn-danger text-white style="cursor:pointer; width:100px;">
-            //                <i class="far fa-trash-alt"></i>
-            //                Delete
-            //                </a>
-
-            //           </div>
-            //        `;
-
-            //    }, width: "20%"
-            //}
         ],
         "language": {
             "emptyTable": "no data found."
