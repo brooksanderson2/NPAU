@@ -12,7 +12,7 @@ function prepareButtonUpload() {
         if (files.length > 0) {
             $.ajax({
                 type: "POST",
-                url: "/Index?handler=Upload",
+                url: "?handler=Upload",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("XSRF-TOKEN",
                         $('input:hidden[name="__RequestVerificationToken"]').val());

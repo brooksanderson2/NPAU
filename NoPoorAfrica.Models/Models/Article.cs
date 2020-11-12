@@ -59,18 +59,18 @@ namespace NoPoorAfrica.Models.Models
         /// Date of article
         /// </summary>
         [Required]
-        [Display(Name = "Date")]
+        [Display(Name = "Published Date")]
         public DateTime PublishDate { get; set; }
 
         /// <summary>
         /// Date of most recent update to the article. Will show as PublishDate if never updated.
         /// </summary>
+        [Display(Name = "Last Updated")]
         public DateTime UpdateDate { get; set; }
 
         /// <summary>
         /// Used for routing inside the Article page controller, since the page is dynamic.
         /// </summary>
-        [Required]
         public string RouteName { get; set; }
 
         /// <summary>

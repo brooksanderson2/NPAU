@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NoPoorAfrica.DataAccess.Data.Repository.IRepository;
 using NoPoorAfrica.Models.Models;
+using NoPoorAfrica.Utility;
 
 namespace NoPoorAfrica.Pages.Admin.Articles
 {
@@ -26,13 +27,11 @@ namespace NoPoorAfrica.Pages.Admin.Articles
 
         [BindProperty]
         public Article ArticleObj { get; set; }
-
         public IEnumerable<ArticleFiles> ThumbnailList { get; set; }
 
         public IActionResult OnGet(int? id)
         {
             ArticleObj = new Article();
-            ThumbnailList = new List<ArticleFiles>();
 
             //Check if it's a new article
             if (id != null)
@@ -42,12 +41,9 @@ namespace NoPoorAfrica.Pages.Admin.Articles
                 {
                     return NotFound();
                 }
-            }
 
-            //Get thumbnails of existing pictures for article
-            if (id != null)
-            {
-                ThumbnailList = _unitOfWork.ArticleFiles.GetAll(f => f.ArticleId == id);
+                ThumbnailList = _unitOfWork.ArticleFiles.GetAll(f => f.ArticleId == ArticleObj.Id);
+                TempData.Put<IEnumerable<ArticleFiles>>("ThumbnailList", ThumbnailList);
             }
 
             return Page();
@@ -55,8 +51,18 @@ namespace NoPoorAfrica.Pages.Admin.Articles
 
         public IActionResult OnPost()
         {
+            //Set times
+            if (ArticleObj.Id == 0)
+            {
+                ArticleObj.PublishDate = DateTime.Now;
+            }
+            ArticleObj.UpdateDate = DateTime.Now;
+            ArticleObj.ArticleCategoryId = 1;
+
             if (!ModelState.IsValid)
                 return Page();
+
+            ThumbnailList = TempData.Get<IEnumerable<ArticleFiles>>("ThumbnailList");
 
             if (ArticleObj.Id == 0) 
             {
@@ -68,15 +74,27 @@ namespace NoPoorAfrica.Pages.Admin.Articles
                 foreach(ArticleFiles file in ThumbnailList)
                 {
                     file.ArticleId = ArticleObj.Id;
-                }
 
-                _unitOfWork.Save();
+                    _unitOfWork.ArticleFiles.Add(file);
+                }
             }
             else
             {
+                var imgList = _unitOfWork.ArticleFiles.GetAll(f => f.Id == ArticleObj.Id);
+
+                foreach (ArticleFiles file in ThumbnailList)
+                {
+                    file.ArticleId = ArticleObj.Id;
+
+                    if (!imgList.Contains(file))
+                        _unitOfWork.ArticleFiles.Add(file);
+                    else
+                        _unitOfWork.ArticleFiles.Update(file);
+                }
+
                 _unitOfWork.Article.Update(ArticleObj);
-                _unitOfWork.Save();
             }
+            _unitOfWork.Save();
             return RedirectToPage("./Index");
         }
 
@@ -84,7 +102,7 @@ namespace NoPoorAfrica.Pages.Admin.Articles
         {
             if (files != null && files.Count > 0)
             {
-                string folderName = "ArticleImages";
+                string folderName = @"\images\ArticleImages\";
                 string webRootPath = _webHostEnvironment.WebRootPath;
                 string newPath = Path.Combine(webRootPath, folderName);
 
@@ -93,12 +111,16 @@ namespace NoPoorAfrica.Pages.Admin.Articles
                     Directory.CreateDirectory(newPath);
                 }
 
+                List<ArticleFiles> list = new List<ArticleFiles>();
+
                 foreach (IFormFile item in files)
                 {
                     if (item.Length > 0)
                     {
                         string fileName = ContentDispositionHeaderValue.Parse(item.ContentDisposition).FileName.Trim('"');
                         string fullPath = Path.Combine(newPath, fileName);
+                        string dbPath = folderName + fileName;
+
                         using (var stream = new FileStream(fullPath, FileMode.Create))
                         {
                             item.CopyTo(stream);
@@ -107,16 +129,15 @@ namespace NoPoorAfrica.Pages.Admin.Articles
                         ArticleFiles Relationship = new ArticleFiles()
                         {
                             ArticleId = ArticleObj.Id,
-                            FilePath = fullPath
+                            FilePath = dbPath
                         };
 
-                        _unitOfWork.ArticleFiles.Add(Relationship);
-
-                        ThumbnailList.Append(Relationship);
+                        list.Add(Relationship);
                     }
                 }
+                ThumbnailList = list;
+                TempData.Put<IEnumerable<ArticleFiles>>("ThumbnailList", list);
 
-                _unitOfWork.Save();
                 return this.Content("Success");
             }
             return this.Content("Fail");
