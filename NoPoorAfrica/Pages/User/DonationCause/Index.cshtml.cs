@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NoPoorAfrica.DataAccess.Data.Repository.IRepository;
+using NoPoorAfrica.Models.Models;
 using NoPoorAfrica.Models.ViewModels;
 
 namespace NoPoorAfrica.Pages.Donation
@@ -26,8 +27,21 @@ namespace NoPoorAfrica.Pages.Donation
 
         public void OnGet()
         {
-           DonationCauseList = _unitOfWork.DonationCause.GetAll();
-           DonationList = _unitOfWork.Donation.GetAll();        
+            DonationCauseList = _unitOfWork.DonationCause.GetAll();
+            DonationList = _unitOfWork.Donation.GetAll();
+
+
+            foreach (var DonationCause in DonationCauseList) 
+            {
+                DonationCauseList = _unitOfWork.DonationCause.GetAll();
+                DonationList = _unitOfWork.Donation.GetAll();
+
+
+                foreach (var DonationDetails in DonationList)
+                {
+                    DonationCause.GoalProgress += DonationDetails.DonationAmount;
+                }
+            }
         }
     }
 }

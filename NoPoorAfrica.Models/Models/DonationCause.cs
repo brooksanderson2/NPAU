@@ -15,6 +15,7 @@ namespace NoPoorAfrica.Models.Models
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
         public double FundingGoal { get; set; }
+        public double GoalProgress { get; set; }
         public string Country { get; set; }
         public string Image { get; set; }
         [Display(Name = "Donation Cause Category Type")]
