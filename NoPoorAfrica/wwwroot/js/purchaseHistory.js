@@ -13,9 +13,10 @@ function loadList() {
         },
         "columns": [
 
-            { "data": "applicationUser.fullname", "width": "25%" },
+            { "data": "id", "width": "10%" },
+            { "data": "applicationUser.fullName", "width": "25%" },
             { "data": "storeItem.name", "width": "25%" },
-            { "data": "count", "width": "25%" },
+            { "data": "count", "width": "15%" },
             {
                 "data": "purchaseDate",
                 "render": function (data, type) {
