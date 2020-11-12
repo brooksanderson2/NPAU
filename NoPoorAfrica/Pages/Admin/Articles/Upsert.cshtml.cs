@@ -45,6 +45,10 @@ namespace NoPoorAfrica.Pages.Admin.Articles
                 ThumbnailList = _unitOfWork.ArticleFiles.GetAll(f => f.ArticleId == ArticleObj.Id);
                 TempData.Put<IEnumerable<ArticleFiles>>("ThumbnailList", ThumbnailList);
             }
+            else
+            {
+
+            }
 
             return Page();
         }

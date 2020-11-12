@@ -262,9 +262,10 @@ hr {
     max-height: inherit
 }
 
-.fade {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
+.ellips {
+    display: block;
     overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 150px;
 }

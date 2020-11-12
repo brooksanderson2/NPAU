@@ -7,7 +7,7 @@
             </div>
 
             <div class="col-12 px-1" style="border-bottom:1px solid #325d88">
-                <h2 class="text-primary">@(Model.ArticleObj.Id !=0 ? "Update Article" : "Create New Article")</h2>
+                <h2 class="text-dark">@(Model.ArticleObj.Id !=0 ? "Update Article" : "Create New Article")</h2>
             </div>
 
             <div class="col-12 pt-1">
@@ -44,7 +44,7 @@
                         <input type="button" id="btnFUpload" value="Upload Images" />
                     </div>
                 </div>
-                @if (Model.ThumbnailList.Count() > 0)
+                @if (Model.ThumbnailList != null && Model.ThumbnailList.Count() > 0)
                 {
                     <hr />
 
@@ -68,18 +68,18 @@
                     <div class="col-3">
                         @if (Model.ArticleObj.Id != 0)
                         {
-                            <button type="submit" class="btn btn-primary form-control">Update</button>
+                            <button type="submit" class="btn btn-warning form-control">Update</button>
                         }
                         else
                         {
-                            <button type="submit" class="btn btn-primary form-control" onclick="return ValidateInput()">Publish</button>
+                            <button type="submit" class="btn btn-warning form-control" onclick="return ValidateInput()">Publish</button>
                         }
                     </div>
                     <div class="col-6">
-                        <button class="btn btn-secondary form-control">Preview</button>
+                        <button class="btn btn-primary form-control">Preview</button>
                     </div>
                     <div class="col-3">
-                        <a asp-page="./Index" class="btn btn-success form-control">Back to Articles</a>
+                        <a asp-page="./Index" class="btn btn-dark form-control">Back to Articles</a>
                     </div>
                 </div>
             </div>
