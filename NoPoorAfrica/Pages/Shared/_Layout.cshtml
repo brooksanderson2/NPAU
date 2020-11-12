@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="~/css/jquery-ui.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -27,75 +28,75 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse justify-content-center justify-content-between text-white">
                     <partial name="_LoginPartial" />
-					<ul class="navbar-nav flex-grow-1 justify-content-center justify-content-between text-white">
-						<li class="npauLogo mb-2">
-							<a class="navbar-brand npauLogo" asp-area="" asp-page="/Index"><img class="npauLogo" src="~/images/npau.png" alt="npaulogo" /> </a>
-						</li>
-						<li class="nav-item m-3 p-3 mt-4 border border-warning rounded shadow">
-							<a class="nav-link text-white" asp-area="" asp-page="/User/DonationCause/Index">Donate Now</a>
-						</li>
-						<li class="nav-item m-3 p-3 mt-4">
-							<a class="nav-link text-white" asp-area="" asp-page="/Articles/Index">News Articles</a>
-						</li>
+                    <ul class="navbar-nav flex-grow-1 justify-content-center justify-content-between text-white">
+                        <li class="npauLogo mb-2">
+                            <a class="navbar-brand npauLogo" asp-area="" asp-page="/Index"><img class="npauLogo" src="~/images/npau.png" alt="npaulogo" /> </a>
+                        </li>
+                        <li class="nav-item m-3 p-3 mt-4 border border-warning rounded shadow">
+                            <a class="nav-link text-white" asp-area="" asp-page="/User/DonationCause/Index">Donate Now</a>
+                        </li>
+                        <li class="nav-item m-3 p-3 mt-4">
+                            <a class="nav-link text-white" asp-area="" asp-page="/Articles/Index">News Articles</a>
+                        </li>
 
-						<li class="nav-item m-3 p-3 mt-4">
-							<a class="nav-link text-white" asp-area="" asp-page="/User/Store/Index">Store</a>
-						</li>
-						@if (HttpContextAccessor.HttpContext.Session.GetInt32(SD.ShoppingCart) != null)
-						{
-							<li class="m-3 p-3">
-								<a class="nav-link text-white" asp-area="" asp-page="/User/Cart/Index">
-									@{
-										var count = HttpContextAccessor.HttpContext.Session.GetInt32(SD.ShoppingCart); }
+                        <li class="nav-item m-3 p-3 mt-4">
+                            <a class="nav-link text-white" asp-area="" asp-page="/User/Store/Index">Store</a>
+                        </li>
+                        @if (HttpContextAccessor.HttpContext.Session.GetInt32(SD.ShoppingCart) != null)
+                        {
+                            <li class="m-3 p-3">
+                                <a class="nav-link text-white" asp-area="" asp-page="/User/Cart/Index">
+                                    @{
+                                        var count = HttpContextAccessor.HttpContext.Session.GetInt32(SD.ShoppingCart); }
 
-									<i class="fas fa-shopping-cart"></i>&nbsp; (@count)
-								</a>
+                                    <i class="fas fa-shopping-cart"></i>&nbsp; (@count)
+                                </a>
 
-							</li>
-						}
-						else
-						{
-							<li class="m-3 p-3 mt-4">
-								<a class="nav-link text-white" asp-page="/User/Cart/Index">
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="m-3 p-3 mt-4">
+                                <a class="nav-link text-white" asp-page="/User/Cart/Index">
 
 
-									<i class="fas fa-shopping-cart"></i>&nbsp; (0)
-								</a>
+                                    <i class="fas fa-shopping-cart"></i>&nbsp; (0)
+                                </a>
 
-							</li>
-						}
-						@if (User.IsInRole(SD.AdminRole))
-						{
-							<li class="nav-item dropdown m-3 p-3 mt-4">
-								<a class="nav-link text-white dropdown-toggle" href="#" id="navbarDropDown" data-toggle="dropdown">
-									Admin
-								</a>
-								<div class="dropdown-menu">
-									<a class="dropdown-item text-black" asp-page="/Admin/Donations/Index">Donations</a>
-									<a class="dropdown-item text-black" asp-page="/Admin/DonationCause/Index">Donation Cause</a>
-									<a class="dropdown-item text-black" asp-page="/Admin/DonationCauseCategory/Index">Donation Category</a>
-									<a class="dropdown-item text-black" asp-page="/Admin/Articles/Index">News Articles</a>
-									<a class="dropdown-item text-black" asp-page="/Admin/Category/Index">Category</a>
-									<a class="dropdown-item text-black" asp-page="/Admin/Size/Index">Store Sizes</a>
-									<a class="dropdown-item text-black" asp-page="/Admin/StoreItems/Index">Store Items</a>
-									<a class="dropdown-item text-black" asp-page="/Admin/Purchases/Index">Store Purchases</a>
-									<a class="dropdown-item text-black" id="register" asp-area="Identity" asp-page="/Account/Register">Register User</a>
-								</div>
-							</li>
-						}
-						else if (User.IsInRole(SD.CustomerRole))
-						{
-                    <li class="nav-item dropdown m-3 p-3 mt-4">
-                        <a class="nav-link text-white dropdown-toggle" href="#" id="navbarDropDown" data-toggle="dropdown">
-                            Customer
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item text-black" asp-page="/User/DonationHistory/Index">Donation History</a>
-                            <a class="dropdown-item text-black" asp-page="/User/CustomerPurchases/Index">Purchase History</a>
-                        </div>
-                    </li>
-						}
-					</ul>
+                            </li>
+                        }
+                        @if (User.IsInRole(SD.AdminRole))
+                        {
+                            <li class="nav-item dropdown m-3 p-3 mt-4">
+                                <a class="nav-link text-white dropdown-toggle" href="#" id="navbarDropDown" data-toggle="dropdown">
+                                    Admin
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item text-black" asp-page="/Admin/Donations/Index">Donations</a>
+                                    <a class="dropdown-item text-black" asp-page="/Admin/DonationCause/Index">Donation Cause</a>
+                                    <a class="dropdown-item text-black" asp-page="/Admin/DonationCauseCategory/Index">Donation Category</a>
+                                    <a class="dropdown-item text-black" asp-page="/Admin/Articles/Index">News Articles</a>
+                                    <a class="dropdown-item text-black" asp-page="/Admin/Category/Index">Category</a>
+                                    <a class="dropdown-item text-black" asp-page="/Admin/Size/Index">Store Sizes</a>
+                                    <a class="dropdown-item text-black" asp-page="/Admin/StoreItems/Index">Store Items</a>
+                                    <a class="dropdown-item text-black" asp-page="/Admin/Purchases/Index">Store Purchases</a>
+                                    <a class="dropdown-item text-black" id="register" asp-area="Identity" asp-page="/Account/Register">Register User</a>
+                                </div>
+                            </li>
+                        }
+                        else if (User.IsInRole(SD.CustomerRole))
+                        {
+                            <li class="nav-item dropdown m-3 p-3 mt-4">
+                                <a class="nav-link text-white dropdown-toggle" href="#" id="navbarDropDown" data-toggle="dropdown">
+                                    Customer
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item text-black" asp-page="/User/DonationHistory/Index">Donation History</a>
+                                    <a class="dropdown-item text-black" asp-page="/User/CustomerPurchases/Index">Purchase History</a>
+                                </div>
+                            </li>
+                        }
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -122,6 +123,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

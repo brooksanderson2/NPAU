@@ -1,21 +1,21 @@
 ﻿@page
 @model NoPoorAfrica.Pages.Admin.Articles.UpsertModel
-<form method="post" asp-action="Upsert">
+<form method="post" enctype="multipart/form-data" asp-controller="fileUpload" asp-action="Upsert">
     <div class="container">
         <div class="row px-1 mx-1 backgroundWhite border">
             <div asp-validation-summary="ModelOnly" class="text-danger">
             </div>
 
             <div class="col-12 px-1" style="border-bottom:1px solid #325d88">
-                <h2 class="text-primary">@(Model.ArticleObj.Id !=0 ? "Update Article" : "Create New Article")</h2>
+                <h2 class="text-dark">@(Model.ArticleObj.Id !=0 ? "Update Article" : "Create New Article")</h2>
             </div>
-            
+
             <div class="col-12 pt-1">
                 <div class="form-group row">
-                    <div class="col-3">
-                        <label asp-for="ArticleObj.Title"></label>
+                    <div class="col-1">
+                        <label class="font-weight-bold" asp-for="ArticleObj.Title"></label>
                     </div>
-                    <div class="col-7">
+                    <div class="col-6">
                         <input class="form-control" asp-for="ArticleObj.Title" />
                         <span class="text-danger" asp-validation-for="ArticleObj.Title"></span>
                     </div>
@@ -25,32 +25,61 @@
                     }
                 </div>
                 <div class="form-group row">
-                    <div class="col-3">
-                        <label asp-for="ArticleObj.Body"></label>
+                    <div class="col-1">
+                        <label class="font-weight-bold" asp-for="ArticleObj.Template"></label>
+                    </div>
+                    <div class="col-6">
+                        <input type="radio" asp-for="ArticleObj.Template" value="template_1" checked />Template 1  &nbsp;&nbsp;
+                        <input type="radio" asp-for="ArticleObj.Template" value="template_2" />Template 2  &nbsp;&nbsp;
+                        <input type="radio" asp-for="ArticleObj.Template" value="template_3" />Template 3&nbsp;&nbsp;
                     </div>
                 </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <input type="file" id="fUpload" name="files" multiple class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <input type="button" id="btnFUpload" value="Upload Images" />
+                    </div>
+                </div>
+                @if (Model.ThumbnailList != null && Model.ThumbnailList.Count() > 0)
+                {
+                    <hr />
+
+                <div class="image-gallery">
+                    @foreach (NoPoorAfrica.Models.Models.ArticleFiles file in Model.ThumbnailList)
+                    {
+                        <div class="image-gallery-card">
+                            <img class="image-gallery-img" src="@file.FilePath" />
+                        </div>
+                    }
+                </div>
+                <hr />
+                }
+                <br><br>
                 <div class="form-group row">
                     <div class="col-12">
-                        <textarea class="form-control" asp-for="ArticleObj.Body" id="txtDesc" style="height:800px"></textarea>
+                        <textarea class="form-control" asp-for="ArticleObj.Body" id="Full-Featured" style="height:800px"></textarea>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <div class="col-9 offset-3">
-                        <div class="row">
-                            <div class="col-6">
-                                @if (Model.ArticleObj.Id != 0)
-                                {
-                                    <button type="submit" class="btn btn-primary form-control">Update</button>
-                                }
-                                else
-                                {
-                                    <button type="submit" class="btn btn-primary form-control" onclick="return ValidateInput()">Create</button>
-                                }
-                            </div>
-                            <div class="col-6">
-                                <a asp-page="./Index" class="btn btn-success form-control">Back to Articles</a>
-                            </div>
-                        </div>
+                    <div class="col-3">
+                        @if (Model.ArticleObj.Id != 0)
+                        {
+                            <button type="submit" class="btn btn-warning form-control">Update</button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-warning form-control" onclick="return ValidateInput()">Publish</button>
+                        }
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-primary form-control">Preview</button>
+                    </div>
+                    <div class="col-3">
+                        <a asp-page="./Index" class="btn btn-dark form-control">Back to Articles</a>
                     </div>
                 </div>
             </div>
@@ -60,12 +89,38 @@
 
 @section Scripts{
     <script>
-    tinymce.init({
-        selector: 'textarea',
-        plugins: "lists, hr",
-        toolbar: "hr",
-        menubar: 'file edit format'
-    });
+        tinymce.init({
+            selector: 'textarea#Full-Featured',
+            plugins: 'print preview paste importcss searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap emoticons nonbreaking',
+            menubar: 'file edit view insert format table',
+            toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+            toolbar_sticky: true,
+            autosave_ask_before_unload: true,
+            autosave_interval: '30s',
+            autosave_prefix: '{path}{query}-{id}-',
+            autosave_restore_when_empty: false,
+            autosave_retention: '2m',
+            nonbreaking_force_tab: true,
+            image_advtab: false,
+            importcss_append: true,
+           /* file_picker_callback: function (callback, value, meta) {
+                 Provide file and text for the link dialog 
+                if (meta.filetype === 'file') {
+                    callback('https://www.google.com/logos/google.jpg', { text: 'My text' });
+                }
+
+                /* Provide image and alt text for the image dialog 
+                if (meta.filetype === 'image') {
+                    callback('https://www.google.com/logos/google.jpg', { alt: 'My alt text' });
+                }
+
+                /* Provide alternative source and posted for the media dialog 
+                if (meta.filetype === 'media') {
+                    callback('movie.mp4', { source2: 'alt.ogg', poster: 'https://www.google.com/logos/google.jpg' });
+                }*/
+            });
     
     </script>
+
+    <script src="~/js/adminArticleImageUpload.js"></script>
 }

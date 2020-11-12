@@ -25,6 +25,8 @@ namespace NoPoorAfrica.Pages.Articles
             _unitOfWork = unitOfWork;
         }
 
+        public IEnumerable<ArticleFiles> ImageGallery { get; set; }
+
         public void OnGet(string id)
         {
             DetailedView = false;
@@ -42,8 +44,10 @@ namespace NoPoorAfrica.Pages.Articles
                 //Articles?id=articleRoute
 
                 DetailedView = true;
-
                 DetailedArticle = _unitOfWork.Article.GetFirstOrDefault(i => i.RouteName == id);
+
+                ImageGallery = _unitOfWork.ArticleFiles.GetAll(f => f.ArticleId == DetailedArticle.Id);
+
             }
         }
     }

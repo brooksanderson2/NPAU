@@ -10,8 +10,8 @@ using NoPoorAfrica.DataAccess.Data;
 namespace NoPoorAfrica.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201109054008_donationCauseVM")]
-    partial class donationCauseVM
+    [Migration("20201112070105_RemoveRouteNameRequiredTag")]
+    partial class RemoveRouteNameRequiredTag
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -230,6 +230,9 @@ namespace NoPoorAfrica.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ArticleCategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Body")
                         .HasColumnType("nvarchar(max)");
 
@@ -239,24 +242,72 @@ namespace NoPoorAfrica.DataAccess.Migrations
                     b.Property<float>("BodyTextSize")
                         .HasColumnType("real");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("PublishDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("RouteName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Template")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TitleFont")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("ArticleCategoryId");
+
                     b.ToTable("Article");
+                });
+
+            modelBuilder.Entity("NoPoorAfrica.Models.Models.ArticleCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ArticleCategory");
+                });
+
+            modelBuilder.Entity("NoPoorAfrica.Models.Models.ArticleFiles", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.ToTable("ArticleFiles");
                 });
 
             modelBuilder.Entity("NoPoorAfrica.Models.Models.Category", b =>
@@ -377,6 +428,9 @@ namespace NoPoorAfrica.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Comments")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("DonationCauseId")
                         .HasColumnType("int");
 
@@ -391,6 +445,9 @@ namespace NoPoorAfrica.DataAccess.Migrations
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("FollowUp")
+                        .HasColumnType("bit");
 
                     b.Property<string>("PaymentStatus")
                         .HasColumnType("nvarchar(max)");
@@ -483,7 +540,7 @@ namespace NoPoorAfrica.DataAccess.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Count")
                         .HasColumnType("int");
@@ -495,6 +552,10 @@ namespace NoPoorAfrica.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("StoreItemId");
 
                     b.ToTable("PurchaseHistory");
                 });
@@ -638,6 +699,24 @@ namespace NoPoorAfrica.DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("NoPoorAfrica.Models.Models.Article", b =>
+                {
+                    b.HasOne("NoPoorAfrica.Models.Models.ArticleCategory", "ArticleCategory")
+                        .WithMany()
+                        .HasForeignKey("ArticleCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("NoPoorAfrica.Models.Models.ArticleFiles", b =>
+                {
+                    b.HasOne("NoPoorAfrica.Models.Models.Article", "Article")
+                        .WithMany()
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("NoPoorAfrica.Models.Models.Donation", b =>
                 {
                     b.HasOne("NoPoorAfrica.Models.Models.DonationCause", "DonationCause")
@@ -683,6 +762,19 @@ namespace NoPoorAfrica.DataAccess.Migrations
                     b.HasOne("NoPoorAfrica.Models.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("NoPoorAfrica.Models.Models.PurchaseHistory", b =>
+                {
+                    b.HasOne("NoPoorAfrica.Models.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("NoPoorAfrica.Models.Models.StoreItem", "StoreItem")
+                        .WithMany()
+                        .HasForeignKey("StoreItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("NoPoorAfrica.Models.Models.StoreItem", b =>

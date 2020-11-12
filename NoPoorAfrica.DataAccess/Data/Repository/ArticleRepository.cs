@@ -37,7 +37,9 @@ namespace NoPoorAfrica.DataAccess.Data.Repository
             objFromDb.Body = article.Body;
             objFromDb.BodyFont = article.BodyFont;
             objFromDb.BodyTextSize = article.BodyTextSize;
-            objFromDb.Date = article.Date;
+            objFromDb.PublishDate = article.PublishDate;
+            objFromDb.UpdateDate = article.UpdateDate;
+            objFromDb.ArticleCategory = article.ArticleCategory;
 
             if (objFromDb.Title == article.Title && objFromDb.RouteName != null)
             // Don't change the route name if it's already been set and the title hasn't changed.
@@ -51,7 +53,7 @@ namespace NoPoorAfrica.DataAccess.Data.Repository
             }
             else
             {
-                objFromDb.RouteName = HttpUtility.UrlEncode( (article.Date.ToShortDateString() + "-" + article.Title) );
+                objFromDb.RouteName = HttpUtility.UrlEncode( (article.PublishDate.ToShortDateString() + "-" + article.Title) );
             }
 
             objFromDb.Template = article.Template;

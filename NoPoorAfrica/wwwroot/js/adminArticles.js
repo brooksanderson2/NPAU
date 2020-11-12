@@ -13,7 +13,16 @@ function loadList() {
         },
         "columns": [
             { data: "title", width: "40%" },
-            { data: "date", width: "30%" },
+            {
+                "data": "publishDate", "render": function (data, type) {
+                    return type === 'sort' ? data : moment(data).format('MM/DD/YYYY');
+                }, "width": "15%"
+            },
+            {
+                "data": "updateDate", "render": function (data, type) {
+                    return type === 'sort' ? data : moment(data).format('MM/DD/YYYY');
+                }, "width": "15%"
+            },
             {
                 data: "id", width: "30%",
                 "render": function (data) {

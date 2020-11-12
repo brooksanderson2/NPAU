@@ -228,6 +228,9 @@ namespace NoPoorAfrica.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ArticleCategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Body")
                         .HasColumnType("nvarchar(max)");
 
@@ -237,24 +240,72 @@ namespace NoPoorAfrica.DataAccess.Migrations
                     b.Property<float>("BodyTextSize")
                         .HasColumnType("real");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("PublishDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("RouteName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Template")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TitleFont")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("ArticleCategoryId");
+
                     b.ToTable("Article");
+                });
+
+            modelBuilder.Entity("NoPoorAfrica.Models.Models.ArticleCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ArticleCategory");
+                });
+
+            modelBuilder.Entity("NoPoorAfrica.Models.Models.ArticleFiles", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.ToTable("ArticleFiles");
                 });
 
             modelBuilder.Entity("NoPoorAfrica.Models.Models.Category", b =>
@@ -645,6 +696,24 @@ namespace NoPoorAfrica.DataAccess.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("NoPoorAfrica.Models.Models.Article", b =>
+                {
+                    b.HasOne("NoPoorAfrica.Models.Models.ArticleCategory", "ArticleCategory")
+                        .WithMany()
+                        .HasForeignKey("ArticleCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("NoPoorAfrica.Models.Models.ArticleFiles", b =>
+                {
+                    b.HasOne("NoPoorAfrica.Models.Models.Article", "Article")
+                        .WithMany()
+                        .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
