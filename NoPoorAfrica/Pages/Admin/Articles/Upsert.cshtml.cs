@@ -80,13 +80,19 @@ namespace NoPoorAfrica.Pages.Admin.Articles
             }
             else
             {
-                var imgList = _unitOfWork.ArticleFiles.GetAll(f => f.Id == ArticleObj.Id);
+                var imgList = _unitOfWork.ArticleFiles.GetAll(f => f.ArticleId == ArticleObj.Id);
+                List<int> idList = new List<int>();
+
+                foreach (ArticleFiles imgListFile in imgList)
+                {
+                    idList.Add(imgListFile.Id);
+                }
 
                 foreach (ArticleFiles file in ThumbnailList)
                 {
                     file.ArticleId = ArticleObj.Id;
 
-                    if (!imgList.Contains(file))
+                    if (!idList.Contains(file.Id))
                         _unitOfWork.ArticleFiles.Add(file);
                     else
                         _unitOfWork.ArticleFiles.Update(file);
@@ -102,7 +108,7 @@ namespace NoPoorAfrica.Pages.Admin.Articles
         {
             if (files != null && files.Count > 0)
             {
-                string folderName = @"\images\ArticleImages\";
+                string folderName = @"images\ArticleImages\";
                 string webRootPath = _webHostEnvironment.WebRootPath;
                 string newPath = Path.Combine(webRootPath, folderName);
 
@@ -119,7 +125,7 @@ namespace NoPoorAfrica.Pages.Admin.Articles
                     {
                         string fileName = ContentDispositionHeaderValue.Parse(item.ContentDisposition).FileName.Trim('"');
                         string fullPath = Path.Combine(newPath, fileName);
-                        string dbPath = folderName + fileName;
+                        string dbPath = @"\" + folderName + fileName;
 
                         using (var stream = new FileStream(fullPath, FileMode.Create))
                         {
