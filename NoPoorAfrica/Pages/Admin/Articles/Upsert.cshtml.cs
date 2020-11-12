@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -59,7 +60,19 @@ namespace NoPoorAfrica.Pages.Admin.Articles
             if (ArticleObj.Id == 0)
             {
                 ArticleObj.PublishDate = DateTime.Now;
+
+                //Set route
+                if (_unitOfWork.Article.GetAll(i => i.RouteName == HttpUtility.UrlEncode(ArticleObj.Title) && i.Id != ArticleObj.Id).Count() == 0)
+                //Check if route already exists based on title, so that two routes cannot be the same.
+                {
+                    ArticleObj.RouteName = HttpUtility.UrlEncode(ArticleObj.Title);
+                }
+                else
+                {
+                    ArticleObj.RouteName = HttpUtility.UrlEncode((ArticleObj.PublishDate.ToShortDateString() + "-" + ArticleObj.Title));
+                }
             }
+
             ArticleObj.UpdateDate = DateTime.Now;
             ArticleObj.ArticleCategoryId = 1;
 
@@ -73,13 +86,21 @@ namespace NoPoorAfrica.Pages.Admin.Articles
                 _unitOfWork.Article.Add(ArticleObj);
 
                 _unitOfWork.Save();
-
-                //Fix file relationships that were given an ArticleId of 0.
-                foreach(ArticleFiles file in ThumbnailList)
+                try
                 {
-                    file.ArticleId = ArticleObj.Id;
+                    if (ThumbnailList != null) {
+                        //Fix file relationships that were given an ArticleId of 0.
+                        foreach (ArticleFiles file in ThumbnailList)
+                        {
+                            file.ArticleId = ArticleObj.Id;
 
-                    _unitOfWork.ArticleFiles.Add(file);
+                            _unitOfWork.ArticleFiles.Add(file);
+                        }
+                    }
+                }
+                catch
+                {
+
                 }
             }
             else
@@ -92,14 +113,21 @@ namespace NoPoorAfrica.Pages.Admin.Articles
                     idList.Add(imgListFile.Id);
                 }
 
-                foreach (ArticleFiles file in ThumbnailList)
+                try
                 {
-                    file.ArticleId = ArticleObj.Id;
+                    foreach (ArticleFiles file in ThumbnailList)
+                    {
+                        file.ArticleId = ArticleObj.Id;
 
-                    if (!idList.Contains(file.Id))
-                        _unitOfWork.ArticleFiles.Add(file);
-                    else
-                        _unitOfWork.ArticleFiles.Update(file);
+                        if (!idList.Contains(file.Id))
+                            _unitOfWork.ArticleFiles.Add(file);
+                        else
+                            _unitOfWork.ArticleFiles.Update(file);
+                    }
+                }
+                catch
+                {
+                    //Empty
                 }
 
                 _unitOfWork.Article.Update(ArticleObj);
