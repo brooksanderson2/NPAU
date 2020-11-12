@@ -23,23 +23,24 @@ namespace NoPoorAfrica.Pages.Donation
         public IEnumerable<Models.Models.DonationCause> DonationCauseList { get; set; }
 
         public IEnumerable<Models.Models.Donation> DonationList { get; set; }
+        public IEnumerable<Models.Models.DonationDetails> DonationDetailsList { get; set; }
 
 
         public void OnGet()
         {
             DonationCauseList = _unitOfWork.DonationCause.GetAll();
-            DonationList = _unitOfWork.Donation.GetAll();
+            DonationDetailsList = _unitOfWork.DonationDetails.GetAll();
 
 
             foreach (var DonationCause in DonationCauseList) 
             {
                 DonationCauseList = _unitOfWork.DonationCause.GetAll();
-                DonationList = _unitOfWork.Donation.GetAll();
+                DonationDetailsList = _unitOfWork.DonationDetails.GetAll(c => c.DonationCauseId == DonationCause.Id);
 
 
-                foreach (var DonationDetails in DonationList)
+                foreach (var DonationDetails in DonationDetailsList)
                 {
-                    DonationCause.GoalProgress += DonationDetails.DonationAmount;
+                    DonationCause.GoalProgress += DonationDetails.DonationTotal;
                 }
             }
         }
