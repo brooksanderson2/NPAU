@@ -30,11 +30,9 @@ namespace NoPoorAfrica.Models.Models
         [Display(Name = "Purchase Date")]
         public DateTime PurchaseDate { get; set; }
 
-        [NotMapped]
         [ForeignKey("StoreItemId")]
         public virtual StoreItem StoreItem { get; set; }
 
-        [NotMapped]
         [ForeignKey("ApplicationUserId")]
         public virtual ApplicationUser ApplicationUser { get; set; }
 

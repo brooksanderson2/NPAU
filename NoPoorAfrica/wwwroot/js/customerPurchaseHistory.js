@@ -7,36 +7,27 @@ $(document).ready(function () {
 function loadList() {
     dataTable = $('#DT_load').DataTable({
         "ajax": {
-            "url": "/api/category",
+            "url": "/api/PurchaseHistory",
             "type": "GET",
             "datatype": "json"
         },
         "columns": [
-            { data: "name", width: "70%" },
-            {
-                data: "id",
-                "render": function (data) {
-                    return `
-                        <div class="text-center">
-                            <a href="/Admin/Category/Upsert?id=${data}" 
-                            class="btn btn-success text-white style="cursor:pointer; width:100px;">
-                            <i class="far fa-edit"></i>
-                            Edit
-                            </a>
-                            <a onClick=Delete('/api/category/'+${data}) 
-                            class="btn btn-danger text-white style="cursor:pointer; width:100px;">
-                            <i class="far fa-trash-alt"></i>
-                            Delete
-                            </a>
-                        </div>`;
-                }, width: "30%"
 
-            }
+            { "data": "id", "width": "10%" },
+            { "data": "storeItem.name", "width": "35%" },
+            { "data": "count", "width": "20%" },
+            {
+                "data": "purchaseDate",
+                "render": function (data, type) {
+                    return type === 'sort' ? data : moment(data).format('MM/DD/YYYY');
+                }, width: "35%"
+            },
         ],
         "language": {
             "emptyTable": "no data found."
         },
-        "width": "100%"
+        "width": "100%",
+        "order": [[2, "asc"]]
     });
 }
 
