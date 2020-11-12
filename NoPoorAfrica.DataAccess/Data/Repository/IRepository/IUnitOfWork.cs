@@ -7,8 +7,6 @@ namespace NoPoorAfrica.DataAccess.Data.Repository.IRepository
 {
     public interface IUnitOfWork : IDisposable
     {
-
-
         IShoppingCartRepository ShoppingCart { get; }
         IOrderDetailsRepository OrderDetails { get; }
         IOrderHeaderRepository OrderHeader { get; }
@@ -22,6 +20,8 @@ namespace NoPoorAfrica.DataAccess.Data.Repository.IRepository
         ISizeRepository Size { get; }
         IDonationDetailsRepository DonationDetails { get; }
         IDonationCauseCategoryRepository DonationCauseCategory { get; }
+        IArticleCategoryRepository ArticleCategory { get; }
+        IArticleFilesRepository ArticleFiles { get; }
 
         void Save();
     }

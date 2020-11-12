@@ -242,3 +242,30 @@ hr {
     height: 400px;
     width: 375px;
 }
+
+/*Article Admin Images*/
+.image-gallery {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-height: 256px;
+}
+
+.image-gallery-card {
+    margin: 1px 4px 1px 4px;
+    flex: 0 0 auto;
+    max-height: inherit;
+}
+
+.image-gallery-img{
+    max-height: inherit
+}
+
+.ellips {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 150px;
+}
