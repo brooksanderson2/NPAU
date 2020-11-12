@@ -51,6 +51,7 @@ namespace NoPoorAfrica
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
 
             services.Configure<IdentityOptions>(options =>
             {

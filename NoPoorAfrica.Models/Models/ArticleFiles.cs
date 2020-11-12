@@ -19,10 +19,7 @@ namespace NoPoorAfrica.Models.Models
         /// Path to file
         /// </summary>
         [Required]
-        public string FileName { get; set; }
-
-        [Required]
-        public byte[] File { get; set; }
+        public string FilePath { get; set; }
 
         /// <summary>
         /// Object of Article FK using ArticleId

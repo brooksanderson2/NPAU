@@ -21,4 +21,8 @@
     <ProjectReference Include="..\NoPoorAfrica.Models\NoPoorAfrica.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>
