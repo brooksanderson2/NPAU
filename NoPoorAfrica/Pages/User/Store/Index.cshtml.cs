@@ -13,34 +13,18 @@ namespace NoPoorAfrica.Pages.User.Store
 {
     public class IndexModel : PageModel
     {
-        //private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        //public IndexModel(IUnitOfWork unitOfWork)
-        //{
-        //    _unitOfWork = unitOfWork;
-        //}
-
-        //public IEnumerable<StoreItem> StoreItemList { get; set; }
-        //public IEnumerable<Category> CategoryList { get; set; }
-
-        //public void OnGet()
-        //{
-        //    StoreItemList = _unitOfWork.StoreItem.GetAll(null, null, "Category");
-        //    CategoryList = _unitOfWork.Category.GetAll();
-        //}
-
-
-        private readonly ApplicationDbContext _context;
-
-        public IndexModel(ApplicationDbContext context)
+        public IndexModel(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         public string NameSort { get; set; }
         public string PriceSort { get; set; }
         public string CurrentFilter { get; set; }
         public string CurrentSort { get; set; }
+        public string CategorySort { get; set; }
 
         public PaginatedList<StoreItem> StoreItem { get; set; }
 
@@ -50,6 +34,7 @@ namespace NoPoorAfrica.Pages.User.Store
             CurrentSort = sortOrder;
             NameSort = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
             PriceSort = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
+            CategorySort = sortOrder == "Category" ? "category_desc" : "Category";
 
             if (searchString != null)
             {
@@ -62,13 +47,14 @@ namespace NoPoorAfrica.Pages.User.Store
 
             CurrentFilter = searchString;
 
-            IQueryable<StoreItem> storeItemIQ = from s in _context.StoreItem select s;
+            IQueryable<StoreItem> storeItemIQ = from s in _unitOfWork.StoreItem.GetAll(null, null, "Category").AsQueryable()
+                                                select s;
             //IQueryable<Genre> genreIQ = from q in _context.Genre select q;
             //IQueryable<Director> directorIQ = from d in _context.Director select d;
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                storeItemIQ = storeItemIQ.Where(s => s.Name.Contains(searchString));
+                storeItemIQ = storeItemIQ.Where(s => s.Name.ToLower().Contains(searchString.ToLower()));
                 //genreIQ = genreIQ.Where(q => q.Name.Contains(searchString));
                 //directorIQ = directorIQ.Where(d => d.Name.Contains(searchString));
             }
@@ -81,17 +67,21 @@ namespace NoPoorAfrica.Pages.User.Store
                 case "Price_desc":
                     storeItemIQ = storeItemIQ.OrderByDescending(s => s.Price);
                     break;
+                case "Category":
+                    storeItemIQ = storeItemIQ.OrderBy(s => s.Category.Name);
+                    break;
+                case "category_desc":
+                    storeItemIQ = storeItemIQ.OrderByDescending(s => s.Category.Name);
+                    break;
 
                 default:
                     storeItemIQ = storeItemIQ.OrderBy(s => s.Name);
                     break;
             }
 
-            int pageSize = 3;
-            StoreItem = await PaginatedList<StoreItem>.CreateAsync(
+            int pageSize = 8;
+            StoreItem = PaginatedList<StoreItem>.Create(
                 storeItemIQ.AsNoTracking(), pageIndex ?? 1, pageSize);
         }
-
-
     }
 }

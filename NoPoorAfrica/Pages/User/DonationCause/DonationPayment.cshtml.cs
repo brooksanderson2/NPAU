@@ -41,12 +41,14 @@ namespace NoPoorAfrica.Pages.User.DonationCause
                     //Retrieve details of the person logged in
                     ApplicationUser applicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(c => c.Id == claim.Value);
                     DonationDetails.DonorName = applicationUser.FullName;
+                    DonationDetails.Email = applicationUser.Email;
                 }
             }
         }
 
         public IActionResult OnPost(string stripeToken)
         {
+            
             if (User.Identity.IsAuthenticated)
             {
                 var claimIdentity = (ClaimsIdentity)User.Identity;
@@ -89,7 +91,7 @@ namespace NoPoorAfrica.Pages.User.DonationCause
             }
             _unitOfWork.DonationDetails.Add(DonationDetails);
             _unitOfWork.Save();
-            return RedirectToPage("/User/DonationCause/DonationConfirmation");
+            return RedirectToPage("/User/DonationCause/DonationConfirmation", new { id = DonationDetails.TransactionId });
         }
     }
 }

@@ -1,29 +1,33 @@
 ﻿@page
-@model NoPoorAfrica.Pages.Admin.Category.IndexModel
 
 <div class="container border backgroundWhite">
     <div class="row">
         <div class="col-6">
-            <h2 class="text-dark">Categories</h2>
-        </div>
-        <div class="col-12 text-right">
-            <a asp-page="Upsert" class="btn btn-primary"><i class="fas fa-plus"></i>&nbsp;Create New</a>
+            <h2 class="text-dark">Purchase History</h2>
         </div>
     </div>
-    <br />
+    <br /><br />
+
     <table id="DT_load" class="table table-striped table-bordered">
         <thead>
             <tr>
                 <th>
-                    Category Name
+                    Order Number
                 </th>
                 <th>
-
+                    Store Item
+                </th>
+                <th>
+                    Count
+                </th>
+                <th>
+                    Purchase Date
                 </th>
             </tr>
         </thead>
     </table>
 </div>
+
 @section Scripts{
-    <script src="~/js/category.js"></script>
+    <script src="~/js/customerPurchaseHistory.js"></script>
 }

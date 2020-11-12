@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NoPoorAfrica.DataAccess.Data.Repository.IRepository;
+using NoPoorAfrica.Models.ViewModels;
 
 namespace NoPoorAfrica.Pages.Donation
 {
@@ -17,6 +18,7 @@ namespace NoPoorAfrica.Pages.Donation
             _unitOfWork = unitOfWork;
         }
 
+        public DonationCauseVM DonationCause { get; set; }
         public IEnumerable<Models.Models.DonationCause> DonationCauseList { get; set; }
 
         public IEnumerable<Models.Models.Donation> DonationList { get; set; }

@@ -9,7 +9,7 @@
 			<div asp-validation-summary="ModelOnly" class="text-danger">
 			</div>
 			<div class="col-12 px-3" style="border-bottom:1px solid #325d88">
-				<h2 class="text-primary">@(Model.DonationCauseObj.DonationCause.Id !=0 ? "Update" : "Create") Donation Cause</h2>
+				<h2 class="text-info text-black-50">@(Model.DonationCauseObj.DonationCause.Id !=0 ? "Update" : "Create") Donation Cause</h2>
 			</div>
 
 			<div class="col-8 pt-3">
@@ -95,15 +95,15 @@
 							<div class="col-6">
 								@if (Model.DonationCauseObj.DonationCause.Id != 0)
 								{
-									<button type="submit" class="btn btn-primary form-control">Update</button>
+									<button type="submit" class="btn btn-warning form-control">Update</button>
 								}
 								else
 								{
-									<button type="submit" class="btn btn-primary form-control" onclick="return ValidateInput()">Create</button>
+									<button type="submit" class="btn btn-warning form-control" onclick="return ValidateInput()">Create</button>
 								}
 							</div>
 							<div class="col-6">
-								<a asp-page="./Index" class="btn btn-success form-control">Back to List</a>
+								<a asp-page="./Index" class="btn border-warning form-control">Back to List</a>
 							</div>
 						</div>
 					</div>

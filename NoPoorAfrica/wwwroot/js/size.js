@@ -12,7 +12,7 @@ function loadList() {
             "datatype": "json"
         },
         "columns": [
-            { data: "name", width: "50%" },
+            { data: "name", width: "70%" },
             {
                 data: "id",
                 "render": function (data) {
@@ -29,7 +29,7 @@ function loadList() {
                             Delete
                             </a>
                         </div>`;
-                }, width: "50%"
+                }, width: "30%"
 
             }
         ],

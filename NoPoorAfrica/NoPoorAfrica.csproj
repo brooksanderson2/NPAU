@@ -17,6 +17,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="PayPal" Version="1.9.1" />
     <PackageReference Include="SendGrid" Version="9.21.0" />
     <PackageReference Include="Stripe.net" Version="39.18.0" />
   </ItemGroup>
