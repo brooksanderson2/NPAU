@@ -105,6 +105,16 @@
                                 <div class="badge center-screen" style="border:0px;">
                                     <div class="h5 rounded" style="color:dark;"><b>$@item.Price.ToString("0.00")</b></div>
                                 </div>
+                                <div>
+                                    @if (item.Inventory > 0)
+                                    {
+                                    <h6>@item.Inventory.ToString() in stock</h6>
+                                    }
+                                    else
+                                    {
+                                        <h6>Out of stock, check back soon</h6>
+                                    }
+                                </div>
 
                                 <a asp-page="Details" class="btn btn-dark" style="border-radius:2px;" asp-route-id="@item.Id">More Info</a>
 
