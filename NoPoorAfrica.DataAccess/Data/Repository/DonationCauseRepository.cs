@@ -27,6 +27,9 @@ namespace NoPoorAfrica.DataAccess.Data.Repository
             donationCauseFromDb.FundingGoal = donationCause.FundingGoal;
             donationCauseFromDb.Country = donationCause.Country;
             donationCauseFromDb.GoalProgress = donationCause.GoalProgress;
+            donationCauseFromDb.IsActive = donationCause.IsActive;
+
+
 
             if (donationCause.Image != null)
             {

@@ -12,6 +12,8 @@ namespace NoPoorAfrica.Models.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
         public double FundingGoal { get; set; }
@@ -22,5 +24,8 @@ namespace NoPoorAfrica.Models.Models
         public int DonationCauseCategoryId { get; set; }
         [ForeignKey("DonationCauseCategoryId")]
         public virtual DonationCauseCategory DonationCauseCategory { get; set; }
+
+        [Display(Name = "IsActive")]
+        public Boolean IsActive { get; set; }       
     }
 }

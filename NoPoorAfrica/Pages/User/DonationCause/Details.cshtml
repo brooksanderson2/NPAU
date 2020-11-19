@@ -22,11 +22,14 @@
 						<div class="row">
 							<div class="col-12 col-lg-8">
 								<div class="row">
-									<div class="col-12">
-										<span class="badge badge-warning h3">@Model.DonationCauseObj.Country</span>
-										<h3 class="text-success"></h3>
-										<p class="text-secondary">@Html.Raw(Model.DonationCauseObj.Description)</p>
-									</div>
+                                    <div class="col-12">
+                                        <span class="badge badge-warning h3">@Model.DonationCauseObj.Country</span>
+                                        <h3 class="text-success"></h3>
+                                        <p class="text-secondary">@Html.Raw(Model.DonationCauseObj.Description)</p>
+
+
+                                        <p class="text-dark"> Start Date @Model.DonationCauseObj.FromDate   <br /> End Date @Model.DonationCauseObj.ToDate</p>
+                                    </div>							
 								</div>
 							</div>
 							<div class="col-12 col-lg-4 p-1 text-center">
