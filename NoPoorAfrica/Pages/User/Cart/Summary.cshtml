@@ -34,7 +34,7 @@
                                     <div class="col-12 col-lg-6 pb-4">
                                         <div class="row">
                                             <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                                <span class="text-dark">Delivery Details:</span>
+                                                <span class="text-dark">Order Details:</span>
                                             </h4>
                                         </div>
                                         <div class="row my-1">
@@ -69,6 +69,14 @@
                                     <input id="timepicker" value="" asp-for="@Model.OrderDetailsCart.OrderHeader.PurchaseDate" type="text" class="form-control" />
                                 </div>
                             </div>*@
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label>Email</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <input asp-for="@Model.OrderDetailsCart.OrderHeader.Email" style="height:100px;" class="form-control" />
+                                        </div>
+                                    </div>
                                         <div class="row my-1">
                                             <div class="col-3">
                                                 <label>Address</label>
@@ -84,6 +92,15 @@
                                             <div class="col-9">
                                                 <textarea asp-for="@Model.OrderDetailsCart.OrderHeader.Comments" style="height:100px;" class="form-control"></textarea>
                                             </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col-1">
+                                                <input type="checkbox" id="emailCheckBox" name="emailbox" onclick="return emailPreference()" />
+                                            </div>
+                                            <div class="col-9">
+                                                <label>Email me updates on store items</label>
+                                            </div>
+
                                         </div>
                                     </div>
 
@@ -121,7 +138,10 @@
                         </div>
                         <div class="card-footer">
                             <div class="row">
-                                <div class="col-12 col-md-4 offset-md-8">
+                                <div class="ccol-12 col-md-6 pb-1">
+                                    <button type="submit" id="btnPlaceOrderPaypal" onclick="return validateInput()" value="Place Order Paypal" class="btn btn-warning form-control">Pay With Paypal</button>
+                                </div>
+                                <div class="col-12 col-md-6">
                                     @{
                                         var OrderTotalForStripe = Math.Round((Model.OrderDetailsCart.OrderHeader.OrderTotal * 100), 0);
                                     }
@@ -138,7 +158,7 @@
                                     </script>
 
                                     <script>document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';</script>
-                                    <button type="submit" id="btnPlaceOrder" onclick="return validateInput()" value="Place Order" class="btn btn-warning form-control">Place Order</button>
+                                    <button type="submit" id="btnPlaceOrder" onclick="return validateInput()" value="Place Order" class="btn btn-warning form-control">Pay With Stripe</button>
                                 </div>
                             </div>
                         </div>
@@ -179,6 +199,10 @@
                     return false;
                 }
                 return true;
+            }
+
+            function emailPreference() {
+              @Model.OrderDetailsCart.OrderHeader.EmailPreference = document.getElementById("emailCheckBox").checked;
             }
 
         </script>
