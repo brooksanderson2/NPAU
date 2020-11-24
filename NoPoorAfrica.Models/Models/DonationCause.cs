@@ -25,7 +25,9 @@ namespace NoPoorAfrica.Models.Models
         [ForeignKey("DonationCauseCategoryId")]
         public virtual DonationCauseCategory DonationCauseCategory { get; set; }
 
-        [Display(Name = "IsActive")]
-        public Boolean IsActive { get; set; }       
+        [Display(Name = "Active Cause")]
+        public Boolean IsActive { get; set; }   
+        [Display(Name = "Featured Cause")]
+        public Boolean IsFeatured { get; set; }
     }
 }

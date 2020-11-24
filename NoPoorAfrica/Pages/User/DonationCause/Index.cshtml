@@ -10,13 +10,70 @@
 <div class="col-sm-10 col-sm-offset-1">
     <div class="title-teaser">Make A Difference Today!! Join our community of world-changers! Choose a community to support and experience the impact of your generosity.<br></div>
 </div>
+@if (Model.DonationCauseList.Where(c => c.IsFeatured == true).Count() > 0)
+{
+    <div class="row container pb-3 border border-dark rounded" style="margin-bottom:50px">
+        <div class="col-12">
+            <div class="row">
+                <h2 class="text-info text-black-50 pl-1"><b>Featured</b></h2>
+                <div class="col-12">
+				    <div class="row my-3">
+					    @foreach (var donationCause in Model.DonationCauseList)
+						{
+						    @if (donationCause.IsActive == true && donationCause.IsFeatured == true)
+							{
+					            <div class="">
+						            <form method="post">
+							            <div class="container backgroundWhite">
+								            <div class="card">
+									            <div class="card-header bg-light text-light ml-0 row container">
+												    <div class="col-12 col-md-6">
+													    <a asp-page="Details" class="btn btn-warning text-info font-weight-bold text-black-50 text-lg-left border-warning btn-lg" style="border-radius:2px;" asp-route-id="@donationCause.Id">@donationCause.Title</a>
+												    </div>
+										            <div class="col-12 col-md-6 text-md-right">
+											            <h1 class="text-muted">@(donationCause.GoalProgress.ToString("c")) / @((donationCause.FundingGoal).ToString("c"))</h1>
+										            </div>
+									            </div>
+									            <div class="card-body">
+										            <div class="container rounded p-2">
+											            <div class="row">
+												            <div class="col-12 col-lg-8">
+													            <div class="row">
+														            <div class="col-12">
+															            <span class="badge badge-warning h3">@donationCause.Country</span>
+															            <h3 class="text-success"></h3>
+															            <p class="text-secondary">@Html.Raw(donationCause.Description)</p>
 
+
+															            <p class="text-dark"> Start Date @donationCause.FromDate   <br /> End Date @donationCause.ToDate</p>
+														            </div>
+													            </div>
+												            </div>
+												            <div class="col-12 col-lg-4 p-1 text-center">
+													            <img src="@donationCause.Image" style="width:100%" class="rounded" />
+												            </div>
+											            </div>
+										            </div>
+									            </div>
+								            </div>
+							            </div>
+						            </form>
+					            </div>
+							}
+
+						}
+				    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
     <div class="row">
 
         @foreach (var donationCause in Model.DonationCauseList)
         {
-            @if (donationCause.IsActive == true)
+            @if (donationCause.IsActive == true && donationCause.IsFeatured == false)
             {
             <div class="col-lg-3 col-xl-3 col-md-6 pb-4">
                 <div class="card" style="border:2px solid #008cba; border-radius: 5px; ">
