@@ -28,6 +28,7 @@ namespace NoPoorAfrica.DataAccess.Data.Repository
             donationCauseFromDb.Country = donationCause.Country;
             donationCauseFromDb.GoalProgress = donationCause.GoalProgress;
             donationCauseFromDb.IsActive = donationCause.IsActive;
+            donationCauseFromDb.IsFeatured = donationCause.IsFeatured;
 
 
 
