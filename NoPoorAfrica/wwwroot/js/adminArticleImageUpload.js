@@ -5,7 +5,9 @@
 function prepareButtonUpload() {
     $('#btnFUpload').on('click', function () {
         var files = $('#fUpload').prop("files");
+        var id = $('#articleId').prop("value");
         var fdata = new FormData();
+        fdata.append("Id", id);
         for (var i = 0; i < files.length; i++) {
             fdata.append("files", files[i]);
         }
