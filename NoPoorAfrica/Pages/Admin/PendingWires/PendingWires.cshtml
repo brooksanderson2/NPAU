@@ -1,4 +1,41 @@
 ﻿@page
-@model NoPoorAfrica.Pages.Admin.PendingWires.PendingWiresModel
-@{
+
+<div class="container border backgroundWhite">
+	<div class="row">
+		<div class="col-6">
+			<h2 class="text-dark">Pending Wires</h2>
+		</div>
+	</div>
+	<br />
+	<table id="DT_load" class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th>
+					Donor Name
+				</th>
+				<th>
+					Donation Total
+				</th>
+				<th>
+					Donation Date
+				</th>
+				<th>
+					Donor Email
+				</th>
+				<th>
+					Donation Cause
+				</th>
+				<th>
+					Comments
+				</th>
+				<th>
+					Follow Up
+				</th>
+				<th></th>
+			</tr>
+		</thead>
+	</table>
+</div>
+@section Scripts{
+	<script src="~/js/pendingWires.js"></script>
 }
