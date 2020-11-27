@@ -8,7 +8,7 @@ namespace NoPoorAfrica.Models.Models
     {
         private string user = "Devyn Woodruff"; // The name you want to show up on your email
                                                 // Make sure the string passed in below matches your API Key
-        private string key = "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";
+        private string key = "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";
         public string SendGridUser { get { return user; } }
         public string SendGridKey { get { return key; } }
     }

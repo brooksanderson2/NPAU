@@ -16,6 +16,7 @@ namespace NoPoorAfrica.Models.Models
 
         public string DonorName { get; set; }
         [Required]
+        [DisplayFormat(DataFormatString = "{0:C}")]
         public double DonationTotal { get; set; }
         public string PaymentStatus { get; set; }
         public string Email { get; set; }
