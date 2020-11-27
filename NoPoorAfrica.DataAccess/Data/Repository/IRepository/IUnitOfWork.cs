@@ -22,6 +22,7 @@ namespace NoPoorAfrica.DataAccess.Data.Repository.IRepository
         IDonationCauseCategoryRepository DonationCauseCategory { get; }
         IArticleCategoryRepository ArticleCategory { get; }
         IArticleFilesRepository ArticleFiles { get; }
+        IPendingWireRepository PendingWire { get; }
 
         void Save();
     }
