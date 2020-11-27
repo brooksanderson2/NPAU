@@ -26,7 +26,6 @@ namespace NoPoorAfrica.DataAccess.Data.Repository
         public IDonationCauseCategoryRepository DonationCauseCategory { get; private set; }
         public IArticleCategoryRepository ArticleCategory { get; private set; }
         public IArticleFilesRepository ArticleFiles { get; private set; }
-        public ITEMP_ArticleUploads TempUploads { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
@@ -46,7 +45,6 @@ namespace NoPoorAfrica.DataAccess.Data.Repository
             DonationCauseCategory = new DonationCauseCategoryRepository(_db);
             ArticleCategory = new ArticleCategoryRepository(_db);
             ArticleFiles = new ArticleFilesRepository(_db);
-            TempUploads = new TEMP_ArticleUploads(_db);
         }
 
         public void Dispose()

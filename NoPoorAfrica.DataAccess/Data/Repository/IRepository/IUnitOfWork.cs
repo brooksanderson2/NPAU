@@ -22,7 +22,6 @@ namespace NoPoorAfrica.DataAccess.Data.Repository.IRepository
         IDonationCauseCategoryRepository DonationCauseCategory { get; }
         IArticleCategoryRepository ArticleCategory { get; }
         IArticleFilesRepository ArticleFiles { get; }
-        ITEMP_ArticleUploads TempUploads { get; }
 
         void Save();
     }

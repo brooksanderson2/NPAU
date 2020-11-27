@@ -28,7 +28,7 @@ namespace NoPoorAfrica.Pages.Admin.Articles
 
         [BindProperty]
         public Article ArticleObj { get; set; }
-        public List<string> ThumbnailList { get; private set; }
+        public IEnumerable<ArticleFiles> ThumbnailList { get; set; }
 
         public IActionResult OnGet(int? id)
         {
@@ -43,12 +43,12 @@ namespace NoPoorAfrica.Pages.Admin.Articles
                     return NotFound();
                 }
 
-                PopulateThumbnailList();
-                //TempData.Put<IEnumerable<ArticleFiles>>("ThumbnailList", ThumbnailList);
+                ThumbnailList = _unitOfWork.ArticleFiles.GetAll(f => f.ArticleId == ArticleObj.Id);
+                TempData.Put<IEnumerable<ArticleFiles>>("ThumbnailList", ThumbnailList);
             }
             else
             {
-                return NotFound();
+
             }
 
             return Page();
@@ -56,8 +56,6 @@ namespace NoPoorAfrica.Pages.Admin.Articles
 
         public IActionResult OnPost()
         {
-            int? SessionId = HttpContext.Session.GetInt32("ArticleUploads");
-
             //Set times
             if (ArticleObj.Id == 0)
             {
@@ -81,34 +79,22 @@ namespace NoPoorAfrica.Pages.Admin.Articles
             if (!ModelState.IsValid)
                 return Page();
 
+            ThumbnailList = TempData.Get<IEnumerable<ArticleFiles>>("ThumbnailList");
 
-            PopulateThumbnailList();
-            //ThumbnailList = TempData.Get<IEnumerable<ArticleFiles>>("ThumbnailList");
-
-            if (ArticleObj.Id == 0)
+            if (ArticleObj.Id == 0) 
             {
                 _unitOfWork.Article.Add(ArticleObj);
 
                 _unitOfWork.Save();
-
-                //Add images after generating an ArticleId.
                 try
                 {
-                    if (ThumbnailList != null && SessionId != null)
-                    {
+                    if (ThumbnailList != null) {
                         //Fix file relationships that were given an ArticleId of 0.
-                        var TempFiles = _unitOfWork.TempUploads.GetAll(i => i.SessionId == SessionId);
-
-                        foreach (var TempFile in TempFiles)
+                        foreach (ArticleFiles file in ThumbnailList)
                         {
-                            ArticleFiles file = new ArticleFiles
-                            {
-                                ArticleId = ArticleObj.Id,
-                                FilePath = TempFile.FilePath
-                            };
+                            file.ArticleId = ArticleObj.Id;
 
                             _unitOfWork.ArticleFiles.Add(file);
-                            _unitOfWork.TempUploads.Remove(TempFile);
                         }
                     }
                 }
@@ -117,113 +103,54 @@ namespace NoPoorAfrica.Pages.Admin.Articles
 
                 }
             }
-            else //Article already exists - user is updating it.
+            else
             {
-                var TempFiles = _unitOfWork.TempUploads.GetAll(i => i.SessionId == SessionId);
-                var CurrentFiles = _unitOfWork.ArticleFiles.GetAll(i => i.ArticleId == ArticleObj.Id);
-                List<string> CurrentPaths = new List<string>();
+                var imgList = _unitOfWork.ArticleFiles.GetAll(f => f.ArticleId == ArticleObj.Id);
+                List<int> idList = new List<int>();
 
-                foreach (var File in CurrentFiles)
+                foreach (ArticleFiles imgListFile in imgList)
                 {
-                    CurrentPaths.Add(File.FilePath);
+                    idList.Add(imgListFile.Id);
                 }
 
-                foreach (var TempFile in TempFiles)
+                try
                 {
-                    if (!CurrentPaths.Contains(TempFile.FilePath))
+                    foreach (ArticleFiles file in ThumbnailList)
                     {
-                        ArticleFiles file = new ArticleFiles
-                        {
-                            ArticleId = ArticleObj.Id,
-                            FilePath = TempFile.FilePath
-                        };
+                        file.ArticleId = ArticleObj.Id;
 
-                        _unitOfWork.ArticleFiles.Add(file);
-                        _unitOfWork.TempUploads.Remove(TempFile);
+                        if (!idList.Contains(file.Id))
+                            _unitOfWork.ArticleFiles.Add(file);
+                        else
+                            _unitOfWork.ArticleFiles.Update(file);
                     }
+                }
+                catch
+                {
+                    //Empty
                 }
 
                 _unitOfWork.Article.Update(ArticleObj);
             }
-
             _unitOfWork.Save();
-
-            HttpContext.Session.SetInt32("ArticleUploads", -1);
-
             return RedirectToPage("./Index");
         }
 
-        public IActionResult OnPostUpload(int Id, List<IFormFile> files)
+        public IActionResult OnPostUpload(List<IFormFile> files)
         {
-            ArticleObj.Id = Id;
-
-            string folderName;
-            string webRootPath;
-            string newPath;
-
             if (files != null && files.Count > 0)
             {
-                folderName = @"images\ArticleImages\";
-                webRootPath = _webHostEnvironment.WebRootPath;
-                newPath = Path.Combine(webRootPath, folderName);
+                string folderName = @"images\ArticleImages\";
+                string webRootPath = _webHostEnvironment.WebRootPath;
+                string newPath = Path.Combine(webRootPath, folderName);
 
                 if (!Directory.Exists(newPath))
                 {
                     Directory.CreateDirectory(newPath);
                 }
-            }
-            else
-            {
-                return this.Content("Fail");
-            }
 
-            // Set a temporary session id to save the files that were uploaded. They cannot be put into the ArticleFiles
-            // table yet because of the foreign key restraint on the Article ID that does not exist yet. Once the
-            // Article ID exists (on Post), move the items from the temporary table to the ArticleFiles table and
-            // assign the ID.
-            if (ArticleObj.Id == 0)
-            {
-                Random rnd = new Random();
-                int randSession = rnd.Next(0, Int32.MaxValue);
-                int? SessionId = HttpContext.Session.GetInt32("ArticleUploads");
+                List<ArticleFiles> list = new List<ArticleFiles>();
 
-                if (SessionId == null || SessionId == -1)
-                {
-                    HttpContext.Session.SetInt32("ArticleUploads", randSession);
-                }
-
-                List<_TEMP_ArticleUploads> list = new List<_TEMP_ArticleUploads>();
-
-                foreach (IFormFile item in files)
-                {
-                    if (item.Length > 0)
-                    {
-                        string fileName = ContentDispositionHeaderValue.Parse(item.ContentDisposition).FileName.Trim('"');
-                        string fullPath = Path.Combine(newPath, fileName);
-                        string dbPath = @"\" + folderName + fileName;
-
-                        using (var stream = new FileStream(fullPath, FileMode.Create))
-                        {
-                            item.CopyTo(stream);
-                        }
-
-                        _TEMP_ArticleUploads Relationship = new _TEMP_ArticleUploads()
-                        {
-                            FilePath = dbPath,
-                            SessionId = randSession
-                        };
-
-                        list.Add(Relationship);
-                    }
-                }
-
-                return this.Content("Success");
-            }
-                
-            // The Article is being updated, not created. The Article ID already exists
-            // We do not have to store the files in the temporary table.
-            else
-            {
                 foreach (IFormFile item in files)
                 {
                     if (item.Length > 0)
@@ -243,37 +170,16 @@ namespace NoPoorAfrica.Pages.Admin.Articles
                             FilePath = dbPath
                         };
 
-                        _unitOfWork.ArticleFiles.Add(Relationship);
+                        list.Add(Relationship);
                     }
                 }
+                ThumbnailList = list;
+                TempData.Put<IEnumerable<ArticleFiles>>("ThumbnailList", list);
 
-                _unitOfWork.Save();
                 return this.Content("Success");
             }
-        }
+            return this.Content("Fail");
 
-        public void PopulateThumbnailList()
-        {
-            ThumbnailList = new List<string>();
-
-            int? SessionId = HttpContext.Session.GetInt32("ArticleUploads");
-
-            var ArticleImages = _unitOfWork.ArticleFiles.GetAll(i => i.ArticleId == ArticleObj.Id);
-            foreach (var item in ArticleImages)
-            {
-                ThumbnailList.Add(item.FilePath);
-            }
-
-            //Generally should not have a session id when using GET, but checks for any pending uploads just in case.
-            if (SessionId != null && SessionId != -1)
-            {
-                var PendingUploads = _unitOfWork.TempUploads.GetAll(i => i.SessionId == SessionId);
-
-                foreach (var item in PendingUploads)
-                {
-                    ThumbnailList.Add(item.FilePath);
-                }
-            }
         }
     }
 }

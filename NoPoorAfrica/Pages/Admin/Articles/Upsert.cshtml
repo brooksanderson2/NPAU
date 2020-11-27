@@ -19,14 +19,17 @@
                         <input class="form-control" asp-for="ArticleObj.Title" />
                         <span class="text-danger" asp-validation-for="ArticleObj.Title"></span>
                     </div>
-                    <input type="hidden" id="articleId" value="@Model.ArticleObj.Id"/>
+                    @if (Model.ArticleObj.Id != 0)
+                    {
+                        <input type="hidden" asp-for="ArticleObj.Id" />
+                    }
                 </div>
                 <div class="form-group row">
                     <div class="col-1">
                         <label class="font-weight-bold" asp-for="ArticleObj.Template"></label>
                     </div>
                     <div class="col-6">
-                        <input type="radio" asp-for="ArticleObj.Template" value="template_1" />Template 1  &nbsp;&nbsp;
+                        <input type="radio" asp-for="ArticleObj.Template" value="template_1" checked />Template 1  &nbsp;&nbsp;
                         <input type="radio" asp-for="ArticleObj.Template" value="template_2" />Template 2  &nbsp;&nbsp;
                         <input type="radio" asp-for="ArticleObj.Template" value="template_3" />Template 3&nbsp;&nbsp;
                     </div>
@@ -46,10 +49,10 @@
                     <hr />
 
                 <div class="image-gallery">
-                    @foreach (string file in Model.ThumbnailList)
+                    @foreach (NoPoorAfrica.Models.Models.ArticleFiles file in Model.ThumbnailList)
                     {
                         <div class="image-gallery-card">
-                            <img class="image-gallery-img" src="@file" />
+                            <img class="image-gallery-img" src="@file.FilePath" />
                         </div>
                     }
                 </div>

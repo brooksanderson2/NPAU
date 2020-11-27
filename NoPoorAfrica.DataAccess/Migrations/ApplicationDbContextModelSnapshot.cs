@@ -645,25 +645,6 @@ namespace NoPoorAfrica.DataAccess.Migrations
                     b.ToTable("StoreItem");
                 });
 
-            modelBuilder.Entity("NoPoorAfrica.Models.Models._TEMP_ArticleUploads", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("FilePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SessionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("_TEMP_ArticleUploads");
-                });
-
             modelBuilder.Entity("NoPoorAfrica.Models.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
