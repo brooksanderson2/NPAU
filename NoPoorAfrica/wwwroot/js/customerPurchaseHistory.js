@@ -27,7 +27,11 @@ function loadList() {
             "emptyTable": "no data found."
         },
         "width": "100%",
-        "order": [[2, "asc"]]
+        "order": [[2, "asc"]],
+        "dom": 'Blfrtip',
+        "buttons": [
+            'csv', 'pdf', 'print'
+        ],
     });
 }
 

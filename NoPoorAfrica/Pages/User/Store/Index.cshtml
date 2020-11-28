@@ -5,8 +5,12 @@
 }
 
 
-<div>
-    <h1 class="display-4 text-warning rounded m-2 p-2 center-screen">Store</h1>
+<div class="row justify-content-between">
+    <h1 class="display-4 text-warning rounded m-2 p-2 center-screen"><b>Store</b></h1>
+
+    <div>
+        <a asp-page="/User/DonationCause/Index" class="btn btn-warning btn-lg mt-4 border border-dark rounded" style="height:50px;">Donate</a>
+    </div>
 </div>
 
 <div>
@@ -29,100 +33,66 @@
     <div>&nbsp;</div>
 </div>
 
+<div class="row center-screen border border-dark rounded m-1 p-1">
+    <h5 class="">All purchases made through this site are secure. A confirmation number will be emailed to you after checkout. </h5>
+</div>
 
 
-<table class="table center-screen">
-    <thead>
-        <tr>
-            <th>
-                <form asp-page="./Index" method="get">
-                    Search:
-                    <input type="text" name="SearchString" value="@Model.CurrentFilter" />
-                    <input type="submit" value="Search" class="btn btn-dark" /> |
-                    <a class="text-dark" asp-page="./Index">Clear</a>
-                </form>
-            </th>
-            <th>
-                &nbsp;&nbsp;
-            </th>
-            <th class="mb-3 pb-4">
-                Sort by:&nbsp;&nbsp;
-                <a class="text-dark" asp-page="./Index" asp-route-sortOrder="@Model.NameSort">
-                    @*@Html.DisplayNameFor(model => model.StoreItem[0].Name)*@ Product &nbsp;
-                </a>
-                |
-                <a class="text-dark" asp-page="./Index" asp-route-sortOrder="@Model.CategorySort">
-                    @*@Html.DisplayNameFor(model => model.StoreItem[0].Category.Name)*@ &nbsp; Category &nbsp;
-                </a>
-                |
-                <a class="text-dark" asp-page="./Index" asp-route-sortOrder="@Model.PriceSort"
-                   asp-route-currentFilter="@Model.CurrentFilter">
-                   &nbsp; @Html.DisplayNameFor(model => model.StoreItem[0].Price)
-                </a>
-            </th>
-            <th>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </th>
-            <th>
-                @{
-                    var prevDisabled = !Model.StoreItem.HasPreviousPage ? "disabled" : "";
-                    var nextDisabled = !Model.StoreItem.HasNextPage ? "disabled" : "";
-                }
+<div>
+    <div>&nbsp;</div>
+</div>
 
-                <a asp-page="./Index"
-                   asp-route-sortOrder="@Model.CurrentSort"
-                   asp-route-pageIndex="@(Model.StoreItem.PageIndex - 1)"
-                   asp-route-currentFilter="@Model.CurrentFilter"
-                   class="btn btn-dark @prevDisabled">
-                    Previous
-                </a>
-                <a asp-page="./Index"
-                   asp-route-sortOrder="@Model.CurrentSort"
-                   asp-route-pageIndex="@(Model.StoreItem.PageIndex + 1)"
-                   asp-route-currentFilter="@Model.CurrentFilter"
-                   class="btn btn-dark @nextDisabled">
-                    Next
-                </a>
-            </th>
-        </tr>
-    </thead>
-</table>
+@foreach (var category in Model.CategoryList)
+{
+
+<h2 class="display-4 text-warning rounded m-2 p-2 center-screen">@category.Name</h2>
+<hr />
+
+    @if (Model.StoreItemList.Where(c => c.CategoryId == category.Id).Count() > 0)
+    {
+
 <div class="row container pb-3 c">
     <div class="col-12">
+
         <div class="row">
+
             <div class="col-12">
                 <div class="row my-3">
-                    @foreach (var item in Model.StoreItem)
+
+                    @foreach (var item in Model.StoreItemList.Where(c => c.Category.Id == category.Id))
                     {
-                        <div class="col-lg-3 col-xl-3 col-md-6 pb-4 ">
-                            <div class="card" style="border:2px solid #0F0F0F; border-radius: 5px;">
-                                <div class="pl-3 pt-1 text-center">
-                                    <h3 class="card-title text-dark"><b>@item.Name</b></h3>
-                                </div>
-
-                                <img src="@item.Image" class="card-img-top p-2 rounded storeHomePageImage" />
-
-                                <div class="badge center-screen" style="border:0px;">
-                                    <div class="h5 rounded" style="color:dark;"><b>$@item.Price.ToString("0.00")</b></div>
-                                </div>
-                                <div class="center-screen text-warning ">
-                                    @if (item.Inventory > 0)
-                                    {
-                                    <h6>@item.Inventory.ToString() in stock</h6>
-                                    }
-                                    else
-                                    {
-                                        <h6>Out of stock, check back soon</h6>
-                                    }
-                                </div>
-
-                                <a asp-page="Details" class="btn btn-dark" style="border-radius:2px;" asp-route-id="@item.Id">More Info</a>
-
+                    <div class="col-lg-3 col-xl-3 col-md-6 pb-4 ">
+                        <div class="card" style="border:2px solid #0F0F0F; border-radius: 5px;">
+                            <div class="pl-3 pt-1 text-center">
+                                <h3 class="card-title text-dark"><b>@item.Name</b></h3>
                             </div>
+
+                            <img src="@item.Image" class="card-img-top p-2 rounded storeHomePageImage" />
+
+                            <div class="badge center-screen" style="border:0px;">
+                                <div class="h5 rounded" style="color:dark;"><b>$@item.Price.ToString("0.00")</b></div>
+                            </div>
+                            <div class="center-screen text-warning ">
+                                @if (item.Inventory > 0)
+                                {
+                                <h6>@item.Inventory.ToString() in stock</h6>
+                                }
+                                else
+                                {
+                                <h6>Out of stock, check back soon</h6>
+                                }
+                            </div>
+
+                            <a asp-page="Details" class="btn btn-dark" style="border-radius:2px;" asp-route-id="@item.Id">More Info</a>
+
                         </div>
+                    </div>
                     }
                 </div>
             </div>
         </div>
     </div>
 </div>
+    }
+
+}
