@@ -67,7 +67,7 @@ namespace NoPoorAfrica.Pages.User.Cart
             }
         }
 
-        public IActionResult OnPost(string stripeToken)
+        public IActionResult OnPost(string stripeToken, bool? emailbox)
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
@@ -78,7 +78,14 @@ namespace NoPoorAfrica.Pages.User.Cart
             OrderDetailsCart.OrderHeader.PurchaseDate = DateTime.Now;
             OrderDetailsCart.OrderHeader.UserId = claim.Value;
             OrderDetailsCart.OrderHeader.Status = SD.StatusSubmitted;
-
+            bool email = emailbox ?? false;
+            if (email) {
+                OrderDetailsCart.OrderHeader.EmailPreference = true;
+                    }
+            else {
+                OrderDetailsCart.OrderHeader.EmailPreference = false; 
+            }
+           
 
             _unitOfWork.OrderHeader.Add(OrderDetailsCart.OrderHeader);
             _unitOfWork.Save();

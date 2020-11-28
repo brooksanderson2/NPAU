@@ -95,7 +95,7 @@
                                         </div>
                                         <div class="row my-1">
                                             <div class="col-1">
-                                                <input type="checkbox" id="emailCheckBox" name="emailbox" onclick="return emailPreference()" />
+                                                <input type="checkbox" id="emailCheckBox" name="emailbox" value="true" />
                                             </div>
                                             <div class="col-9">
                                                 <label>Email me updates on store items</label>
@@ -138,9 +138,6 @@
                         </div>
                         <div class="card-footer">
                             <div class="row">
-                                <div class="ccol-12 col-md-6 pb-1">
-                                    <button type="submit" id="btnPlaceOrderPaypal" onclick="return validateInput()" value="Place Order Paypal" class="btn btn-warning form-control">Pay With Paypal</button>
-                                </div>
                                 <div class="col-12 col-md-6">
                                     @{
                                         var OrderTotalForStripe = Math.Round((Model.OrderDetailsCart.OrderHeader.OrderTotal * 100), 0);
@@ -202,7 +199,7 @@
             }
 
             function emailPreference() {
-              @Model.OrderDetailsCart.OrderHeader.EmailPreference = document.getElementById("emailCheckBox").checked;
+                @Model.OrderDetailsCart.OrderHeader.EmailPreference = document.getElementById(emailCheckBox).checked;
             }
 
         </script>
