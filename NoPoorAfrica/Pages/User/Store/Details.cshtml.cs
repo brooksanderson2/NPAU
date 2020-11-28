@@ -41,26 +41,29 @@ namespace NoPoorAfrica.Pages.User.Store
 
             if (ModelState.IsValid)
             {
-                //Determind the GUID of the logged in user
-                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
-                var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-                ShoppingCartObj.ApplicationUserId = claim.Value;
+               
+                    //Determind the GUID of the logged in user
+                    var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+                    var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+                    ShoppingCartObj.ApplicationUserId = claim.Value;
 
-                ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.GetFirstOrDefault(c => c.ApplicationUserId == ShoppingCartObj.ApplicationUserId && c.StoreItemId == ShoppingCartObj.StoreItemId);
-                if (cartFromDb == null)
-                {
-                    _unitOfWork.ShoppingCart.Add(ShoppingCartObj);
-                }
-                else //update
-                {
-                    _unitOfWork.ShoppingCart.IncrementCount(cartFromDb, ShoppingCartObj.Count);
-                }
-                _unitOfWork.Save();
+                    ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.GetFirstOrDefault(c => c.ApplicationUserId == ShoppingCartObj.ApplicationUserId && c.StoreItemId == ShoppingCartObj.StoreItemId);
+                    if (cartFromDb == null)
+                    {
+                        _unitOfWork.ShoppingCart.Add(ShoppingCartObj);
+                    }
+                    else //update
+                    {
+                        _unitOfWork.ShoppingCart.IncrementCount(cartFromDb, ShoppingCartObj.Count);
+                    }
+                    _unitOfWork.Save();
 
-                var count = _unitOfWork.ShoppingCart.GetAll(c => c.ApplicationUserId == ShoppingCartObj.ApplicationUserId).ToList().Count;
-                //Establish the session
-                HttpContext.Session.SetInt32(SD.ShoppingCart, count);
-                return RedirectToPage("Index");
+                    var count = _unitOfWork.ShoppingCart.GetAll(c => c.ApplicationUserId == ShoppingCartObj.ApplicationUserId).ToList().Count;
+                    //Establish the session for count
+                    HttpContext.Session.SetInt32(SD.ShoppingCart, count);
+                    return RedirectToPage("Index");
+                
+                
             }
             else
             {
