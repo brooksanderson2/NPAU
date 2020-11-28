@@ -153,7 +153,7 @@ namespace NoPoorAfrica.Pages.User.Cart
                     double amount = OrderDetailsCart.OrderHeader.OrderTotal;
                     decimal a;
                     a = Convert.ToDecimal(amount);
-                    emailSender.SendEmailAsync(OrderHeader.Email, "Thank you for your purchase from No Poor Africa!", "Purchase amount: " + amount.ToString("C2") + "\n" + "Purchase ID: " + OrderDetailsCart.OrderHeader.Id);
+                    emailSender.SendEmailAsync(OrderDetailsCart.OrderHeader.Email, "Thank you for your purchase from No Poor Africa!", "Purchase amount: " + amount.ToString("C2") + "\n" + "Purchase ID: " + OrderDetailsCart.OrderHeader.Id);
 
 
 
