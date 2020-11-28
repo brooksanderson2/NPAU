@@ -9,8 +9,9 @@ namespace NoPoorAfrica.Pages.User.DonationCause
 {
     public class WireInstructionsModel : PageModel
     {
-        public void OnGet()
+        public void OnGet(string id)
         {
+            ViewData["TransactionId"] = id;
         }
     }
 }

@@ -18,14 +18,19 @@ namespace NoPoorAfrica.Pages.User.Cart
     public class SummaryModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly Microsoft.Extensions.Options.IOptions<AuthSenderOptions> _authOptions;
 
-        public SummaryModel(IUnitOfWork unitOfWork)
+        public SummaryModel(IUnitOfWork unitOfWork, Microsoft.Extensions.Options.IOptions<AuthSenderOptions> authOptions)
         {
             _unitOfWork = unitOfWork;
+            _authOptions = authOptions;
         }
 
         [BindProperty]
         public OrderDetailsCartVM OrderDetailsCart { get; set; }
+
+        [BindProperty]
+        public OrderHeader OrderHeader { get; set; }
 
         public void OnGet()
         {
@@ -60,6 +65,7 @@ namespace NoPoorAfrica.Pages.User.Cart
 
                 //Retrieve details of the person logged in 
                 ApplicationUser applicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(c => c.Id == claim.Value);
+                OrderDetailsCart.OrderHeader.Email = applicationUser.Email;
                 //OrderDetailsCart.OrderHeader.DeliveryName = applicationUser.FullName;
                 OrderDetailsCart.OrderHeader.PurchaseDate = DateTime.Now;
                 //OrderDetailsCart.OrderHeader.PhoneNumber = applicationUser.PhoneNumber;
@@ -146,6 +152,18 @@ namespace NoPoorAfrica.Pages.User.Cart
                 if(charge.Status.ToLower() == "succeeded")
                 {
                     //Send a confirmation email
+                    EmailSender emailSender;
+                    emailSender = new EmailSender(_authOptions);
+
+                    ApplicationUser applicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(c => c.Id == claim.Value);
+
+                    double amount = OrderDetailsCart.OrderHeader.OrderTotal;
+                    decimal a;
+                    a = Convert.ToDecimal(amount);
+                    emailSender.SendEmailAsync(OrderDetailsCart.OrderHeader.Email, "Thank you for your purchase from No Poor Africa!", "Purchase amount: " + amount.ToString("C2") + "\n" + "Purchase ID: " + OrderDetailsCart.OrderHeader.Id);
+
+
+
                     OrderDetailsCart.OrderHeader.PaymentStatus = SD.PaymentStatusApproved;
 
                 }
