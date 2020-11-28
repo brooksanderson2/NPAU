@@ -5,11 +5,28 @@
 }
 
 
-<div class="row justify-content-between">
+<div class="center-screen">
     <h1 class="display-4 text-warning rounded m-2 p-2 center-screen"><b>Store</b></h1>
+</div>
 
-    <div>
-        <a asp-page="/User/DonationCause/Index" class="btn btn-warning btn-lg mt-4 border border-dark rounded" style="height:50px;">Donate</a>
+<!-- Modal -->
+<div class="modal fade" id="modalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Create a NPAU account today!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Benefits Include: Access to personal donation and store purchase history, ability to print donation history for tax deductable purposes, included on organization email list, continued contact with NPAU sponsors, and much more!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-warning">Create Account</a>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -33,66 +50,117 @@
     <div>&nbsp;</div>
 </div>
 
-<div class="row center-screen border border-dark rounded m-1 p-1">
-    <h5 class="">All purchases made through this site are secure. A confirmation number will be emailed to you after checkout. </h5>
+<div class="row justify-content-around">
+    <div>
+        <a asp-page="/User/DonationCause/Index" class="btn btn-warning btn-lg mt-4 border border-dark rounded" style="height:50px;"><b>Donate</b></a>
+    </div>
+    <!-- Button trigger modal Account -->
+    <button type="button" class="btn btn-warning mt-4 border border-dark rounded" data-toggle="modal" data-target="#modalAccount">
+        <b>Benefits of NPAU Account</b>
+    </button>
+    <!-- Button trigger modal Secure -->
+    <button type="button" class="btn btn-warning mt-4 border border-dark rounded" data-toggle="modal" data-target="#modalSecure">
+        <b>Secure Checkout</b>
+    </button>
 </div>
-
 
 <div>
     <div>&nbsp;</div>
 </div>
 
-@foreach (var category in Model.CategoryList)
-{
-
-<h2 class="display-4 text-warning rounded m-2 p-2 center-screen">@category.Name</h2>
-<hr />
-
-    @if (Model.StoreItemList.Where(c => c.CategoryId == category.Id).Count() > 0)
-    {
-
-<div class="row container pb-3 c">
-    <div class="col-12">
-
-        <div class="row">
-
-            <div class="col-12">
-                <div class="row my-3">
-
-                    @foreach (var item in Model.StoreItemList.Where(c => c.Category.Id == category.Id))
-                    {
-                    <div class="col-lg-3 col-xl-3 col-md-6 pb-4 ">
-                        <div class="card" style="border:2px solid #0F0F0F; border-radius: 5px;">
-                            <div class="pl-3 pt-1 text-center">
-                                <h3 class="card-title text-dark"><b>@item.Name</b></h3>
-                            </div>
-
-                            <img src="@item.Image" class="card-img-top p-2 rounded storeHomePageImage" />
-
-                            <div class="badge center-screen" style="border:0px;">
-                                <div class="h5 rounded" style="color:dark;"><b>$@item.Price.ToString("0.00")</b></div>
-                            </div>
-                            <div class="center-screen text-warning ">
-                                @if (item.Inventory > 0)
-                                {
-                                <h6>@item.Inventory.ToString() in stock</h6>
-                                }
-                                else
-                                {
-                                <h6>Out of stock, check back soon</h6>
-                                }
-                            </div>
-
-                            <a asp-page="Details" class="btn btn-dark" style="border-radius:2px;" asp-route-id="@item.Id">More Info</a>
-
-                        </div>
-                    </div>
-                    }
-                </div>
+<!-- Modal Secure -->
+<div class="modal fade" id="modalAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Create a NPAU account today!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Benefits Include: Access to personal donation and store purchase history, ability to print donation history for tax deductable purposes, included on organization email list, continued contact with NPAU sponsors, and much more!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-warning">Create Account</a>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal Account -->
+<div class="modal fade" id="modalSecure" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"> <i class="fas fa-lock"></i>&nbsp; Secure Checkout</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                This site supports a secure checkout. All transactions will be confirmed with a confirmation number and email sent to the address on file.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@foreach (var category in Model.CategoryList)
+{
+
+    <h2 class="display-4 text-warning rounded m-2 p-2 center-screen">@category.Name</h2>
+    <hr />
+
+    @if (Model.StoreItemList.Where(c => c.CategoryId == category.Id).Count() > 0)
+    {
+
+        <div class="row container pb-3 c">
+            <div class="col-12">
+
+                <div class="row">
+
+                    <div class="col-12">
+                        <div class="row my-3">
+
+                            @foreach (var item in Model.StoreItemList.Where(c => c.Category.Id == category.Id))
+                            {
+                                <div class="col-lg-3 col-xl-3 col-md-6 pb-4 ">
+                                    <div class="card" style="border:2px solid #0F0F0F; border-radius: 5px;">
+                                        <div class="pl-3 pt-1 text-center">
+                                            <h3 class="card-title text-dark"><b>@item.Name</b></h3>
+                                        </div>
+
+                                        <img src="@item.Image" class="card-img-top p-2 rounded storeHomePageImage" />
+
+                                        <div class="badge center-screen" style="border:0px;">
+                                            <div class="h5 rounded" style="color:dark;"><b>$@item.Price.ToString("0.00")</b></div>
+                                        </div>
+                                        <div class="center-screen text-warning ">
+                                            @if (item.Inventory > 0)
+                                            {
+                                                <h6>@item.Inventory.ToString() in stock</h6>
+                                            }
+                                            else
+                                            {
+                                                <h6>Out of stock, check back soon</h6>
+                                            }
+                                        </div>
+
+                                        <a asp-page="Details" class="btn btn-dark" style="border-radius:2px;" asp-route-id="@item.Id">More Info</a>
+
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
 
 }
