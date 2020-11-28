@@ -1,5 +1,5 @@
 ﻿@page
-@model NoPoorAfrica.Pages.User.DonationCause.DonationPaymentModel
+@model NoPoorAfrica.Pages.User.DonationCause.DonationPaymentWireModel
 @using NoPoorAfrica.Utility
 @using Microsoft.Extensions.Options
 @inject IOptions<NoPoorAfrica.Utility.StripeSettings> Stripe
@@ -37,8 +37,8 @@
 										<label>Name</label>
 									</div>
 									<div class="col-9">
-										<input id="txtName" asp-for="@Model.DonationDetails.DonorName" type="text" class="form-control" />
-										<input id="txtNameHidden" asp-for="@Model.DonationDetails.DonorName" type="text" class="form-control" disabled hidden />
+										<input id="txtName" asp-for="@Model.PendingWire.DonorName" type="text" class="form-control" />
+										<input id="txtNameHidden" asp-for="@Model.PendingWire.DonorName" type="text" class="form-control" disabled hidden />
 									</div>
 								</div>
 								<div class="row my-1">
@@ -46,7 +46,7 @@
 										<label>Amount</label>
 									</div>
 									<div class="col-9">
-										<input id="txtPhone" asp-for="@Model.DonationDetails.DonationTotal" type="text" class="form-control" />
+										<input id="txtPhone" asp-for="@Model.PendingWire.DonationTotal" type="text" class="form-control" />
 									</div>
 								</div>
 								<div class="row my-1">
@@ -54,8 +54,8 @@
 										<label>Email</label>
 									</div>
 									<div class="col-9">
-										<input id="txtEmail" asp-for="@Model.DonationDetails.Email" type="text" class="form-control" />
-										<input id="txtEmailHidden" asp-for="@Model.DonationDetails.Email" type="text" class="form-control" disabled hidden />
+										<input id="txtEmail" asp-for="@Model.PendingWire.Email" type="text" class="form-control" />
+										<input id="txtEmailHidden" asp-for="@Model.PendingWire.Email" type="text" class="form-control" disabled hidden />
 									</div>
 								</div>
 								<div class="row my-1">
@@ -63,7 +63,7 @@
 										<label>Comments</label>
 									</div>
 									<div class="col-9">
-										<textarea asp-for="@Model.DonationDetails.Comments" style="height:100px;" class="form-control"></textarea>
+										<textarea asp-for="@Model.PendingWire.Comments" style="height:100px;" class="form-control"></textarea>
 									</div>
 								</div>
 								<div class="row my-1">
@@ -71,7 +71,7 @@
 										<label>I would like to receive updates about future causes</label>
 									</div>
 									<div class="col-1">
-										<input id="followUpChckBx" asp-for="@Model.DonationDetails.FollowUp" class="form-control" />
+										<input id="followUpChckBx" asp-for="@Model.PendingWire.FollowUp" class="form-control" />
 									</div>
 								</div>
 
@@ -90,23 +90,8 @@
 						<div class="col-12 col-md-6 pb-1 ">
 							<a asp-page="Index" class="btn border-warning btn-square form-control">Cancel</a>
 						</div>
-						<div class="col-12 col-md-6">
-							@{
-								var OrderTotalForStripe = Math.Round((Model.DonationDetails.DonationTotal * 100), 0); //convert to cents
-							}
-							<script src="https://checkout.stripe.com/checkout.js"
-									class="stripe-button"
-									data-key="@Stripe.Value.PublishableKey"
-									data-amount="@OrderTotalForStripe"
-									data-name="No Poor Africa"
-									data-label="Place Donation"
-									data-description="No Poor Among Us"
-									data-locale="auto"
-									data-allow-remember-me="false"
-									data-image="/Images/npau.png">
-							</script>
-							<script>document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';</script>
-							<button type="submit" id="btnPlaceOrder" value="Place Order" class="btn btn-warning form-control">Donate With Stripe</button>
+						<div class="ccol-12 col-md-6 pb-1">
+							<button type="submit" id="btnPlaceOrderWire" value="Place Order Wire" class="btn btn-warning form-control">Donate With Wire Transfer</button>
 						</div>
 					</div>
 				</div>
@@ -140,5 +125,6 @@
 
 			return true;
 		}
+
 	</script>
 }

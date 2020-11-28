@@ -47,12 +47,7 @@ namespace NoPoorAfrica.Pages.User.DonationCause
             }
         }
 
-        public IActionResult OnPostWire()
-        {
-            return RedirectToPage("/WireInstructions");
-        }
-
-        public IActionResult OnPostStripe(string stripeToken)
+        public IActionResult OnPost(string stripeToken)
         {
             
             if (User.Identity.IsAuthenticated)
