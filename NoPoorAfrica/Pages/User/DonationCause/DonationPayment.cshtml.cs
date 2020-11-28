@@ -47,7 +47,12 @@ namespace NoPoorAfrica.Pages.User.DonationCause
             }
         }
 
-        public IActionResult OnPost(string stripeToken)
+        public IActionResult OnPostWire()
+        {
+            return RedirectToPage("/WireInstructions");
+        }
+
+        public IActionResult OnPostStripe(string stripeToken)
         {
             
             if (User.Identity.IsAuthenticated)
@@ -85,8 +90,9 @@ namespace NoPoorAfrica.Pages.User.DonationCause
                     EmailSender emailSender;
                     emailSender = new EmailSender(_authOptions);
                     double amount = DonationDetails.DonationTotal;
-                    String.Format("{0:C}", amount);
-                    emailSender.SendEmailAsync(DonationDetails.Email, "Thank you for your donation to No Poor Africa!", "Donation amount: $" + amount + "\n" + "Donation ID: " + DonationDetails.TransactionId);
+                    decimal a;
+                    a = Convert.ToDecimal(amount);
+                    emailSender.SendEmailAsync(DonationDetails.Email, "Thank you for your donation to No Poor Africa!", "Donation amount: " + amount.ToString("C2") + "\n" + "Donation ID: " + DonationDetails.TransactionId);
 
                     DonationDetails.PaymentStatus = SD.PaymentStatusApproved;
                 }
