@@ -13,17 +13,11 @@ function loadList() {
         },
         "columns": [
 
-            { "data": "email", "width": "25%" },
-            {
-                "data": "purchaseDate",
-                "render": function (data, type) {
-                    return type === 'sort' ? data : moment(data).format('MM/DD/YYYY');
-                }, width: "25%"
-            },
-            
-            { "data": "transactionId", "width": "25%" },
-            { "data": "emailPreference", "width": "25%" },
-        
+            { "data": "email", "width": "40%" },
+            { "data": "applicationUser.fullName", "width": "40%" },
+            { "data": "emailPreference", "width": "20%" },
+           
+
         ],
         "language": {
             "emptyTable": "no data found."

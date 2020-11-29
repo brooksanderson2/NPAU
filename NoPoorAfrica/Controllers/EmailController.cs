@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NoPoorAfrica.DataAccess.Data.Repository.IRepository;
+using NoPoorAfrica.Models.Models;
 using NoPoorAfrica.Utility;
 
 namespace NoPoorAfrica.Controllers
@@ -27,8 +28,8 @@ namespace NoPoorAfrica.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            
-                return Json(new { data = _unitOfWork.OrderHeader.GetAll() });
+         
+                return Json( new { data = _unitOfWork.OrderHeader.GetAll(d => d.EmailPreference == true,null,"ApplicationUser") });
 
         }
     }
