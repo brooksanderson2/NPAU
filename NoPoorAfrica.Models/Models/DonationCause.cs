@@ -13,7 +13,7 @@ namespace NoPoorAfrica.Models.Models
         public string Title { get; set; }
         public string Description { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
+
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
         public double FundingGoal { get; set; }

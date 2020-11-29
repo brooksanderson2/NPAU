@@ -14,7 +14,7 @@
 						<h1 class="text-info text-black-50">@Model.DonationCauseObj.Title</h1>
 					</div>
 					<div class="col-12 col-md-6 text-md-right">
-						<h1 class="text-muted"> @((Model.DonationCauseObj.FundingGoal).ToString("c"))</h1>
+						<h1 class="text-muted">@(Model.DonationCauseObj.GoalProgress.ToString("c")) / @((Model.DonationCauseObj.FundingGoal).ToString("c"))</h1>
 					</div>
 				</div>
 				<div class="card-body">
@@ -28,7 +28,7 @@
                                         <p class="text-secondary">@Html.Raw(Model.DonationCauseObj.Description)</p>
 
 
-                                        <p class="text-dark"> Start Date @Model.DonationCauseObj.FromDate   <br /> End Date @Model.DonationCauseObj.ToDate</p>
+                                        <p class="text-dark"> Start Date @Model.DonationCauseObj.FromDate.ToString("dd/MM/yyyy")   <br /> End Date @Model.DonationCauseObj.ToDate.ToString("dd/MM/yyyy")</p>
                                     </div>							
 								</div>
 							</div>
