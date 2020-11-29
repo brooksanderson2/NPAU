@@ -52,7 +52,6 @@ namespace NoPoorAfrica.Pages.Store.Cart
                     cartList.StoreItem = _unitOfWork.StoreItem.GetFirstOrDefault(m => m.Id == cartList.StoreItemId);
                     OrderDetailsCart.OrderHeader.OrderTotal += (cartList.StoreItem.Price * cartList.Count);
                 }
-
             }
         }
 
@@ -95,6 +94,5 @@ namespace NoPoorAfrica.Pages.Store.Cart
             HttpContext.Session.SetInt32(SD.ShoppingCart, cnt);
             return RedirectToPage("/User/Cart/Index");
         }
-
     }
 }

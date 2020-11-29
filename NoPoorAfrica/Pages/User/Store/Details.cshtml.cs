@@ -34,14 +34,11 @@ namespace NoPoorAfrica.Pages.User.Store
             };
         }
 
-
         public IActionResult OnPost()
         {
 
-
             if (ModelState.IsValid)
             {
-               
                     //Determind the GUID of the logged in user
                     var claimsIdentity = (ClaimsIdentity)this.User.Identity;
                     var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
@@ -62,18 +59,14 @@ namespace NoPoorAfrica.Pages.User.Store
                     //Establish the session for count
                     HttpContext.Session.SetInt32(SD.ShoppingCart, count);
                     return RedirectToPage("Index");
-                
-                
             }
+
             else
             {
                 ShoppingCartObj.StoreItem = _unitOfWork.StoreItem.GetFirstOrDefault(includeProperties: "Category,Size",
                 filter: c => c.Id == ShoppingCartObj.StoreItem.Id);
-
-
                 return Page();
             }
-
         }
     }
 }

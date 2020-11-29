@@ -43,7 +43,6 @@
     <div class="col-6">
         <img class="storeHeaderImage center-screen rounded border border-dark" src="~/Images/sewing.png" />
     </div>
-
 </div>
 
 <div>
@@ -109,21 +108,16 @@
     </div>
 </div>
 
-
 @foreach (var category in Model.CategoryList)
 {
-
     <h2 class="display-4 text-warning rounded m-2 p-2 center-screen">@category.Name</h2>
     <hr />
 
     @if (Model.StoreItemList.Where(c => c.CategoryId == category.Id).Count() > 0)
     {
-
         <div class="row container pb-3 c">
             <div class="col-12">
-
                 <div class="row">
-
                     <div class="col-12">
                         <div class="row my-3">
 
@@ -140,6 +134,7 @@
                                         <div class="badge center-screen" style="border:0px;">
                                             <div class="h5 rounded" style="color:dark;"><b>$@item.Price.ToString("0.00")</b></div>
                                         </div>
+
                                         <div class="center-screen text-warning ">
                                             @if (item.Inventory > 0)
                                             {

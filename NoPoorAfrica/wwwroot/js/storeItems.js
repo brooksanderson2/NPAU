@@ -3,8 +3,7 @@
 $(document).ready(function () {
     loadList();
 });
-
-
+ 
 function loadList() {
     dataTable = $('#DT_load').DataTable({
         "ajax": {
@@ -45,8 +44,6 @@ function loadList() {
 		],
     });
 }
-
-
 
 function Delete(url) {
     swal({

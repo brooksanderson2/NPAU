@@ -52,10 +52,9 @@ namespace NoPoorAfrica.Controllers
             }
             catch (Exception ex)
             {
-
                 return Json(new { success = false, message = "Error while deleting." });
-
             }
+
             return Json(new { success = true, message = "Delete success." });
         }
     }

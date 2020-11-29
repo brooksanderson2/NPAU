@@ -18,19 +18,15 @@ namespace NoPoorAfrica.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         
-
         public EmailController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-           
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-         
-                return Json( new { data = _unitOfWork.OrderHeader.GetAll(d => d.EmailPreference == true,null,"ApplicationUser") });
-
+            return Json( new { data = _unitOfWork.OrderHeader.GetAll(d => d.EmailPreference == true,null,"ApplicationUser") });
         }
     }
 }

@@ -35,6 +35,7 @@ namespace NoPoorAfrica.Pages.Admin.Size
 
             return Page();
         }
+
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
@@ -49,7 +50,7 @@ namespace NoPoorAfrica.Pages.Admin.Size
 
             else
             {
-                _unitOfWork.Size.Update(SizeObj);
+                _unitOfWork.Size.Update(SizeObj); // updating an existing size
             }
 
             _unitOfWork.Save();
