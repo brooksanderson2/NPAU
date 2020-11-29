@@ -19,17 +19,20 @@
                         <input class="form-control" asp-for="ArticleObj.Title" />
                         <span class="text-danger" asp-validation-for="ArticleObj.Title"></span>
                     </div>
+
                     @if (Model.ArticleObj.Id != 0)
                     {
                         <input type="hidden" asp-for="ArticleObj.Id" />
                     }
+                    <input type="hidden" id="articleId" value="@Model.ArticleObj.Id" />
+
                 </div>
                 <div class="form-group row">
                     <div class="col-1">
                         <label class="font-weight-bold" asp-for="ArticleObj.Template"></label>
                     </div>
                     <div class="col-6">
-                        <input type="radio" asp-for="ArticleObj.Template" value="template_1" checked />Template 1  &nbsp;&nbsp;
+                        <input type="radio" asp-for="ArticleObj.Template" value="template_1" />Template 1  &nbsp;&nbsp;
                         <input type="radio" asp-for="ArticleObj.Template" value="template_2" />Template 2  &nbsp;&nbsp;
                         <input type="radio" asp-for="ArticleObj.Template" value="template_3" />Template 3&nbsp;&nbsp;
                     </div>
@@ -39,23 +42,21 @@
                         <input type="file" id="fUpload" name="files" multiple class="form-control" />
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-4">
-                        <input type="button" id="btnFUpload" value="Upload Images" />
-                    </div>
-                </div>
                 @if (Model.ThumbnailList != null && Model.ThumbnailList.Count() > 0)
                 {
                     <hr />
 
-                <div class="image-gallery">
-                    @foreach (NoPoorAfrica.Models.Models.ArticleFiles file in Model.ThumbnailList)
-                    {
-                        <div class="image-gallery-card">
-                            <img class="image-gallery-img" src="@file.FilePath" />
+                    <div class="image-gallery">
+                        @for (int i = 0; i < Model.ThumbnailList.Count(); i++)
+                        {
+                        <div class="image-gallery-card" style="position: relative;">
+                            <img class="image-gallery-img" src="@Model.ThumbnailList.ElementAt(i)" />
+                            <button id="moveLeft-@Model.ThumbnailList.ElementAt(i)" onclick="moveLeft('@Model.ThumbnailList.ElementAt(i)');" type="button" class="fas fa-angle-double-left" style="position: absolute; left: 5px; top: 46%; opacity: .5;"></button>
+                            <button id="moveRight-@Model.ThumbnailList.ElementAt(i)" onclick="moveRight'(@Model.ThumbnailList.ElementAt(i)');" type="button" class="fas fa-angle-double-right" style="position: absolute; right: 5px; top: 46%; opacity: .5;"></button>
+                            <button id="deleteImage-@Model.ThumbnailList.ElementAt(i)" onclick="deleteImage('@Model.ThumbnailList.ElementAt(i)');" type="button" class="fas fa-trash" style="position: absolute; top: 5px; right: 5px; opacity: .5;"></button>
                         </div>
-                    }
-                </div>
+                        }
+                    </div>
                 <hr />
                 }
                 <br><br>
