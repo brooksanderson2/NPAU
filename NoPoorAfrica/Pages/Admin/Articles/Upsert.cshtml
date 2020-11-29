@@ -51,9 +51,9 @@
                         {
                         <div class="image-gallery-card" style="position: relative;">
                             <img class="image-gallery-img" src="@Model.ThumbnailList.ElementAt(i)" />
-                            <button id="moveLeft-@Model.ThumbnailList.ElementAt(i)" onclick="moveLeft('@Model.ThumbnailList.ElementAt(i)');" type="button" class="fas fa-angle-double-left" style="position: absolute; left: 5px; top: 46%; opacity: .5;"></button>
-                            <button id="moveRight-@Model.ThumbnailList.ElementAt(i)" onclick="moveRight'(@Model.ThumbnailList.ElementAt(i)');" type="button" class="fas fa-angle-double-right" style="position: absolute; right: 5px; top: 46%; opacity: .5;"></button>
-                            <button id="deleteImage-@Model.ThumbnailList.ElementAt(i)" onclick="deleteImage('@Model.ThumbnailList.ElementAt(i)');" type="button" class="fas fa-trash" style="position: absolute; top: 5px; right: 5px; opacity: .5;"></button>
+                            <button onclick='    moveLeft( "@System.Web.HttpUtility.UrlEncode(Model.ThumbnailList.ElementAt(i))" ); ' type="button" class="fas fa-angle-double-left" style="position: absolute; left: 5px; top: 46%; opacity: .5;"></button>
+                            <button onclick='   moveRight( "@System.Web.HttpUtility.UrlEncode(Model.ThumbnailList.ElementAt(i))" ); ' type="button" class="fas fa-angle-double-right" style="position: absolute; right: 5px; top: 46%; opacity: .5;"></button>
+                            <button onclick=' deleteImage( "@System.Web.HttpUtility.UrlEncode(Model.ThumbnailList.ElementAt(i))" ); ' type="button" class="fas fa-trash" style="position: absolute; top: 5px; right: 5px; opacity: .5;"></button>
                         </div>
                         }
                     </div>

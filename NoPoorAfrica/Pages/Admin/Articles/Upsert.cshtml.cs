@@ -47,10 +47,6 @@ namespace NoPoorAfrica.Pages.Admin.Articles
 
                 ThumbnailList = _unitOfWork.ArticleFiles.GetByArticleAscending(ArticleObj.Id);
             }
-            else
-            {
-                return NotFound();
-            }
 
             return Page();
         }
@@ -94,6 +90,7 @@ namespace NoPoorAfrica.Pages.Admin.Articles
             else //Article already exists - user is updating it.
             {
                 _unitOfWork.Article.Update(ArticleObj);
+                _unitOfWork.Save();
             }
 
             //Add uploaded images to repository model
@@ -114,14 +111,12 @@ namespace NoPoorAfrica.Pages.Admin.Articles
                     ArticleId = ArticleObj.Id,
                     FilePath = "\\images\\ArticleImages\\" + fileName + extension,
                     OriginalName = item.FileName,
-                    Position = 0 //TODO: Fix position
+                    Position = _unitOfWork.ArticleFiles.GetLowestAvailablePosition(ArticleObj.Id)
                 };
 
                 _unitOfWork.ArticleFiles.Add(UploadedImage);
+                _unitOfWork.Save();
             }
-
-            _unitOfWork.Save();
-
             return RedirectToPage("./Index");
         }
     }

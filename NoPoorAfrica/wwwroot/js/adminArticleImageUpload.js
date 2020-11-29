@@ -22,7 +22,7 @@ async function getPositions() {
 
 function moveLeft(imgPath) {
     $.ajax({
-        "url": "/api/articleImages/Left/?ArticleId=" + $('#articleId').prop("value") + "&" + imgPath,
+        "url": "/api/articleImages/Left/?ArticleId=" + $('#articleId').prop("value") + "&Path=" + imgPath,
         "type": "PATCH",
         "datatype": "json"
     }).done(function (result) {
@@ -31,11 +31,23 @@ function moveLeft(imgPath) {
 }
 
 function moveRight(imgPath) {
+    $.ajax({
+        "url": "/api/articleImages/Right/?ArticleId=" + $('#articleId').prop("value") + "&Path=" + imgPath,
+        "type": "PATCH",
+        "datatype": "json"
+    }).done(function (result) {
 
+    });
 }
 
 function deleteImage(imgPath){
+    $.ajax({
+        "url": "/api/articleImages/Delete/?ArticleId=" + $('#articleId').prop("value") + "&Path=" + imgPath,
+        "type": "DELETE",
+        "datatype": "json"
+    }).done(function (result) {
 
+    });
 }
 
 function prepareButtonUpload() {

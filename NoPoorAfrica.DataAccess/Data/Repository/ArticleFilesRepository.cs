@@ -28,6 +28,31 @@ namespace NoPoorAfrica.DataAccess.Data.Repository
             return _db.ArticleFiles.OrderBy(i => i.Position).Where(i => i.ArticleId == ArticleId).Last().Position;
         }
 
+        public int GetLowestAvailablePosition(int ArticleId)
+        {
+            try
+            {
+                var Collection = _db.ArticleFiles.OrderBy(i => i.Position).Where(i => i.ArticleId == ArticleId);
+                int i = 0;
+                foreach (var item in Collection)
+                {
+                    if (item.Position > i)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+                return i;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
         public Dictionary<string,int> GetByArticleWithPosition(int ArticleId)
         {
             var values = _db.ArticleFiles.Where(i => i.ArticleId == ArticleId).ToList();

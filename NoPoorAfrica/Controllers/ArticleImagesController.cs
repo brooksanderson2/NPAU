@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using NoPoorAfrica.DataAccess.Data.Repository;
 using NoPoorAfrica.DataAccess.Data.Repository.IRepository;
@@ -28,20 +29,25 @@ namespace NoPoorAfrica.Controllers
         
         // PATCH: api/<ArticleImagesController>/Left/ArticleId?Path
         [HttpPatch]
+        [Route("/api/[controller]/Left")]
         public JsonResult Left(int ArticleId, string Path)
         {
-            var item = _unitOfWork.ArticleFiles.GetFirstOrDefault(i => i.FilePath == Path);
+            var item = _unitOfWork.ArticleFiles.GetFirstOrDefault(i => i.FilePath == HttpUtility.UrlDecode(Path));
             if (item != null)
             {
                 if (item.Position > 0)
                 {
                     try
                     {
-                        ArticleFiles ItemToSwap = _unitOfWork.ArticleFiles.GetFirstOrDefault(i => i.Position == item.Position - 1);
-                        ItemToSwap.Position++;
+                        ArticleFiles ItemToSwap = _unitOfWork.ArticleFiles.GetFirstOrDefault(i => i.Position == item.Position - 1 && i.ArticleId == ArticleId);
+                        if (ItemToSwap != null)
+                        {
+                            ItemToSwap.Position++;
+                            _unitOfWork.ArticleFiles.Update(ItemToSwap);
+                        }
+
                         item.Position--;
                         _unitOfWork.ArticleFiles.Update(item);
-                        _unitOfWork.ArticleFiles.Update(ItemToSwap);
                         _unitOfWork.Save();
 
                         return Json( new { success = true, message = "Position updated!" });
@@ -61,9 +67,10 @@ namespace NoPoorAfrica.Controllers
 
         // PATCH: api/<ArticleImagesController>/Right/ArticleId?Path
         [HttpPatch]
+        [Route("/api/[controller]/Right")]
         public JsonResult Right(int ArticleId, string Path)
         {
-            var item = _unitOfWork.ArticleFiles.GetFirstOrDefault(i => i.FilePath == Path);
+            var item = _unitOfWork.ArticleFiles.GetFirstOrDefault(i => i.FilePath == HttpUtility.UrlDecode(Path));
             int end = _unitOfWork.ArticleFiles.GetLastPosition(ArticleId);
             if (item != null)
             {
@@ -71,10 +78,14 @@ namespace NoPoorAfrica.Controllers
                 {
                     try
                     {
-                        ArticleFiles ItemToSwap = _unitOfWork.ArticleFiles.GetFirstOrDefault(i => i.Position == item.Position - 1);
-                        ItemToSwap.Position--;
+                        ArticleFiles ItemToSwap = _unitOfWork.ArticleFiles.GetFirstOrDefault(i => i.Position == item.Position + 1 && i.ArticleId == ArticleId);
+                        if (ItemToSwap != null)
+                        {
+                            ItemToSwap.Position--;
+                            _unitOfWork.ArticleFiles.Update(ItemToSwap);
+                        }
+
                         item.Position++;
-                        _unitOfWork.ArticleFiles.Update(ItemToSwap);
                         _unitOfWork.ArticleFiles.Update(item);
                         _unitOfWork.Save();
 
@@ -94,15 +105,28 @@ namespace NoPoorAfrica.Controllers
         }
 
         // GET api/<ArticleImagesController>/DeleteImage/id
-        [HttpDelete("{id}")]
-        public JsonResult DeleteImage(string Path)
+        [HttpDelete]
+        [Route("/api/[controller]/Delete")]
+        public JsonResult DeleteImage(int ArticleId, string Path)
         {
-            var item = _unitOfWork.ArticleFiles.GetFirstOrDefault(i => i.FilePath == Path);
+            var item = _unitOfWork.ArticleFiles.GetFirstOrDefault(i => i.FilePath == HttpUtility.UrlDecode(Path));
             if (item != null)
             {
                 try
                 {
+                    int Pos = item.Position;
                     _unitOfWork.ArticleFiles.Remove(item);
+
+                    var Collection = _unitOfWork.ArticleFiles.GetAll(i => i.ArticleId == ArticleId);
+                    foreach (var image in Collection)
+                    {
+                        if (image.Position > Pos)
+                        {
+                            image.Position--;
+                            _unitOfWork.ArticleFiles.Update(image);
+                        }
+                    }
+
                     _unitOfWork.Save();
 
                     return Json( new { success = true, message = "Delete successful." });
