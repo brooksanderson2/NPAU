@@ -12,9 +12,10 @@ namespace NoPoorAfrica.Pages.Admin.Articles
     //[Authorize(Roles = SD.AdminRole)]
     public class IndexModel : PageModel
     {
+
         public void OnGet()
         {
-
+           
         }
     }
 }

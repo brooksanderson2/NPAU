@@ -20,6 +20,8 @@ namespace NoPoorAfrica.Pages.Articles
         public Article DetailedArticle { get; set; }
         public bool DetailedView { get; set; }
 
+        public int count = 0;
+
         public IndexModel(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
