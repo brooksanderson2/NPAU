@@ -21,8 +21,8 @@ function loadList() {
                 }, width: "25%"
             },
             
-            { "data": "transactionID", "width": "25%" },
-            { "data": "EmailPrefernce", "width": "25%" },
+            { "data": "transactionId", "width": "25%" },
+            { "data": "emailPreference", "width": "25%" },
         
         ],
         "language": {
