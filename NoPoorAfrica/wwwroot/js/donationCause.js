@@ -15,16 +15,17 @@ function loadList() {
 			{ "data": "title", "width": "10%" },
 			{ "data": "fromDate", "render": function (data, type) {
 			  return type === 'sort' ? data : moment(data).format('MM/DD/YYYY');
-				}, "width": "10%"
+				}, "width": "8%"
 			},
 			{ "data": "toDate", "render": function (data, type) {
 			  return type === 'sort' ? data : moment(data).format('MM/DD/YYYY');
-				}, "width": "10%"
+				}, "width": "8%"
 			},
 			{ "data": "fundingGoal", render: $.fn.dataTable.render.number(',', '.', 2, '$'), "width": "5%" },
 			{ "data": "country", "width": "5%" },
 			{ "data": "description", "width": "30%" },
 			{ "data": "donationCauseCategory.name", "width": "15%" },
+			{ "data": "image", "render": function (data) { return `<img src="${data}" alt="Label" style="width:130px;height:175px;">`; }, "width": "19%" },
 			{ "data": "id",
 				"render": function (data) {
 					return `
