@@ -29,7 +29,6 @@ namespace NoPoorAfrica.Models.Models
         [ForeignKey("SizeId")]
         public virtual Size Size { get; set; }
 
-
         public int Inventory { get; set; }
     }
 }

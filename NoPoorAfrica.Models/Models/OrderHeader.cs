@@ -15,10 +15,6 @@ namespace NoPoorAfrica.Models.Models
         public string Address { get; set; }
         public string UserId { get; set; }
 
-        ////Newly added in and will be used with a logged in customer
-        //[Display(Name = "Order Name")]
-        //public string OrderName { get; set; }
-
         [ForeignKey("UserId")]
         public virtual ApplicationUser ApplicationUser { get; set; }
 
@@ -36,7 +32,5 @@ namespace NoPoorAfrica.Models.Models
         public bool EmailPreference { get; set; }
         public string Comments { get; set; }
         public string TransactionId { get; set; }
-
-        
     }
 }

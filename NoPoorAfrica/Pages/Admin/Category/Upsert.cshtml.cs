@@ -35,6 +35,7 @@ namespace NoPoorAfrica.Pages.Admin.Category
 
             return Page();
         }
+
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
@@ -49,7 +50,7 @@ namespace NoPoorAfrica.Pages.Admin.Category
 
             else
             {
-                _unitOfWork.Category.Update(CategoryObj);
+                _unitOfWork.Category.Update(CategoryObj); // updating a category g
             }
 
             _unitOfWork.Save();

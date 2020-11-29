@@ -49,7 +49,6 @@ namespace NoPoorAfrica.Pages.User.Cart
             {
                 IEnumerable<ShoppingCart> cart = _unitOfWork.ShoppingCart.GetAll(c => c.ApplicationUserId == claim.Value);
 
-
                 if (cart != null)
                 {
                     OrderDetailsCart.ListCart = cart.ToList();
@@ -66,10 +65,7 @@ namespace NoPoorAfrica.Pages.User.Cart
                 //Retrieve details of the person logged in 
                 ApplicationUser applicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(c => c.Id == claim.Value);
                 OrderDetailsCart.OrderHeader.Email = applicationUser.Email;
-                //OrderDetailsCart.OrderHeader.DeliveryName = applicationUser.FullName;
                 OrderDetailsCart.OrderHeader.PurchaseDate = DateTime.Now;
-                //OrderDetailsCart.OrderHeader.PhoneNumber = applicationUser.PhoneNumber;
-
             }
         }
 
@@ -79,11 +75,11 @@ namespace NoPoorAfrica.Pages.User.Cart
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
             OrderDetailsCart.ListCart = _unitOfWork.ShoppingCart.GetAll(c => c.ApplicationUserId == claim.Value).ToList();
-
             OrderDetailsCart.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
             OrderDetailsCart.OrderHeader.PurchaseDate = DateTime.Now;
             OrderDetailsCart.OrderHeader.UserId = claim.Value;
             OrderDetailsCart.OrderHeader.Status = SD.StatusSubmitted;
+
             bool email = emailbox ?? false;
             if (email) {
                 OrderDetailsCart.OrderHeader.EmailPreference = true;
@@ -92,7 +88,6 @@ namespace NoPoorAfrica.Pages.User.Cart
                 OrderDetailsCart.OrderHeader.EmailPreference = false; 
             }
            
-
             _unitOfWork.OrderHeader.Add(OrderDetailsCart.OrderHeader);
             _unitOfWork.Save();
 
@@ -118,7 +113,6 @@ namespace NoPoorAfrica.Pages.User.Cart
                     PurchaseDate = DateTime.Now,
                 };
 
-
                 OrderDetailsCart.OrderHeader.OrderTotal += (orderDetails.Count * orderDetails.Price) * (1 + SD.SalesTaxPercent);
 
                 _unitOfWork.OrderDetails.Add(orderDetails);
@@ -131,7 +125,6 @@ namespace NoPoorAfrica.Pages.User.Cart
             HttpContext.Session.SetInt32(SD.ShoppingCart, 0);
 
             _unitOfWork.Save();
-
 
             if(stripeToken != null)
             {
@@ -161,11 +154,7 @@ namespace NoPoorAfrica.Pages.User.Cart
                     decimal a;
                     a = Convert.ToDecimal(amount);
                     emailSender.SendEmailAsync(OrderDetailsCart.OrderHeader.Email, "Thank you for your purchase from No Poor Africa!", "Purchase amount: " + amount.ToString("C2") + "\n" + "Purchase ID: " + OrderDetailsCart.OrderHeader.Id);
-
-
-
                     OrderDetailsCart.OrderHeader.PaymentStatus = SD.PaymentStatusApproved;
-
                 }
 
                 else
@@ -176,7 +165,6 @@ namespace NoPoorAfrica.Pages.User.Cart
 
             _unitOfWork.Save();
             return RedirectToPage("/User/Cart/OrderConfirmation", new { id = OrderDetailsCart.OrderHeader.Id });
-
         }
     }
 }

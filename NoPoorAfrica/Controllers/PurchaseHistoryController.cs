@@ -22,7 +22,6 @@ namespace NoPoorAfrica.Controllers
         {
             _unitOfWork = unitOfWork;
             _hostingEnvionment = hostingEnvironment;
-
         }
 
         [HttpGet]
@@ -33,17 +32,13 @@ namespace NoPoorAfrica.Controllers
 
             if (User.IsInRole(SD.AdminRole))
             {
-
                 return Json(new { data = _unitOfWork.PurchaseHistory.GetAll(null, null, "StoreItem,ApplicationUser") });
-
             }
 
             else
             {
                 return Json(new { data = _unitOfWork.PurchaseHistory.GetAll(c => c.ApplicationUserId == claim.Value, null, "StoreItem,ApplicationUser") });
-
             }
-
         }
     }
 }

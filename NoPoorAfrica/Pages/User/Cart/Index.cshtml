@@ -9,18 +9,15 @@
 
     @if (Model.OrderDetailsCart.ListCart.Count > 0)
     {
-
         <input asp-for="@Model.OrderDetailsCart.ListCart[0].ApplicationUserId" hidden />
         <div class="backgroundWhiteBorder">
             <div class="container">
                 <div class="card">
-
                     <div class="card-header bg-dark text-light font-weight-bold ml-0 row container center-screen">
                         <div class=" center-screen">
 
                             Shopping Cart Summary
                         </div>
-
                     </div>
                     <div class="card-body">
                         @foreach (var item in Model.OrderDetailsCart.ListCart)
@@ -31,12 +28,8 @@
                                 </div>
                                 <div class="col">
                                     <h4><strong>@item.StoreItem.Name</strong></h4>
-                                    @*<span class="badge badge-warning h3">Purchase Date: @DateTime.Now.ToString("MM/dd")</span>*@
                                 </div>
-
                                 <div>
-
-
                                 </div>
                                 <div class="col text-sm-center col-lg-5 text-lg-right row">
                                     <div class="col-4 text-md-right" style="padding-top:5px;">
@@ -86,7 +79,6 @@
                                 <a asp-page="Summary" class="btn btn-primary form-control">Continue to Checkout</a>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

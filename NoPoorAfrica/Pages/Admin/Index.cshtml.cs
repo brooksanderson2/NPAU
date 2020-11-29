@@ -12,7 +12,6 @@ namespace NoPoorAfrica.Pages.Admin
         public IActionResult OnGet()
         {
             return RedirectToPage("/Identity/Account/Login");
-        
         }
     }
 }

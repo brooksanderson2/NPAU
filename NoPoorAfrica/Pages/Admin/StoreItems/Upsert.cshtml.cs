@@ -33,6 +33,7 @@ namespace NoPoorAfrica.Pages.Admin.StoreItems
                 CategoryList = _unitOfWork.Category.GetCategoryListForDropDown(),
                 SizeList = _unitOfWork.Size.GetSizeListForDropDown()
             };
+
             if(id != null)
             {
                 StoreItemObj.StoreItem = _unitOfWork.StoreItem.GetFirstOrDefault(u => u.Id == id);
@@ -43,7 +44,6 @@ namespace NoPoorAfrica.Pages.Admin.StoreItems
             }
 
             return Page();
-
         }
 
         public IActionResult OnPost()
@@ -67,6 +67,7 @@ namespace NoPoorAfrica.Pages.Admin.StoreItems
                 {
                     files[0].CopyTo(fileStream);
                 }
+
                 //save the string data path
                 StoreItemObj.StoreItem.Image = @"\images\menuitems\" + fileName + extension;
                 _unitOfWork.StoreItem.Add(StoreItemObj.StoreItem);
@@ -82,27 +83,31 @@ namespace NoPoorAfrica.Pages.Admin.StoreItems
                     var uploads = Path.Combine(webRootPath, @"images\storeitems");
                     var extension = Path.GetExtension(files[0].FileName);
                     var imagePath = Path.Combine(webRootPath, objFromDb.Image.TrimStart('\\')); //trim off forward slash
+
                     if (System.IO.File.Exists(imagePath))
                     {
                         System.IO.File.Delete(imagePath);
                     }
+
                     using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
                     {
                         files[0].CopyTo(fileStream);
                     }
+
                     //save the string data path
                     StoreItemObj.StoreItem.Image = @"\images\storeitems\" + fileName + extension;
                 }
+
                 else
                 {
                     StoreItemObj.StoreItem.Image = objFromDb.Image;
                 }
+
                 _unitOfWork.StoreItem.Update(StoreItemObj.StoreItem);
             }
 
             _unitOfWork.Save();
             return RedirectToPage("./Index");
         }
-
     }
 }
