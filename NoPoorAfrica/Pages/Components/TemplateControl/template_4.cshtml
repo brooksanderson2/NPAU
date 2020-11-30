@@ -1,0 +1,27 @@
+﻿@{
+    @model NoPoorAfrica.Models.ViewModels.ArticlesTemplateViewModel
+}
+
+<div class="container">
+    <div class="row">
+        <h1>@Model.Title</h1>
+    </div>
+    <hr />
+    <div class="col-11 row offset-1">
+        <div>
+            <img class="rounded" src="@Model.ImageGallery[0]" style="height:330px; width:310px;" />
+        </div>
+        <div>
+            <img class="rounded" src="@Model.ImageGallery[1]" style="height:330px; width:310px;" />
+        </div>
+        <div>
+            <img class="rounded" src="@Model.ImageGallery[2]" style="height:330px; width:310px;" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="article-body col-11 offset-1 border rounded border-dark p-4 mb-5">
+            @Html.Raw(@System.Net.WebUtility.HtmlDecode(Model.Body))
+        </div>
+    </div>
+</div>
