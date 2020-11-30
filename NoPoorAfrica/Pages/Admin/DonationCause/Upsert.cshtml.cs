@@ -49,7 +49,7 @@ namespace NoPoorAfrica.Pages.Admin.DonationCause
         {
             if (!ModelState.IsValid)
             {
-                if(DonationCauseObj.DonationCause.DonationCauseCategoryId == 0 && DonationCauseObj.DonationCause.Id != 0)
+                if(/*DonationCauseObj.DonationCause.DonationCauseCategoryId == 0 &&*/ DonationCauseObj.DonationCause.Id != 0)
                 {
                     DonationCauseObj.DonationCause = _unitOfWork.DonationCause.GetFirstOrDefault(u => u.Id == DonationCauseObj.DonationCause.Id);
                     if (DonationCauseObj == null)
