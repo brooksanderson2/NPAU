@@ -51,7 +51,7 @@ namespace NoPoorAfrica.Controllers
                 obj.Email = objFromDb.Email;
                 obj.Comments = objFromDb.Comments;
                 obj.FollowUp = objFromDb.FollowUp;
-                obj.TransactionId = objFromDb.TransactionId;
+                //obj.TransactionId = objFromDb.TransactionId;
                 obj.DonationDate = objFromDb.DonationDate;
                 obj.DonationCause = objFromDb.DonationCause;
 

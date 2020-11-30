@@ -6,6 +6,7 @@
 
 
 <form method="post">
+	<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 	<br />
 	<div class="backgroundWhiteBorder">
 		<div class="container">
@@ -39,6 +40,7 @@
 									<div class="col-9">
 										<input id="txtName" asp-for="@Model.DonationDetails.DonorName" type="text" class="form-control" />
 										<input id="txtNameHidden" asp-for="@Model.DonationDetails.DonorName" type="text" class="form-control" disabled hidden />
+										<span asp-validation-for="DonationDetails.DonorName" class="text-danger"></span>
 									</div>
 								</div>
 								<div class="row my-1">
@@ -47,6 +49,7 @@
 									</div>
 									<div class="col-9">
 										<input id="txtPhone" asp-for="@Model.DonationDetails.DonationTotal" type="text" class="form-control" />
+										<span asp-validation-for="DonationDetails.DonationTotal" class="text-danger"></span>
 									</div>
 								</div>
 								<div class="row my-1">
@@ -56,6 +59,7 @@
 									<div class="col-9">
 										<input id="txtEmail" asp-for="@Model.DonationDetails.Email" type="text" class="form-control" />
 										<input id="txtEmailHidden" asp-for="@Model.DonationDetails.Email" type="text" class="form-control" disabled hidden />
+										<span asp-validation-for="DonationDetails.Email" class="text-danger"></span>
 									</div>
 								</div>
 								<div class="row my-1">

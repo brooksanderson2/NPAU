@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NoPoorAfrica.DataAccess.Data.Repository.IRepository;
@@ -22,7 +23,7 @@ namespace NoPoorAfrica.Pages.User.DonationCause
             _authOptions = authOptions;
         }
 
-        [BindProperty]
+        //[BindProperty]
         public Models.Models.DonationCause DonationCauseObj { get; set; }
 
         [BindProperty]
@@ -45,61 +46,74 @@ namespace NoPoorAfrica.Pages.User.DonationCause
                     DonationDetails.Email = applicationUser.Email;
                 }
             }
+            ViewData["Title"] = DonationCauseObj.Title;
+            ViewData["Image"] = DonationCauseObj.Image;
+            HttpContext.Session.SetString("donationCauseId", DonationCauseObj.Id.ToString());
         }
 
         public IActionResult OnPost(string stripeToken)
         {
-            
-            if (User.Identity.IsAuthenticated)
+            DonationCauseObj = _unitOfWork.DonationCause.GetFirstOrDefault(c => c.Id == Int32.Parse(HttpContext.Session.GetString("donationCauseId")));
+            if (ModelState.IsValid)
             {
-                var claimIdentity = (ClaimsIdentity)User.Identity;
-                var claim = claimIdentity.FindFirst(ClaimTypes.NameIdentifier);
-                DonationDetails.UserId = claim.Value;
+                if (User.Identity.IsAuthenticated)
+                {
+                    var claimIdentity = (ClaimsIdentity)User.Identity;
+                    var claim = claimIdentity.FindFirst(ClaimTypes.NameIdentifier);
+                    DonationDetails.UserId = claim.Value;
+                }
+                else
+                {
+                    DonationDetails.UserId = null;
+                }
+                DonationDetails.PaymentStatus = SD.PaymentStatusPending;
+                DonationDetails.DonationDate = DateTime.Now;
+                DonationDetails.DonationCauseId = DonationCauseObj.Id;
+                if (stripeToken != null)
+                {
+                    var options = new ChargeCreateOptions
+                    {
+                        //Amount in cents
+                        Amount = Convert.ToInt32(DonationDetails.DonationTotal * 100),
+                        Currency = "usd",
+                        Description = "Donation ID: " + DonationDetails.Id,
+                        Source = stripeToken
+                    };
+
+                    var service = new ChargeService();
+                    Charge charge = service.Create(options);
+
+                    DonationDetails.TransactionId = charge.Id;
+
+                    if (charge.Status.ToLower() == "succeeded")
+                    {
+                        //send confirmation email
+                        EmailSender emailSender;
+                        emailSender = new EmailSender(_authOptions);
+                        double amount = DonationDetails.DonationTotal;
+                        decimal a;
+                        a = Convert.ToDecimal(amount);
+                        emailSender.SendEmailAsync(DonationDetails.Email, "Thank you for your donation to No Poor Africa!", "Donation amount: " + amount.ToString("C2") + "\n" + "Donation ID: " + DonationDetails.TransactionId);
+
+                        DonationDetails.PaymentStatus = SD.PaymentStatusApproved;
+                    }
+
+                    else
+                    {
+                        DonationDetails.PaymentStatus = SD.PaymentStatusRejected;
+                    }
+                }
+                _unitOfWork.DonationDetails.Add(DonationDetails);
+                _unitOfWork.Save();
+                HttpContext.Session.Remove("donationCauseId");
+                return RedirectToPage("/User/DonationCause/DonationConfirmation", new { id = DonationDetails.TransactionId });
             }
             else
             {
-                DonationDetails.UserId = null;
+                ViewData["Title"] = DonationCauseObj.Title;
+                ViewData["Image"] = DonationCauseObj.Image;
+                return Page();
             }
-            DonationDetails.PaymentStatus = SD.PaymentStatusPending;
-            DonationDetails.DonationDate = DateTime.Now;
-            DonationDetails.DonationCauseId = DonationCauseObj.Id;
-            if (stripeToken != null)
-            {
-                var options = new ChargeCreateOptions
-                {
-                    //Amount in cents
-                    Amount = Convert.ToInt32(DonationDetails.DonationTotal * 100),
-                    Currency = "usd",
-                    Description = "Donation ID: " + DonationDetails.Id,
-                    Source = stripeToken
-                };
-
-                var service = new ChargeService();
-                Charge charge = service.Create(options);
-
-                DonationDetails.TransactionId = charge.Id;
-
-                if (charge.Status.ToLower() == "succeeded")
-                {
-                    //send confirmation email
-                    EmailSender emailSender;
-                    emailSender = new EmailSender(_authOptions);
-                    double amount = DonationDetails.DonationTotal;
-                    decimal a;
-                    a = Convert.ToDecimal(amount);
-                    emailSender.SendEmailAsync(DonationDetails.Email, "Thank you for your donation to No Poor Africa!", "Donation amount: " + amount.ToString("C2") + "\n" + "Donation ID: " + DonationDetails.TransactionId);
-
-                    DonationDetails.PaymentStatus = SD.PaymentStatusApproved;
-                }
-
-                else
-                {
-                    DonationDetails.PaymentStatus = SD.PaymentStatusRejected;
-                }
-            }
-            _unitOfWork.DonationDetails.Add(DonationDetails);
-            _unitOfWork.Save();
-            return RedirectToPage("/User/DonationCause/DonationConfirmation", new { id = DonationDetails.TransactionId });
         }
     }
 }

@@ -23,7 +23,7 @@ function loadList() {
 			},
 			{ "data": "email", "width": "10%" },
 			{ "data": "donationCause.title", "width": "15%" },
-			{ "data": "transactionId", "width": "15%" },
+			{ "data": "id", "width": "15%" },
 			{
 				"data": "id",
 				"render": function (data) {

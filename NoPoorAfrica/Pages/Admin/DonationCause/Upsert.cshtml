@@ -28,7 +28,7 @@
 				</div>
 				<div class="form-group row">
 					<div class="col-3">
-						<label>Funding Goal</label>
+						<label>Funding Goal $</label>
 					</div>
 					<div class="col-9">
 						<input class="form-control" asp-for="DonationCauseObj.DonationCause.FundingGoal" />
@@ -46,18 +46,18 @@
 				</div>
 				<div class="row my-1">
 					<div class="col-3">
-						<label>Start Date</label>
+						<label>Start Date (mm/dd/yyyy)</label>
 					</div>
 					<div class="col-9">
-						<input id="datepicker" value="" asp-for="@Model.DonationCauseObj.DonationCause.FromDate" class="form-control" />
+						<input id="datepicker" value="@Model.DonationCauseObj.DonationCause.FromDate.ToString("MM/dd/yyyy")" asp-for="@Model.DonationCauseObj.DonationCause.FromDate" type="text" class="form-control" />
 					</div>
 				</div>
 				<div class="row my-1">
 					<div class="col-3">
-						<label>End Date</label>
+						<label>End Date (mm/dd/yyyy)</label>
 					</div>
 					<div class="col-9">
-						<input id="datepicker2" value="" asp-for="@Model.DonationCauseObj.DonationCause.ToDate" type="text" class="form-control" />
+						<input id="datepicker2" value="@Model.DonationCauseObj.DonationCause.ToDate.ToString("MM/dd/yyyy")" asp-for="@Model.DonationCauseObj.DonationCause.ToDate" type="text" class="form-control" />
 					</div>
 				</div>
 				<div class="form-group row">
