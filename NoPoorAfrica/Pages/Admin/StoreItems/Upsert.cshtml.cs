@@ -53,6 +53,29 @@ namespace NoPoorAfrica.Pages.Admin.StoreItems
 
             if (!ModelState.IsValid)
             {
+                if (StoreItemObj.StoreItem.Id != 0)
+                {
+                    StoreItemObj.StoreItem = _unitOfWork.StoreItem.GetFirstOrDefault(u => u.Id == StoreItemObj.StoreItem.Id);
+
+                    if (StoreItemObj == null)
+                    {
+                        return NotFound();
+                    }
+
+                    StoreItemObj.CategoryList = _unitOfWork.Category.GetCategoryListForDropDown();
+                    StoreItemObj.SizeList = _unitOfWork.Size.GetSizeListForDropDown();
+                }
+
+                else
+                {
+                    StoreItemObj = new StoreItemVM
+                    {
+                        StoreItem = new Models.Models.StoreItem(),
+                        CategoryList = _unitOfWork.Category.GetCategoryListForDropDown(),
+                        SizeList = _unitOfWork.Size.GetSizeListForDropDown()
+                    };
+                }
+
                 return Page();
             }
 
