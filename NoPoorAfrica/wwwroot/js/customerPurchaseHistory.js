@@ -13,15 +13,16 @@ function loadList() {
         },
         "columns": [
 
-            { "data": "id", "width": "10%" },
+            { "data": "orderNumber", "width": "10%" },
             { "data": "storeItem.name", "width": "35%" },
             { "data": "count", "width": "20%" },
             {
                 "data": "purchaseDate",
                 "render": function (data, type) {
                     return type === 'sort' ? data : moment(data).format('MM/DD/YYYY');
-                }, width: "35%"
+                }, width: "25%"
             },
+            { "data": "total", render: $.fn.dataTable.render.number(',', '.', 2, '$'), "width": "10%"},
         ],
         "language": {
             "emptyTable": "no data found."

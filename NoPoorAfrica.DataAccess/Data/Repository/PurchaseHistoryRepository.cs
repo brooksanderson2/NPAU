@@ -34,6 +34,8 @@ namespace NoPoorAfrica.DataAccess.Repository
             objFromDb.PurchaseDate = purchaseHistory.PurchaseDate;
             objFromDb.ApplicationUserId = purchaseHistory.ApplicationUserId;
             objFromDb.StoreItemId = purchaseHistory.StoreItemId;
+            objFromDb.Total = purchaseHistory.Total;
+            objFromDb.OrderNumber = purchaseHistory.OrderNumber;
         
             _db.SaveChanges();
         }

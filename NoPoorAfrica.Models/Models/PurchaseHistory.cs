@@ -20,6 +20,7 @@ namespace NoPoorAfrica.Models.Models
         [Range(1, 100, ErrorMessage = "Please select a count between 1 and 100")]
         public int Count { get; set; }
         public double Total { get; set; }
+        public int OrderNumber { get; set; }
 
         public string ApplicationUserId { get; set; }
 
