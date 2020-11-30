@@ -54,8 +54,8 @@ function loadList() {
 
 function Delete(url) {
 	swal({
-		title: "Are you sure you want to delete?",
-		text: "You will not be able to restore the data!",
+		title: "*WARNING: THIS WILL DELETE ALL DONATION RECORDS ASSOCIATED WITH THIS CAUSE*",
+		text: "If you wish to keep donation records for this cause, click 'Cancel' and de-activate the cause in the 'Edit' page instead of deleting it. Are you sure you want to delete?",
 		icon: "warning",
 		buttons: true,
 		dangerMode: true

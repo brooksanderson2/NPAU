@@ -49,6 +49,25 @@ namespace NoPoorAfrica.Pages.Admin.DonationCause
         {
             if (!ModelState.IsValid)
             {
+                if(/*DonationCauseObj.DonationCause.DonationCauseCategoryId == 0 &&*/ DonationCauseObj.DonationCause.Id != 0)
+                {
+                    DonationCauseObj.DonationCause = _unitOfWork.DonationCause.GetFirstOrDefault(u => u.Id == DonationCauseObj.DonationCause.Id);
+                    if (DonationCauseObj == null)
+                    {
+                        return NotFound();
+                    }
+                    DonationCauseObj.DonationCauseCategoryList = _unitOfWork.DonationCauseCategory.GetDonationCauseCategoryListForDropDown();
+
+                }
+                else
+                {
+                    DonationCauseObj = new DonationCauseVM
+                    {
+                        DonationCause = new Models.Models.DonationCause(),
+                        DonationCauseCategoryList = _unitOfWork.DonationCauseCategory.GetDonationCauseCategoryListForDropDown()
+                    };
+                }
+
                 return Page();
             }
 

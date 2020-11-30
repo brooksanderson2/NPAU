@@ -29,6 +29,7 @@ namespace NoPoorAfrica.DataAccess.Data.Repository
             donationCauseFromDb.GoalProgress = donationCause.GoalProgress;
             donationCauseFromDb.IsActive = donationCause.IsActive;
             donationCauseFromDb.IsFeatured = donationCause.IsFeatured;
+            donationCauseFromDb.DonationCauseCategoryId = donationCause.DonationCauseCategoryId;
 
 
 
