@@ -26,7 +26,12 @@ namespace NoPoorAfrica.Models.Models
         [Required]
         [NotMapped]
         public DateTime PurchaseDate { get; set; }
+        
+        [Required]
         public string Email { get; set; }
+
+        [Required]
+        public string Name { get; set; }
         public string Status { get; set; }
         public string PaymentStatus { get; set; }
         public bool EmailPreference { get; set; }
