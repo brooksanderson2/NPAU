@@ -32,8 +32,10 @@ namespace NoPoorAfrica.Pages.User.Cart
         [BindProperty]
         public OrderHeader OrderHeader { get; set; }
 
-        public void OnGet()
+        public void OnGet(int id)
         {
+            //OrderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(c => c.Id == id);
+
             OrderDetailsCart = new OrderDetailsCartVM()
             {
                 OrderHeader = new NoPoorAfrica.Models.Models.OrderHeader(),
@@ -65,12 +67,15 @@ namespace NoPoorAfrica.Pages.User.Cart
                 //Retrieve details of the person logged in 
                 ApplicationUser applicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(c => c.Id == claim.Value);
                 OrderDetailsCart.OrderHeader.Email = applicationUser.Email;
+                OrderDetailsCart.OrderHeader.Name = applicationUser.FullName;
                 OrderDetailsCart.OrderHeader.PurchaseDate = DateTime.Now;
             }
         }
 
         public IActionResult OnPost(string stripeToken, bool? emailbox)
         {
+            //if (ModelState.IsValid)
+            //{
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
@@ -81,13 +86,15 @@ namespace NoPoorAfrica.Pages.User.Cart
             OrderDetailsCart.OrderHeader.Status = SD.StatusSubmitted;
 
             bool email = emailbox ?? false;
-            if (email) {
+            if (email)
+            {
                 OrderDetailsCart.OrderHeader.EmailPreference = true;
-                    }
-            else {
-                OrderDetailsCart.OrderHeader.EmailPreference = false; 
             }
-           
+            else
+            {
+                OrderDetailsCart.OrderHeader.EmailPreference = false;
+            }
+
             _unitOfWork.OrderHeader.Add(OrderDetailsCart.OrderHeader);
             _unitOfWork.Save();
 
@@ -129,7 +136,7 @@ namespace NoPoorAfrica.Pages.User.Cart
 
             _unitOfWork.Save();
 
-            if(stripeToken != null)
+            if (stripeToken != null)
             {
                 var options = new ChargeCreateOptions
                 {
@@ -144,8 +151,8 @@ namespace NoPoorAfrica.Pages.User.Cart
                 Charge charge = service.Create(options);
 
                 OrderDetailsCart.OrderHeader.TransactionId = charge.Id;
-                
-                if(charge.Status.ToLower() == "succeeded")
+
+                if (charge.Status.ToLower() == "succeeded")
                 {
                     //Send a confirmation email
                     EmailSender emailSender;
@@ -168,6 +175,12 @@ namespace NoPoorAfrica.Pages.User.Cart
 
             _unitOfWork.Save();
             return RedirectToPage("/User/Cart/OrderConfirmation", new { id = OrderDetailsCart.OrderHeader.Id });
+            //}
+
+            //else
+            //{
+            //    return Page();
+            //}
         }
     }
 }

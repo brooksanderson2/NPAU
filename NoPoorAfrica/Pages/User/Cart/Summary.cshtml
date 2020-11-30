@@ -7,132 +7,138 @@
 @{
     ViewData["Title"] = "Summary";
 }
-    <form method="post">
-        <br />
-
-        @if (Model.OrderDetailsCart.ListCart.Count > 0)
-        {
-            <input asp-for="@Model.OrderDetailsCart.ListCart[0].ApplicationUserId" hidden />
-            <div >
-                <div class="container">
-                    <div>
-                        <a asp-page="Index" class="btn bg-warning btn-sm">Back to Cart</a>
+<form method="post">
+    <br />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @if (Model.OrderDetailsCart.ListCart.Count > 0)
+    {
+        <input asp-for="@Model.OrderDetailsCart.ListCart[0].ApplicationUserId" hidden />
+        <div>
+            <div class="container">
+                <div>
+                    <a asp-page="Index" class="btn bg-warning btn-sm">Back to Cart</a>
+                </div>
+                <br />
+                <div class="card">
+                    <div class="card-header bg-dark text-light ml-0 row container center-screen">
+                        <div>
+                            <h3>Order Summary</h3>
+                        </div>
                     </div>
-                    <br />
-                    <div class="card">
-                        <div class="card-header bg-dark text-light ml-0 row container center-screen">
-                            <div>
-                                <h3>Order Summary</h3>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="container rounded p-2">
-                                <div class="row">
-                                    <div class="col-12 col-lg-6 pb-4">
-                                        <div class="row">
-                                            <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                                <span class="text-dark">Order Details:</span>
-                                            </h4>
-                                        </div>
-                                        <div class="row my-1">
-                                            <div class="col-3">
-                                                <label>Name</label>
-                                            </div>
-                                            <div class="col-9">
-                                                <input id="txtName" type="text" class="form-control" />
-                                            </div>
-                                        </div>
-                                        <div class="row my-1">
-                                            <div class="col-3">
-                                                <label>Email</label>
-                                            </div>
-                                            <div class="col-9">
-                                                <input id="txtEmail" type="text" class="form-control" />
-                                            </div>
-                                        </div>
-                                        <div class="row my-1">
-                                            <div class="col-3">
-                                                <label>Address</label>
-                                            </div>
-                                            <div class="col-9">
-                                                <input asp-for="@Model.OrderDetailsCart.OrderHeader.Address" style="height:100px;" class="form-control" />
-                                            </div>
-                                        </div>
-                                        <div class="row my-1">
-                                            <div class="col-3">
-                                                <label>Additional Instructions:</label>
-                                            </div>
-                                            <div class="col-9">
-                                                <textarea asp-for="@Model.OrderDetailsCart.OrderHeader.Comments" style="height:100px;" class="form-control"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="row my-1">
-                                            <div class="col-1">
-                                                <input type="checkbox" id="emailCheckBox" name="emailbox" value="true" />
-                                            </div>
-                                            <div class="col-9">
-                                                <label>Email me updates on store items</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-lg-5 offset-lg-1">
-                                        <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                            <span class="text-dark">Order Total:</span>
-                                        </h4>
-                                        <ul class="list-group mb-3">
-                                            @{ var total = 0.0;}
-                                            @foreach (var details in Model.OrderDetailsCart.ListCart)
-                                            {
-                                                <li class="list-group-item d-flex justify-content-between">
-                                                    <div>
-                                                        <h6 class="my-0">@details.StoreItem.Name</h6>
-                                                        <small class="text-muted">Quantity: @details.Count</small>
-                                                    </div>
-                                                    <span class="text-muted">$@((details.StoreItem.Price * details.Count).ToString("0.00"))</span>
-                                                    @{ total += (details.StoreItem.Price * details.Count);}
-                                                </li>
-                                            }
-                                            <li class="list-group-item d-flex justify-content-between bg-light">
-                                                <small class="text-dark">Sales Tax (@SD.SalesTaxRate%)</small>
-                                                @{ var salesTax = Math.Round((total * SD.SalesTaxPercent), 2);}
-                                                <strong class="text-dark">$@salesTax.ToString("0.00")</strong>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between bg-light">
-                                                <small class="text-dark">Total (USD)</small>
-                                                @{ total += salesTax;}
-                                                <strong class="text-dark">$@total.ToString("0.00")</strong>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer">
+                    <div class="card-body">
+                        <div class="container rounded p-2">
                             <div class="row">
-                                <div class="col-12 col-md-6">
-                                    @{
-                                        var OrderTotalForStripe = Math.Round((Model.OrderDetailsCart.OrderHeader.OrderTotal * 100), 0);
-                                    }
-                                    <script src="https://checkout.stripe.com/checkout.js"
-                                            class="stripe-button"
-                                            data-key="@Stripe.Value.PublishableKey"
-                                            data-amount="@OrderTotalForStripe"
-                                            data-name="No Poor Amoung Us"
-                                            data-label="Place Order"
-                                            data-description="Empower a Woman, Lift a Nation!"
-                                            data-locale="auto"
-                                            data-allow-remember-me="false"
-                                            data-image="/Images/npau.png">
-                                    </script>
-                                    <script>document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';</script>
-                                    <button type="submit" id="btnPlaceOrder" onclick="return validateInput()" value="Place Order" class="btn btn-warning form-control">Pay With Stripe</button>
+                                <div class="col-12 col-lg-6 pb-4">
+                                    <div class="row">
+                                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="text-dark">Order Details:</span>
+                                        </h4>
+                                    </div>
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label>Name</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <input id="txtName" asp-for="@Model.OrderDetailsCart.OrderHeader.Name" type="text" class="form-control" />
+                                            <input id="txtNameHidden" asp-for="@Model.OrderDetailsCart.OrderHeader.Name" type="text" class="form-control" disabled hidden />
+                                            <span asp-validation-for="OrderDetailsCart.OrderHeader.Name" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label>Email</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <input id="txtEmail" asp-for="@Model.OrderDetailsCart.OrderHeader.Email" type="text" class="form-control" />
+                                            <input id="txtEmailHidden" asp-for="@Model.OrderDetailsCart.OrderHeader.Email" type="text" class="form-control" disabled hidden />
+                                            <span asp-validation-for="OrderDetailsCart.OrderHeader.Email" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label>Address</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <input asp-for="@Model.OrderDetailsCart.OrderHeader.Address" style="height:100px;" class="form-control" />
+                                            <span asp-validation-for="OrderDetailsCart.OrderHeader.Address" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label>Additional Instructions:</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <textarea asp-for="@Model.OrderDetailsCart.OrderHeader.Comments" style="height:100px;" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row my-1">
+                                        <div class="col-1">
+                                            <input type="checkbox" id="emailCheckBox" name="emailbox" value="true" />
+                                        </div>
+                                        <div class="col-9">
+                                            <label>Email me updates on store items</label>
+                                        </div>
+                                    </div>
                                 </div>
+                                <div class="col-12 col-lg-5 offset-lg-1">
+                                    <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="text-dark">Order Total:</span>
+                                    </h4>
+                                    <ul class="list-group mb-3">
+                                        @{ var total = 0.0;}
+                                        @foreach (var details in Model.OrderDetailsCart.ListCart)
+                                        {
+                                            <li class="list-group-item d-flex justify-content-between">
+                                                <div>
+                                                    <h6 class="my-0">@details.StoreItem.Name</h6>
+                                                    <small class="text-muted">Quantity: @details.Count</small>
+                                                </div>
+                                                <span class="text-muted">$@((details.StoreItem.Price * details.Count).ToString("0.00"))</span>
+                                                @{ total += (details.StoreItem.Price * details.Count);}
+                                            </li>
+                                        }
+                                        <li class="list-group-item d-flex justify-content-between bg-light">
+                                            <small class="text-dark">Sales Tax (@SD.SalesTaxRate%)</small>
+                                            @{ var salesTax = Math.Round((total * SD.SalesTaxPercent), 2);}
+                                            <strong class="text-dark">$@salesTax.ToString("0.00")</strong>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between bg-light">
+                                            <small class="text-dark">Total (USD)</small>
+                                            @{ total += salesTax;}
+                                            <strong class="text-dark">$@total.ToString("0.00")</strong>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                @{
+                                    var OrderTotalForStripe = Math.Round((Model.OrderDetailsCart.OrderHeader.OrderTotal * 100), 0);
+                                }
+                                <script src="https://checkout.stripe.com/checkout.js"
+                                        class="stripe-button"
+                                        data-key="@Stripe.Value.PublishableKey"
+                                        data-amount="@OrderTotalForStripe"
+                                        data-name="No Poor Amoung Us"
+                                        data-label="Place Order"
+                                        data-description="Empower a Woman, Lift a Nation!"
+                                        data-locale="auto"
+                                        data-allow-remember-me="false"
+                                        data-image="/Images/npau.png">
+                                </script>
+                                <script>document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';</script>
+                                <button type="submit" id="btnPlaceOrder" onclick="return validateInput()" value="Place Order" class="btn btn-warning form-control">Pay With Stripe</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        }
-    </form>
+        </div>
+    }
+</form>
 
     @section Scripts{
         <script>
