@@ -1,5 +1,27 @@
 ﻿@page
 @model NoPoorAfrica.Pages.Admin.Articles.UpsertModel
+
+
+<!-- Modal -->
+<div class="modal fade" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="PreviewTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="PreviewTitle">Preview</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <form method="post" enctype="multipart/form-data" asp-controller="fileUpload" asp-action="Upsert">
     <div class="container">
         <div class="row px-1 mx-1 backgroundWhite border">
@@ -77,7 +99,7 @@
                         }
                     </div>
                     <div class="col-6">
-                        <button class="btn btn-primary form-control">Preview</button>
+                        <button class="btn btn-primary col-6" type="button" data-toggle="modal" data-target="#previewModal">Preview</button>
                     </div>
                     <div class="col-3">
                         <a asp-page="./Index" class="btn btn-dark form-control">Back to Articles</a>
