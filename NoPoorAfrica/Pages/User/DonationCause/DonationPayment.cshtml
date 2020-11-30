@@ -9,108 +9,108 @@
 	<br />
 	<div class="backgroundWhiteBorder">
 		<div class="container">
-            <div class="card">
-                <div class="card-header bg-dark text-light ml-0 row container">
-                    <div class="col-6">
-                        Donation to @Model.DonationCauseObj.Title
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="container rounded p-2">
-                        <div class="row">
-                            <div class="col-12 col-lg-6 pb-4">
-                                <div class="row">
-                                    <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                        <span class="text-info text-black-50">Donation Details:</span>
-                                    </h4>
-                                </div>
-                                <div class="row my-1">
-                                    <div class="col-1">
-                                        <input type="checkbox" id="anonCheckBox" onclick="return anonymous()" />
-                                    </div>
-                                    <div class="col-9">
-                                        <label>Check if you want to make an anonymous donation</label>
-                                    </div>
-                                </div>
-                                <div class="row my-1">
-                                    <div class="col-3">
-                                        <label>Name</label>
-                                    </div>
-                                    <div class="col-9">
-                                        <input id="txtName" asp-for="@Model.DonationDetails.DonorName" type="text" class="form-control" />
-                                        <input id="txtNameHidden" asp-for="@Model.DonationDetails.DonorName" type="text" class="form-control" disabled hidden />
-                                    </div>
-                                </div>
-                                <div class="row my-1">
-                                    <div class="col-3">
-                                        <label>Amount</label>
-                                    </div>
-                                    <div class="col-9">
-                                        <input id="txtPhone" asp-for="@Model.DonationDetails.DonationTotal" type="text" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="row my-1">
-                                    <div class="col-3">
-                                        <label>Email</label>
-                                    </div>
-                                    <div class="col-9">
-                                        <input id="txtEmail" asp-for="@Model.DonationDetails.Email" type="text" class="form-control" />
-                                        <input id="txtEmailHidden" asp-for="@Model.DonationDetails.Email" type="text" class="form-control" disabled hidden />
-                                    </div>
-                                </div>
-                                <div class="row my-1">
-                                    <div class="col-3">
-                                        <label>Comments</label>
-                                    </div>
-                                    <div class="col-9">
-                                        <textarea asp-for="@Model.DonationDetails.Comments" style="height:100px;" class="form-control"></textarea>
-                                    </div>
-                                </div>
-                                <div class="row my-1">
-                                    <div class="col-9">
-                                        <label>I would like to receive updates about future causes</label>
-                                    </div>
-                                    <div class="col-1">
-                                        <input id="followUpChckBx" asp-for="@Model.DonationDetails.FollowUp" class="form-control" />
-                                    </div>
-                                </div>
+			<div class="card">
+				<div class="card-header bg-dark text-light ml-0 row container">
+					<div class="col-6">
+						Donation to @Model.DonationCauseObj.Title
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="container rounded p-2">
+						<div class="row">
+							<div class="col-12 col-lg-6 pb-4">
+								<div class="row">
+									<h4 class="d-flex justify-content-between align-items-center mb-3">
+										<span class="text-info text-black-50">Donation Details:</span>
+									</h4>
+								</div>
+								<div class="row my-1">
+									<div class="col-1">
+										<input type="checkbox" id="anonCheckBox" onclick="return anonymous()" />
+									</div>
+									<div class="col-9">
+										<label>Check if you want to make an anonymous donation</label>
+									</div>
+								</div>
+								<div class="row my-1">
+									<div class="col-3">
+										<label>Name</label>
+									</div>
+									<div class="col-9">
+										<input id="txtName" asp-for="@Model.DonationDetails.DonorName" type="text" class="form-control" />
+										<input id="txtNameHidden" asp-for="@Model.DonationDetails.DonorName" type="text" class="form-control" disabled hidden />
+									</div>
+								</div>
+								<div class="row my-1">
+									<div class="col-3">
+										<label>Amount</label>
+									</div>
+									<div class="col-9">
+										<input id="txtPhone" asp-for="@Model.DonationDetails.DonationTotal" type="text" class="form-control" />
+									</div>
+								</div>
+								<div class="row my-1">
+									<div class="col-3">
+										<label>Email</label>
+									</div>
+									<div class="col-9">
+										<input id="txtEmail" asp-for="@Model.DonationDetails.Email" type="text" class="form-control" />
+										<input id="txtEmailHidden" asp-for="@Model.DonationDetails.Email" type="text" class="form-control" disabled hidden />
+									</div>
+								</div>
+								<div class="row my-1">
+									<div class="col-3">
+										<label>Comments</label>
+									</div>
+									<div class="col-9">
+										<textarea asp-for="@Model.DonationDetails.Comments" style="height:100px;" class="form-control"></textarea>
+									</div>
+								</div>
+								<div class="row my-1">
+									<div class="col-9">
+										<label>I would like to receive updates about future causes</label>
+									</div>
+									<div class="col-1">
+										<input id="followUpChckBx" asp-for="@Model.DonationDetails.FollowUp" class="form-control" />
+									</div>
+								</div>
 
-                            </div>
-                            <div class="col-12 col-lg-6 ">
-                                <img src="@Model.DonationCauseObj.Image" style="width:100%" class="rounded" />
-                            </div>
-                        </div>
-                        
-                    </div>
-                    
-                </div>
-                
-                <div class="card-footer">
-                    <div class="row">
-                        <div class="ccol-12 col-md-6 pb-1">
-                            <button type="submit" id="btnPlaceOrderPaypal" onclick="return validateInput()" value="Place Order Paypal" class="btn btn-warning form-control">Donate With Paypal</button>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            @{
-                                var OrderTotalForStripe = Math.Round((Model.DonationDetails.DonationTotal * 100), 0); //convert to cents
-                            }
-                            <script src="https://checkout.stripe.com/checkout.js"
-                                    class="stripe-button"
-                                    data-key="@Stripe.Value.PublishableKey"
-                                    data-amount="@OrderTotalForStripe"
-                                    data-name="No Poor Africa"
-                                    data-label="Place Donation"
-                                    data-description="No Poor Among Us"
-                                    data-locale="auto"
-                                    data-allow-remember-me="false"
-                                    data-image="/Images/npau.png">
-                            </script>
-                            <script>document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';</script>
-                            <button type="submit" id="btnPlaceOrder" onclick="return validateInput()" value="Place Order" class="btn btn-warning form-control">Donate With Stripe</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+							</div>
+							<div class="col-12 col-lg-6 ">
+								<img src="@Model.DonationCauseObj.Image" style="width:100%" class="rounded" />
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="card-footer">
+					<div class="row">
+						<div class="col-12 col-md-6 pb-1 ">
+							<a asp-page="Index" class="btn border-warning btn-square form-control">Cancel</a>
+						</div>
+						<div class="col-12 col-md-6">
+							@{
+								var OrderTotalForStripe = Math.Round((Model.DonationDetails.DonationTotal * 100), 0); //convert to cents
+							}
+							<script src="https://checkout.stripe.com/checkout.js"
+									class="stripe-button"
+									data-key="@Stripe.Value.PublishableKey"
+									data-amount="@OrderTotalForStripe"
+									data-name="No Poor Africa"
+									data-label="Place Donation"
+									data-description="No Poor Among Us"
+									data-locale="auto"
+									data-allow-remember-me="false"
+									data-image="/Images/npau.png">
+							</script>
+							<script>document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';</script>
+							<button type="submit" id="btnPlaceOrder" value="Place Order" class="btn btn-warning form-control">Donate With Stripe</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </form>
@@ -140,6 +140,5 @@
 
 			return true;
 		}
-
 	</script>
 }

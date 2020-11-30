@@ -81,6 +81,16 @@ body {
     margin-bottom: 30px;
 }
 
+.backgroundBlack {
+    background-color: white;
+    border-style: solid;
+    border: thick;
+    border-color: black;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
 .textBoxBackgroundReturn {
     background-color: #FAFAD2;
     padding: 30px;
@@ -268,4 +278,10 @@ hr {
     text-overflow: ellipsis;
     white-space: nowrap;
     height: 150px;
+}
+
+.ovalImage {
+    width: 200px;
+    height: 300px;
+    border-radius: 50%;
 }

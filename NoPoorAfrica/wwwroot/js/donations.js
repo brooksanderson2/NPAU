@@ -1,10 +1,55 @@
 ﻿var dataTable;
 
+
+
+
+
 $(document).ready(function () {
+	$.fn.dataTable.ext.search.push(
+		function (settings, data, dataIndex) {
+			var min = $('#datemin').datepicker('getDate');
+			var max = $('#datemax').datepicker('getDate');
+			var startDate = new Date(data[2]);
+			if (min == null && max == null) return true;
+			if (min == null && startDate <= max) return true;
+			if (max == null && startDate >= min) return true;
+			if (startDate <= max && startDate >= min) return true;
+			return false;
+		}
+	);
+
+	$.fn.dataTable.ext.search.push(
+	function (settings, data, dataIndex) {
+		var min = parseFloat($('#min').val(), 10);
+		var max = parseFloat($('#max').val(), 10);
+		var donation = parseFloat(data[1]) || 0;
+
+		if ((isNaN(min) && isNaN(max)) ||
+			(isNaN(min) && donation <= max) ||
+			(min <= donation && isNaN(max)) ||
+			(min <= donation && donation <= max)) {
+			return true;
+		}
+		return false;
+	}
+	);
+
+	$('#datemin').datepicker({ onSelect: function () { dataTable.draw(); }, changeMonth: true, changeYear: true });
+	$('#datemax').datepicker({ onSelect: function () { dataTable.draw(); }, changeMonth: true, changeYear: true });
+
 	loadList();
+
+	$('#min, #max').keyup(function () {
+		dataTable.draw();
+	});
+
+	$('#datemin, #datemax').change(function () {
+		dataTable.draw();
+	});
 });
 
 function loadList() {
+
 	dataTable = $('#DT_load').DataTable({
 		"ajax": {
 			"url": "/api/donations",
@@ -36,6 +81,12 @@ function loadList() {
 			'csv', 'pdf', 'print'
 		],
 	});
+
+
+
+
+
+
 }
 
 function Delete(url) {

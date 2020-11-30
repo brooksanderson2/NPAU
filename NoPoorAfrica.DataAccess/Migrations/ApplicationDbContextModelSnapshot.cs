@@ -403,6 +403,9 @@ namespace NoPoorAfrica.DataAccess.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsFeatured")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -547,6 +550,50 @@ namespace NoPoorAfrica.DataAccess.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("OrderHeader");
+                });
+
+            modelBuilder.Entity("NoPoorAfrica.Models.Models.PendingWire", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Comments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DonationCauseId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DonationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("DonationTotal")
+                        .HasColumnType("float");
+
+                    b.Property<string>("DonorName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("FollowUp")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PaymentStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TransactionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DonationCauseId");
+
+                    b.ToTable("PendingWire");
                 });
 
             modelBuilder.Entity("NoPoorAfrica.Models.Models.PurchaseHistory", b =>
@@ -779,6 +826,15 @@ namespace NoPoorAfrica.DataAccess.Migrations
                     b.HasOne("NoPoorAfrica.Models.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("NoPoorAfrica.Models.Models.PendingWire", b =>
+                {
+                    b.HasOne("NoPoorAfrica.Models.Models.DonationCause", "DonationCause")
+                        .WithMany()
+                        .HasForeignKey("DonationCauseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("NoPoorAfrica.Models.Models.PurchaseHistory", b =>

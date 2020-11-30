@@ -7,7 +7,6 @@
 @{
     ViewData["Title"] = "Summary";
 }
-
     <form method="post">
         <br />
 
@@ -21,12 +20,10 @@
                     </div>
                     <br />
                     <div class="card">
-
                         <div class="card-header bg-dark text-light ml-0 row container center-screen">
                             <div>
                                 <h3>Order Summary</h3>
                             </div>
-
                         </div>
                         <div class="card-body">
                             <div class="container rounded p-2">
@@ -45,30 +42,6 @@
                                                 <input id="txtName" type="text" class="form-control" />
                                             </div>
                                         </div>
-                                        @*<div class="row my-1">
-                                <div class="col-3">
-                                    <label>Phone Number</label>
-                                </div>
-                                <div class="col-9">
-                                    <input id="txtPhone" asp-for="@Model.OrderDetailsCart.OrderHeader.PhoneNumber" type="text" class="form-control" />
-                                </div>
-                            </div>*@
-                                        @*<div class="row my-1">
-                                <div class="col-3">
-                                    <label>Delivery Date</label>
-                                </div>
-                                <div class="col-9">
-                                    <input id="datepicker" value="" asp-for="@Model.OrderDetailsCart.OrderHeader.PurchaseDate" type="text" class="form-control" />
-                                </div>
-                            </div>*@
-                                        @*<div class="row my-1">
-                                <div class="col-3">
-                                    <label>Order Date</label>
-                                </div>
-                                <div class="col-9">
-                                    <input id="timepicker" value="" asp-for="@Model.OrderDetailsCart.OrderHeader.PurchaseDate" type="text" class="form-control" />
-                                </div>
-                            </div>*@
                                     <div class="row my-1">
                                         <div class="col-3">
                                             <label>Email</label>
@@ -95,15 +68,13 @@
                                         </div>
                                         <div class="row my-1">
                                             <div class="col-1">
-                                                <input type="checkbox" id="emailCheckBox" name="emailbox" onclick="return emailPreference()" />
+                                                <input type="checkbox" id="emailCheckBox" name="emailbox" value="true" />
                                             </div>
                                             <div class="col-9">
                                                 <label>Email me updates on store items</label>
                                             </div>
-
                                         </div>
                                     </div>
-
                                     <div class="col-12 col-lg-5 offset-lg-1">
                                         <h4 class="d-flex justify-content-between align-items-center mb-3">
                                             <span class="text-dark">Order Total:</span>
@@ -130,7 +101,6 @@
                                                 <small class="text-dark">Total (USD)</small>
                                                 @{ total += salesTax;}
                                                 <strong class="text-dark">$@total.ToString("0.00")</strong>
-
                                         </ul>
                                     </div>
                                 </div>
@@ -138,9 +108,6 @@
                         </div>
                         <div class="card-footer">
                             <div class="row">
-                                <div class="ccol-12 col-md-6 pb-1">
-                                    <button type="submit" id="btnPlaceOrderPaypal" onclick="return validateInput()" value="Place Order Paypal" class="btn btn-warning form-control">Pay With Paypal</button>
-                                </div>
                                 <div class="col-12 col-md-6">
                                     @{
                                         var OrderTotalForStripe = Math.Round((Model.OrderDetailsCart.OrderHeader.OrderTotal * 100), 0);
@@ -156,7 +123,6 @@
                                             data-allow-remember-me="false"
                                             data-image="/Images/npau.png">
                                     </script>
-
                                     <script>document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';</script>
                                     <button type="submit" id="btnPlaceOrder" onclick="return validateInput()" value="Place Order" class="btn btn-warning form-control">Pay With Stripe</button>
                                 </div>
@@ -174,7 +140,6 @@
                 $("#datepicker").datepicker({ minDate: 1, maxDate: "+1W" });
                 $("#timepicker").timepicker({ 'minTime': '11:00 AM', 'maxTime': '9:00 PM', step: '30' });
             });
-
 
             function validateInput() {
                 var time = document.getElementById("timepicker").value;
@@ -202,7 +167,7 @@
             }
 
             function emailPreference() {
-              @Model.OrderDetailsCart.OrderHeader.EmailPreference = document.getElementById("emailCheckBox").checked;
+                @Model.OrderDetailsCart.OrderHeader.EmailPreference = document.getElementById(emailCheckBox).checked;
             }
 
         </script>

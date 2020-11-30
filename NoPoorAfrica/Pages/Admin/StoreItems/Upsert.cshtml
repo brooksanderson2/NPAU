@@ -2,16 +2,17 @@
 @model NoPoorAfrica.Pages.Admin.StoreItems.UpsertModel
 @{
 }
+
+@*Admin table for updating or editing store items*@
+
 <form method="post" asp-action="Upsert" enctype="multipart/form-data">
     <div class="container">
         <div class="row px-2 mx-2 backgroundWhite border">
             <div asp-validation-summary="ModelOnly" class="text-danger">
             </div>
-
             <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
                 <h2 class="text-dark">@(Model.StoreItemObj.StoreItem.Id !=0 ? "Update" : "Create") Store Item</h2>
             </div>
-
             <div class="col-8 pt-3">
                 <div class="form-group row">
                     <div class="col-3">
@@ -84,9 +85,6 @@
                         <span class="text-danger" asp-validation-for="StoreItemObj.StoreItem.SizeId"></span>
                     </div>
                 </div>
-
-
-
                 <div class="form-group row">
                     <div class="col-9 offset-3">
                         <div class="row">
@@ -133,6 +131,5 @@
             }
             return true;
         }
-
     </script>
 }

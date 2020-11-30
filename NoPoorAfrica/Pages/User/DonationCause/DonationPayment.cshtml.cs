@@ -15,10 +15,11 @@ namespace NoPoorAfrica.Pages.User.DonationCause
     public class DonationPaymentModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;
-
-        public DonationPaymentModel(IUnitOfWork unitOfWork)
+        private readonly Microsoft.Extensions.Options.IOptions<AuthSenderOptions> _authOptions;
+        public DonationPaymentModel(IUnitOfWork unitOfWork, Microsoft.Extensions.Options.IOptions<AuthSenderOptions> authOptions)
         {
             _unitOfWork = unitOfWork;
+            _authOptions = authOptions;
         }
 
         [BindProperty]
@@ -81,6 +82,13 @@ namespace NoPoorAfrica.Pages.User.DonationCause
                 if (charge.Status.ToLower() == "succeeded")
                 {
                     //send confirmation email
+                    EmailSender emailSender;
+                    emailSender = new EmailSender(_authOptions);
+                    double amount = DonationDetails.DonationTotal;
+                    decimal a;
+                    a = Convert.ToDecimal(amount);
+                    emailSender.SendEmailAsync(DonationDetails.Email, "Thank you for your donation to No Poor Africa!", "Donation amount: " + amount.ToString("C2") + "\n" + "Donation ID: " + DonationDetails.TransactionId);
+
                     DonationDetails.PaymentStatus = SD.PaymentStatusApproved;
                 }
 
