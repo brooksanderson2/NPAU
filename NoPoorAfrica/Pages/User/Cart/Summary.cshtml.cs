@@ -111,6 +111,9 @@ namespace NoPoorAfrica.Pages.User.Cart
                     Count = item.Count,
                     StoreItemId = item.StoreItemId,
                     PurchaseDate = DateTime.Now,
+                    Total = (item.Count * item.StoreItem.Price) * (1 + SD.SalesTaxPercent),
+                    OrderNumber = OrderDetailsCart.OrderHeader.Id
+
                 };
 
                 OrderDetailsCart.OrderHeader.OrderTotal += (orderDetails.Count * orderDetails.Price) * (1 + SD.SalesTaxPercent);

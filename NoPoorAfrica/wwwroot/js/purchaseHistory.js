@@ -13,16 +13,17 @@ function loadList() {
         },
         "columns": [
 
-            { "data": "id", "width": "10%" },
-            { "data": "applicationUser.fullName", "width": "25%" },
+            { "data": "orderNumber", "width": "10%" },
+            { "data": "applicationUser.fullName", "width": "20%" },
             { "data": "storeItem.name", "width": "25%" },
             { "data": "count", "width": "15%" },
             {
                 "data": "purchaseDate",
                 "render": function (data, type) {
                     return type === 'sort' ? data : moment(data).format('MM/DD/YYYY');
-                }, width: "25%"
+                }, width: "20%"
             },
+            { "data": "total", render: $.fn.dataTable.render.number(',', '.', 2, '$'), width:"10%"},
         ],
         "language": {
             "emptyTable": "no data found."
