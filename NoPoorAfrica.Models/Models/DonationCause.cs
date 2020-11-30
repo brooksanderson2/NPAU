@@ -10,12 +10,16 @@ namespace NoPoorAfrica.Models.Models
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public string Title { get; set; }
+        [Required]
         public string Description { get; set; }
 
-
+        [Required]
         public DateTime FromDate { get; set; }
+        [Required]
         public DateTime ToDate { get; set; }
+        [Required]
         public double FundingGoal { get; set; }
         public double GoalProgress { get; set; }
         public string Country { get; set; }

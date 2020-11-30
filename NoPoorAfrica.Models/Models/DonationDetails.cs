@@ -13,12 +13,14 @@ namespace NoPoorAfrica.Models.Models
         public string UserId { get; set; }
 
         public int DonationCauseId { get; set; }
-
+        [Required]
         public string DonorName { get; set; }
         [Required]
         [DisplayFormat(DataFormatString = "{0:C}")]
+        [Range(1.00, double.MaxValue, ErrorMessage = "Donations require a minimum of $1")]
         public double DonationTotal { get; set; }
         public string PaymentStatus { get; set; }
+        [Required]
         public string Email { get; set; }
         public string Comments { get; set; }
         public bool FollowUp { get; set; }

@@ -47,14 +47,13 @@ namespace NoPoorAfrica.Pages.Admin.DonationCause
 
         public IActionResult OnPost()
         {
-            string webRootPath = _hostingEnvironment.WebRootPath;
-            var files = HttpContext.Request.Form.Files;
-
-
             if (!ModelState.IsValid)
             {
                 return Page();
             }
+
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            var files = HttpContext.Request.Form.Files;
 
             if (DonationCauseObj.DonationCause.Id == 0) //means new menu item
             {
