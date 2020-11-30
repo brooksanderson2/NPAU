@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using NoPoorAfrica.DataAccess.Data.Repository;
+﻿using Microsoft.AspNetCore.Mvc;
 using NoPoorAfrica.DataAccess.Data.Repository.IRepository;
 using NoPoorAfrica.Models.Models;
+using NoPoorAfrica.Models.ViewModels;
+using System.Collections.Generic;
 
 namespace NoPoorAfrica.Controllers
 {
@@ -23,7 +20,37 @@ namespace NoPoorAfrica.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Json(new { data = _unitOfWork.Article.GetAll() });
+            List<ArticlesDataTableView> Dt = new List<ArticlesDataTableView>();
+            var Articles = _unitOfWork.Article.GetAll();
+
+            foreach (var article in Articles)
+            {
+                ArticleFiles Thumbnail = _unitOfWork.ArticleFiles.GetFirstOrDefault(i => i.ArticleId == article.Id);
+                string Path = "";
+
+                if (Thumbnail != null)
+                {
+                    Path = Thumbnail.FilePath;
+                }
+
+                Dt.Add(new ArticlesDataTableView()
+                {
+                    Id = article.Id,
+                    Body = article.Body,
+                    BodyFont = article.BodyFont,
+                    PublishDate = article.PublishDate,
+                    UpdateDate = article.UpdateDate,
+                    ArticleCategoryId = article.ArticleCategoryId,
+                    BodyTextSize = article.BodyTextSize,
+                    RouteName = article.RouteName,
+                    Title = article.Title,
+                    Template = article.Template,
+                    TitleFont = article.TitleFont,
+                    Image = Path
+                });
+            }
+
+            return Json(new { success = true , data = Dt} );
         }
 
         // GET api/<ArticlesController>/id

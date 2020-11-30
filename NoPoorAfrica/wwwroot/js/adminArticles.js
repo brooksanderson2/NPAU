@@ -12,7 +12,8 @@ function loadList() {
             "datatype": "json"
         },
         "columns": [
-            { data: "title", width: "40%" },
+            { "data": "image", "render": function (data) { return `<img src="${data}" alt="Label" style="max-height: 225px;">`; }, "width": "15%" },
+            { data: "title", width: "20%" },
             {
                 "data": "publishDate", "render": function (data, type) {
                     return type === 'sort' ? data : moment(data).format('MM/DD/YYYY');
@@ -24,10 +25,15 @@ function loadList() {
                 }, "width": "15%"
             },
             {
-                data: "id", width: "30%",
+                data: "id", width: "35%",
                 "render": function (data) {
                     return `
                         <div class="text-center">
+                            <a onClick=Publish('/api/articles/'+${data})
+                                class="btn btn-primary text-white style="cursor:pointer; width:100px;">
+                                <i class="fas fa-eye"></i>
+                                Publish
+                            </a>
                             <a href="/Admin/Articles/Upsert?id=${data}"
                                 class="btn btn-success text-white style="cursor:pointer; width:100px;">
                                 <i class="far fa-edit"></i>
@@ -47,6 +53,11 @@ function loadList() {
         },
         "width": "100%"
     });
+}
+
+function Publish(url) {
+    
+
 }
 
 function Delete(url) {
@@ -74,3 +85,4 @@ function Delete(url) {
         }
     });
 }
+
