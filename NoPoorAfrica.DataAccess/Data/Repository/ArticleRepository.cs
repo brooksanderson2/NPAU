@@ -31,12 +31,12 @@ namespace NoPoorAfrica.DataAccess.Data.Repository
 
         public List<int> GetArticleIds()
         {
-            return _db.Article.Select(i => i.Id).ToList();
+            return _db.Article.OrderBy(i => i.Id).Select(i => i.Id).ToList();
         }
 
         public List<bool> GetPublishStatus()
         {
-            return _db.Article.Select(i => i.IsPublished).ToList();
+            return _db.Article.OrderBy(i => i.Id).Select(i => i.IsPublished).ToList();
         }
 
         public void Update(Article article)
@@ -49,7 +49,7 @@ namespace NoPoorAfrica.DataAccess.Data.Repository
             objFromDb.BodyTextSize = article.BodyTextSize;
             objFromDb.PublishDate = article.PublishDate;
             objFromDb.UpdateDate = article.UpdateDate;
-            objFromDb.ArticleCategory = article.ArticleCategory;
+            objFromDb.ArticleCategoryId = article.ArticleCategoryId;
             objFromDb.IsPublished = article.IsPublished;
 
             if (objFromDb.Title == article.Title && objFromDb.RouteName != null)

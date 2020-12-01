@@ -77,7 +77,6 @@ namespace NoPoorAfrica.Pages.Admin.Articles
             }
 
             ArticleObj.UpdateDate = DateTime.Now;
-            ArticleObj.ArticleCategoryId = 1; //TODO: Category ID
 
             if (!ModelState.IsValid)
                 return Page();
@@ -121,7 +120,7 @@ namespace NoPoorAfrica.Pages.Admin.Articles
                 _unitOfWork.ArticleFiles.Add(UploadedImage);
                 _unitOfWork.Save();
             }
-            return Page();
+            return LocalRedirect("~/Admin/Articles/Upsert?id="+ArticleObj.Id);
         }
     }
 }

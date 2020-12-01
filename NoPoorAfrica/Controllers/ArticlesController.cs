@@ -54,6 +54,13 @@ namespace NoPoorAfrica.Controllers
             return Json(new { success = true , data = Dt} );
         }
 
+        [HttpGet]
+        [Route("/api/[controller]/GetArticlesInCategory")]
+        public IActionResult GetArticlesInCategory(int CategoryId)
+        {
+            return Json(new { items = _unitOfWork.Article.GetAll(i => i.IsPublished == true && i.ArticleCategoryId == CategoryId) });
+        }
+
         // PATCH api/<ArticlesController>/Publish/id
         [HttpPatch]
         [Route("/api/[controller]/Publish")]

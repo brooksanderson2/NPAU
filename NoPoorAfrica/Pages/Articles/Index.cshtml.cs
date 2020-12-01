@@ -13,12 +13,8 @@ namespace NoPoorAfrica.Pages.Articles
     public class IndexModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;
-
-        public ArticlesVM ArticlesList { get; set; }
         public Article DetailedArticle { get; set; }
         public bool DetailedView { get; set; }
-
-        public int count = 0;
 
         public IndexModel(IUnitOfWork unitOfWork)
         {
@@ -26,17 +22,44 @@ namespace NoPoorAfrica.Pages.Articles
         }
 
         public IEnumerable<ArticleFiles> ImageGallery { get; set; }
+        public List<ArticlesViewModel> ArticlesList { get; set; }
 
         public void OnGet(string id)
         {
             DetailedView = false;
-            ArticlesList = new ArticlesVM();
 
             if (id == null) 
             {
                 //If no article is selected in url, show recent articles
+                ArticlesList = new List<ArticlesViewModel>();
+                var Articles = _unitOfWork.Article.GetAll(i => i.IsPublished == true).OrderBy(i => i.PublishDate);
 
-                ArticlesList.Articles = _unitOfWork.Article.GetAll(i => i.IsPublished == true);
+                foreach (var article in Articles)
+                {
+                    string Thumbnail = _unitOfWork.ArticleFiles.GetFirstImage(article.Id);
+                    string Path = "";
+
+                    if (Thumbnail != null)
+                    {
+                        Path = Thumbnail;
+                    }
+
+                    ArticlesList.Add(new ArticlesViewModel()
+                    {
+                        Id = article.Id,
+                        Body = article.Body,
+                        BodyFont = article.BodyFont,
+                        PublishDate = article.PublishDate,
+                        UpdateDate = article.UpdateDate,
+                        ArticleCategoryId = article.ArticleCategoryId,
+                        BodyTextSize = article.BodyTextSize,
+                        RouteName = article.RouteName,
+                        Title = article.Title,
+                        Template = article.Template,
+                        TitleFont = article.TitleFont,
+                        Image = Path
+                    });
+                }
             }
             else
             {

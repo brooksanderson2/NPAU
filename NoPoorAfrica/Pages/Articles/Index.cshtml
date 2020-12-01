@@ -17,19 +17,25 @@
             </div>
         </div><br />
 
-        <ul id="posts">
             <!--for each article provided by controller, add a row here containing an article with a "read more"-->
-            @foreach (NoPoorAfrica.Models.Models.Article article in Model.ArticlesList.Articles)
+            @foreach (NoPoorAfrica.Models.ViewModels.ArticlesViewModel article in Model.ArticlesList)
             {
-                <li>
-                    <article>
+                <div class="container">
+                    <div class="row col-12">
+                        <h2 class="col-8">@article.Title</h2>
+                        @if (article.UpdateDate > article.PublishDate)
+                        {
+                            <label class="col-4">Updated @article.UpdateDate.ToShortDateString()</label>
+                        }
+                        else
+                        {
+                            <label class="col-4">Posted @article.PublishDate.ToShortDateString()</label>
+                        }
+                    </div>
+                    <img class="row col-4" src="@article.Image" />
                         <div class="row">
                             <div class="container">
-                                <div class="row">
-                                    <div class="col-8">
-                                        <h2>@article.Title</h2>
-                                    </div>
-                                </div>
+                                <br />
                                 <div class="row">
                                     <div class="col-10 ellips">
                                         @Html.Raw(@WebUtility.HtmlDecode(article.Body))
@@ -40,16 +46,10 @@
                                 </div>
                             </div>
                         </div>
-                        <hr />
-                        <br />
-                    </article>
-                </li>
+                    <hr />
+                    <br />
+                </div>
             }
-
-        </ul>
-        <p id="loading">
-            Loading...
-        </p>
     }
     else
     {
