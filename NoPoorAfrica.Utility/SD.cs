@@ -14,6 +14,8 @@ namespace NoPoorAfrica.Utility
         public const float SalesTaxPercent = 0.0825f;
         public const float SalesTaxRate = 8.25f;
 
+        public const float Shipping = 0;
+
 
         public const string PaymentStatusPending = "Payment Pending";
         public const string PaymentStatusApproved = "Payment Approved";

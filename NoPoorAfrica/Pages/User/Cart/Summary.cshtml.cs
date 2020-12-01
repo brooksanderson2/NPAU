@@ -34,8 +34,7 @@ namespace NoPoorAfrica.Pages.User.Cart
 
         public void OnGet(int id)
         {
-            //OrderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(c => c.Id == id);
-
+            
             OrderDetailsCart = new OrderDetailsCartVM()
             {
                 OrderHeader = new NoPoorAfrica.Models.Models.OrderHeader(),
@@ -62,7 +61,7 @@ namespace NoPoorAfrica.Pages.User.Cart
                     OrderDetailsCart.OrderHeader.OrderTotal += (cartList.StoreItem.Price * cartList.Count); //Subtotal
                 }
 
-                OrderDetailsCart.OrderHeader.OrderTotal += OrderDetailsCart.OrderHeader.OrderTotal * SD.SalesTaxPercent;
+                //OrderDetailsCart.OrderHeader.OrderTotal += OrderDetailsCart.OrderHeader.OrderTotal /** SD.SalesTaxPercent*/;
 
                 //Retrieve details of the person logged in 
                 ApplicationUser applicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(c => c.Id == claim.Value);
@@ -74,8 +73,7 @@ namespace NoPoorAfrica.Pages.User.Cart
 
         public IActionResult OnPost(string stripeToken, bool? emailbox)
         {
-            //if (ModelState.IsValid)
-            //{
+           
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
@@ -118,12 +116,12 @@ namespace NoPoorAfrica.Pages.User.Cart
                     Count = item.Count,
                     StoreItemId = item.StoreItemId,
                     PurchaseDate = DateTime.Now,
-                    Total = (item.Count * item.StoreItem.Price) * (1 + SD.SalesTaxPercent),
+                    Total = (item.Count * item.StoreItem.Price) /** (1 + SD.SalesTaxPercent)*/,
                     OrderNumber = OrderDetailsCart.OrderHeader.Id
 
                 };
 
-                OrderDetailsCart.OrderHeader.OrderTotal += (orderDetails.Count * orderDetails.Price) * (1 + SD.SalesTaxPercent);
+                OrderDetailsCart.OrderHeader.OrderTotal += (orderDetails.Count * orderDetails.Price) /** (1 + SD.SalesTaxPercent)*/;
 
                 _unitOfWork.OrderDetails.Add(orderDetails);
                 _unitOfWork.PurchaseHistory.Add(purchaseHistory);
@@ -175,12 +173,7 @@ namespace NoPoorAfrica.Pages.User.Cart
 
             _unitOfWork.Save();
             return RedirectToPage("/User/Cart/OrderConfirmation", new { id = OrderDetailsCart.OrderHeader.Id });
-            //}
-
-            //else
-            //{
-            //    return Page();
-            //}
+      
         }
     }
 }
