@@ -9,7 +9,8 @@ function loadList() {
         "ajax": {
             "url": "/api/articles/",
             "type": "GET",
-            "datatype": "json"
+            "datatype": "json",
+            "async": false
         },
         "columns": [
             { "data": "image", "render": function (data) { return `<img src="${data}" alt="Label" style="max-height: 225px;">`; }, "width": "15%" },
@@ -29,9 +30,10 @@ function loadList() {
                 "render": function (data) {
                     return `
                         <div class="text-center">
-                            <a onClick=Publish('/api/articles/'+${data})
-                                class="btn btn-primary text-white style="cursor:pointer; width:100px;">
-                                <i class="fas fa-eye"></i>
+                            <a onClick=Publish('/api/articles/Publish/?id='+${data},${data})
+                                class="btn btn-primary text-white style="cursor:pointer; width:100px;"
+                                id="pub-${data}">
+                                <i class="far fa-eye"></i>
                                 Publish
                             </a>
                             <a href="/Admin/Articles/Upsert?id=${data}"
@@ -51,13 +53,36 @@ function loadList() {
         "language": {
             "emptyTable": "No data found."
         },
-        "width": "100%"
+        "width": "100%",
+        "drawCallback": function (settings) {
+            GetPublishStatus();
+        }
     });
 }
 
-function Publish(url) {
-    
+function Publish(url, id) {
+    $.ajax({
+        "url": url,
+        "type": "PATCH",
+        "datatype": "json"
+    }).done(function (result) {
+        if (result.success == true) {
+            $('#pub-' + id).prop("text", result.message);
+        }
+    });
+}
 
+function GetPublishStatus() {
+    $.ajax({
+        "url": "/api/articles/PublishStatus/",
+        "type": "GET",
+        "datatype": "json"
+    }).done(function (result) {
+        for (var i = 0; i < result.item.length; i++) {
+            if (result.status[i] == true)
+                $('#pub-' + result.item[i]).prop("text", "Hide");
+        }
+    });
 }
 
 function Delete(url) {

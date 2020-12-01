@@ -25,12 +25,12 @@ namespace NoPoorAfrica.Controllers
 
             foreach (var article in Articles)
             {
-                ArticleFiles Thumbnail = _unitOfWork.ArticleFiles.GetFirstOrDefault(i => i.ArticleId == article.Id);
+                string Thumbnail = _unitOfWork.ArticleFiles.GetFirstImage(article.Id);
                 string Path = "";
 
                 if (Thumbnail != null)
                 {
-                    Path = Thumbnail.FilePath;
+                    Path = Thumbnail;
                 }
 
                 Dt.Add(new ArticlesDataTableView()
@@ -51,6 +51,40 @@ namespace NoPoorAfrica.Controllers
             }
 
             return Json(new { success = true , data = Dt} );
+        }
+
+        // PATCH api/<ArticlesController>/Publish/id
+        [HttpPatch]
+        [Route("/api/[controller]/Publish")]
+        public JsonResult Publish(int id)
+        {
+            var objFromDb = _unitOfWork.Article.GetFirstOrDefault(i => i.Id == id);
+
+            if (objFromDb.IsPublished == false)
+            {
+                objFromDb.IsPublished = true;
+                _unitOfWork.Article.Update(objFromDb);
+                _unitOfWork.Save();
+                return Json(new { success = true, message = "Hide" });
+            }
+            else
+            {
+                objFromDb.IsPublished = false;
+                _unitOfWork.Article.Update(objFromDb);
+                _unitOfWork.Save();
+                return Json(new { success = true, message = "Publish" });
+            }
+        }
+
+        // GET api/<ArticlesController>/PublishStatus/
+        [HttpGet]
+        [Route("/api/[controller]/PublishStatus")]
+        public JsonResult PublishStatus()
+        {
+            var IdList = _unitOfWork.Article.GetArticleIds();
+            var PublishList = _unitOfWork.Article.GetPublishStatus();
+
+            return Json(new { item = IdList.ToArray(), status = PublishList.ToArray() });
         }
 
         // GET api/<ArticlesController>/id

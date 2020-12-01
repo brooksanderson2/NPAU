@@ -14,6 +14,8 @@ namespace NoPoorAfrica.DataAccess.Data.Repository.IRepository
 
         public int GetLowestAvailablePosition(int ArticleId);
 
+        public string GetFirstImage(int ArticleId);
+
         public Dictionary<string, int> GetByArticleWithPosition(int ArticleId);
 
         void Update(ArticleFiles articleFiles);
