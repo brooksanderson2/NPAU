@@ -31,7 +31,7 @@
 						<label>Funding Goal $</label>
 					</div>
 					<div class="col-9">
-						<input class="form-control" asp-for="DonationCauseObj.DonationCause.FundingGoal" />
+						<input class="form-control" id="fundingGoal" asp-for="DonationCauseObj.DonationCause.FundingGoal" />
 						<span class="text-danger" asp-validation-for="DonationCauseObj.DonationCause.FundingGoal"></span>
 					</div>
 				</div>
@@ -48,17 +48,35 @@
 					<div class="col-3">
 						<label>Start Date (mm/dd/yyyy)</label>
 					</div>
-					<div class="col-9">
-						<input id="datepicker" value="@Model.DonationCauseObj.DonationCause.FromDate.ToString("MM/dd/yyyy")" asp-for="@Model.DonationCauseObj.DonationCause.FromDate" type="text" class="form-control" />
-					</div>
+					@if (Model.DonationCauseObj.DonationCause.Id == 0)
+					{
+						<div class="col-9">
+							<input id="datepicker" value="@DateTime.Now.ToString("MM/dd/yyyy")" asp-for="@Model.DonationCauseObj.DonationCause.FromDate" type="text" class="form-control" />
+						</div>
+					}
+					else
+					{
+						<div class="col-9">
+							<input id="datepicker" value="@Model.DonationCauseObj.DonationCause.FromDate.ToString("MM/dd/yyyy")" asp-for="@Model.DonationCauseObj.DonationCause.FromDate" type="text" class="form-control" />
+						</div>
+					}
 				</div>
 				<div class="row my-1">
 					<div class="col-3">
 						<label>End Date (mm/dd/yyyy)</label>
 					</div>
-					<div class="col-9">
-						<input id="datepicker2" value="@Model.DonationCauseObj.DonationCause.ToDate.ToString("MM/dd/yyyy")" asp-for="@Model.DonationCauseObj.DonationCause.ToDate" type="text" class="form-control" />
-					</div>
+					@if (Model.DonationCauseObj.DonationCause.Id == 0)
+					{
+						<div class="col-9">
+							<input id="datepicker2" value="@DateTime.Now.ToString("MM/dd/yyyy")" asp-for="@Model.DonationCauseObj.DonationCause.ToDate" type="text" class="form-control" />
+						</div>
+					}
+					else
+					{
+						<div class="col-9">
+							<input id="datepicker2" value="@Model.DonationCauseObj.DonationCause.ToDate.ToString("MM/dd/yyyy")" asp-for="@Model.DonationCauseObj.DonationCause.ToDate" type="text" class="form-control" />
+						</div>
+					}
 				</div>
 				<div class="form-group row">
 					<div class="col-3">
@@ -114,11 +132,11 @@
 							<div class="col-6">
 								@if (Model.DonationCauseObj.DonationCause.Id != 0)
 								{
-									<button type="submit" class="btn btn-warning form-control">Update</button>
+									<button id="updatebtn" type="submit" class="btn btn-warning form-control" onclick="return ValidateInput()">Update</button>
 								}
 								else
 								{
-									<button type="submit" class="btn btn-warning form-control" onclick="return ValidateInput5()">Create</button>
+									<button id="createbtn" type="submit" class="btn btn-warning form-control" onclick="return ValidateInput()">Create</button>
 								}
 							</div>
 							<div class="col-6">
@@ -147,33 +165,37 @@
 			menubar: 'file edit format'
 		});
 
-		function ValidateInput4() {
-			if (document.getElementById("title").value == "") {
-				swal('Error', 'Please Select a Title', 'error')
-				return false;
-			}
-			return true;
-		}
-
-		function ValidateInput5() {
-			if (document.getElementById("dropdown").value == "- Please select a Category - ") {
+		function ValidateInput() {
+			if (document.getElementById("DonationCauseObj_DonationCause_DonationCauseCategoryId").value == "") {
 				swal('Error', 'Please Select a Category', 'error')
 				return false;
 			}
-			if (document.getElementById("title").value == "") {
+			if (document.getElementById("title").value == '') {
 				swal('Error', 'Please Select a Title', 'error')
 				return false;
 			}
-			if (document.getElementById("uploadBox").value == "") {
-				swal('Error', 'Please Select an Image', 'error')
+			var e = document.getElementById("createbtn");
+			if (e) {
+				if (document.getElementById("uploadBox").value == '') {
+					swal('Error', 'Please Select an Image', 'error')
+					return false;
+				}
+			}
+			if (document.getElementById("datepicker").value == '') {
+				swal("Error", "Please select Start Date", "error");
 				return false;
 			}
-			return true;
-		}
-
-		function ValidateInput() {
-			if (document.getElementById("uploadBox").value == "") {
-				swal('Error', 'Please Select an Image', 'error')
+			if (document.getElementById("datepicker2").value == '') {
+				swal("Error", "Please select End Date", "error");
+				return false;
+			}
+			var editorContent = tinyMCE.get('txtDesc').getContent();
+			if (editorContent == '') {
+				swal("Error", "Please enter a description", "error");
+				return false;
+			}
+			if (document.getElementById("fundingGoal").value == '' || document.getElementById("fundingGoal").value < 1.00) {
+				swal("Error", "Minimum donation amount is $1", "error");
 				return false;
 			}
 			return true;
@@ -184,28 +206,9 @@
 		});
 
 
-		function validateInput2() {
-			var dt = document.getElementById("datepicker").value;
-			if (dt.toString() == '') {
-				swal("Error", "Please select Start Date", "error");
-				return false;
-			}
-			return true;
-		}
-
-
 		$(function () {
 			$("#datepicker2").datepicker();
 		});
 
-
-		function validateInput3() {
-			var dt = document.getElementById("datepicker2").value;
-			if (dt.toString() == '') {
-				swal("Error", "Please select End Date", "error");
-				return false;
-			}
-			return true;
-		}
 	</script>
 }
