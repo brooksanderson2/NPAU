@@ -1,0 +1,44 @@
+﻿@page
+@model NoPoorAfrica.Pages.Admin.ArticlesCategory.UpsertModel
+@{
+}
+
+<form method="post" asp-action="Upsert">
+	<div class="container">
+		<div class="row px-2 mx-2 backgroundWhite border">
+			<div asp-validation-summary="ModelOnly" class="text-danger">
+			</div>
+			<div class="col-12 px-3" style="border-bottom:1px solid #325d88">
+				<h2 class="text-primary">@(Model.ArticleCategoryObj.Id !=0 ? "Update" : "Create") News Article Category</h2>
+			</div>
+
+            <div class="col-8 pt-3">
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="ArticleCategoryObj.Category"></label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" asp-for="ArticleCategoryObj.Category" />
+                        <span class="text-danger" asp-validation-for="ArticleCategoryObj.Category"></span>
+                    </div>
+                    @if (Model.ArticleCategoryObj.Id != 0)
+                    {
+                        <input type="hidden" asp-for="ArticleCategoryObj.Id" />
+                    }
+                </div>
+                <div class="form-group row">
+                    <div class="col-9 offset-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-warning form-control">@(Model.ArticleCategoryObj.Id !=0 ? "Update" : "Create")</button>
+                            </div>
+                            <div class="col-6">
+                                <a asp-page="./Index" class="btn border-warning form-control">Back to List</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</div>
+</form>

@@ -47,7 +47,8 @@
                         <input type="hidden" asp-for="ArticleObj.Id" />
                     }
                     <input type="hidden" id="articleId" value="@Model.ArticleObj.Id" />
-
+                    <input type="hidden" id="isPublished" asp-for="ArticleObj.IsPublished" />
+                    <input type="hidden" id="publishDate" asp-for="ArticleObj.PublishDate" />
                 </div>
                 <div class="form-group row">
                     <div class="col-1">
@@ -57,6 +58,18 @@
                         <input type="radio" asp-for="ArticleObj.Template" value="template_1" />Template 1  &nbsp;&nbsp;
                         <input type="radio" asp-for="ArticleObj.Template" value="template_2" />Template 2  &nbsp;&nbsp;
                         <input type="radio" asp-for="ArticleObj.Template" value="template_3" />Template 3&nbsp;&nbsp;
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="ArticleObj.ArticleCategoryId"></label>
+                    </div>
+                    <div class="col-6" id="dropdown">
+                        @Html.DropDownListFor(m => m.ArticleObj.ArticleCategoryId,
+                                                Model.ArticleCategoryList,
+                                                "- Please select a Category - ",
+                                                new { @class = "form-control" })
+                        <span class="text-danger" asp-validation-for="ArticleObj.ArticleCategoryId"></span>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -71,15 +84,15 @@
                     <div class="image-gallery">
                         @for (int i = 0; i < Model.ThumbnailList.Count(); i++)
                         {
-                        <div id="card-@Model.ThumbnailList.ElementAt(i).Replace(@"\", "").Replace(".", "")" class="image-gallery-card" style="position: relative;">
-                            <img class="image-gallery-img" src="@Model.ThumbnailList.ElementAt(i)" />
-                            <button onclick='    moveLeft( "@System.Web.HttpUtility.UrlEncode(Model.ThumbnailList.ElementAt(i))" ); ' type="button" class="fas fa-angle-double-left" style="position: absolute; left: 5px; top: 46%; opacity: .5;"></button>
-                            <button onclick='   moveRight( "@System.Web.HttpUtility.UrlEncode(Model.ThumbnailList.ElementAt(i))" ); ' type="button" class="fas fa-angle-double-right" style="position: absolute; right: 5px; top: 46%; opacity: .5;"></button>
-                            <button onclick=' deleteImage( "@System.Web.HttpUtility.UrlEncode(Model.ThumbnailList.ElementAt(i))" ); ' type="button" class="fas fa-trash" style="position: absolute; top: 5px; right: 5px; opacity: .5;"></button>
-                        </div>
+                            <div id="card-@Model.ThumbnailList.ElementAt(i).Replace(@"\", "").Replace(".", "")" class="image-gallery-card" style="position: relative;">
+                                <img class="image-gallery-img" src="@Model.ThumbnailList.ElementAt(i)" />
+                                <button onclick='    moveLeft( "@System.Web.HttpUtility.UrlEncode(Model.ThumbnailList.ElementAt(i))" ); ' type="button" class="fas fa-angle-double-left" style="position: absolute; left: 5px; top: 46%; opacity: .5;"></button>
+                                <button onclick='   moveRight( "@System.Web.HttpUtility.UrlEncode(Model.ThumbnailList.ElementAt(i))" ); ' type="button" class="fas fa-angle-double-right" style="position: absolute; right: 5px; top: 46%; opacity: .5;"></button>
+                                <button onclick=' deleteImage( "@System.Web.HttpUtility.UrlEncode(Model.ThumbnailList.ElementAt(i))" ); ' type="button" class="fas fa-trash" style="position: absolute; top: 5px; right: 5px; opacity: .5;"></button>
+                            </div>
                         }
                     </div>
-                <hr />
+                    <hr />
                 }
                 <br><br>
                 <div class="form-group row">

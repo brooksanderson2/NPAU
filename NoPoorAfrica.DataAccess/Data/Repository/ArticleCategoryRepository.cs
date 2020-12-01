@@ -32,7 +32,6 @@ namespace NoPoorAfrica.DataAccess.Data.Repository
             var objFromDb = _db.ArticleCategory.FirstOrDefault(s => s.Id == articleCategory.Id);
 
             objFromDb.Category = articleCategory.Category;
-            objFromDb.Description = articleCategory.Description;
 
             _db.SaveChanges();
         }

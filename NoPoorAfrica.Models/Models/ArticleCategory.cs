@@ -16,11 +16,5 @@ namespace NoPoorAfrica.Models.Models
         /// </summary>
         [Required]
         public string Category { get; set; }
-
-        /// <summary>
-        /// Category description
-        /// </summary>
-        [Required]
-        public string Description { get; set; }
     }
 }

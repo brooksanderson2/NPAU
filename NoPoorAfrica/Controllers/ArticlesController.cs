@@ -2,6 +2,7 @@
 using NoPoorAfrica.DataAccess.Data.Repository.IRepository;
 using NoPoorAfrica.Models.Models;
 using NoPoorAfrica.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 
 namespace NoPoorAfrica.Controllers
@@ -62,6 +63,7 @@ namespace NoPoorAfrica.Controllers
 
             if (objFromDb.IsPublished == false)
             {
+                objFromDb.PublishDate = DateTime.Now;
                 objFromDb.IsPublished = true;
                 _unitOfWork.Article.Update(objFromDb);
                 _unitOfWork.Save();

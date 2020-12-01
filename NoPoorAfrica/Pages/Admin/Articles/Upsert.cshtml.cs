@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using NoPoorAfrica.DataAccess.Data.Repository.IRepository;
 using NoPoorAfrica.Models.Models;
 
@@ -29,12 +30,15 @@ namespace NoPoorAfrica.Pages.Admin.Articles
         [BindProperty]
         public Article ArticleObj { get; set; }
         [BindProperty]
+        public IEnumerable<SelectListItem> ArticleCategoryList { get; set; }
+        [BindProperty]
         public IEnumerable<string> ThumbnailList { get; set; }
         public IEnumerable<string> UploadList { get; set; }
 
         public IActionResult OnGet(int? id)
         {
             ArticleObj = new Article();
+            ArticleCategoryList = _unitOfWork.ArticleCategory.GetArticleCategoryList();
 
             //Check if it's a new article
             if (id != null)
@@ -117,7 +121,7 @@ namespace NoPoorAfrica.Pages.Admin.Articles
                 _unitOfWork.ArticleFiles.Add(UploadedImage);
                 _unitOfWork.Save();
             }
-            return RedirectToPage("./Index");
+            return Page();
         }
     }
 }
