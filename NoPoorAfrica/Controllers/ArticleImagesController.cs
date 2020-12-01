@@ -104,7 +104,7 @@ namespace NoPoorAfrica.Controllers
             }
         }
 
-        // GET api/<ArticleImagesController>/DeleteImage/id
+        // GET api/<ArticleImagesController>/DeleteImage/ArticleId?Path
         [HttpDelete]
         [Route("/api/[controller]/Delete")]
         public JsonResult DeleteImage(int ArticleId, string Path)
@@ -129,7 +129,7 @@ namespace NoPoorAfrica.Controllers
 
                     _unitOfWork.Save();
 
-                    return Json( new { success = true, message = "Delete successful." });
+                    return Json( new { success = true, message = "Delete successful.", origin = item.FilePath });
                 }
                 catch
                 {

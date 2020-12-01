@@ -54,6 +54,9 @@ function deleteImage(imgPath){
         "type": "DELETE",
         "datatype": "json"
     }).done(function (result) {
-
+        if (result.success == true) {
+            var origin = result.origin.replace(/\\/gi, '').replace('.', '');
+            $('#card-' + origin).remove();
+        }
     });
 }
