@@ -26,8 +26,14 @@ namespace NoPoorAfrica.Controllers
 
             foreach (var article in Articles)
             {
-                string Thumbnail = _unitOfWork.ArticleFiles.GetFirstImage(article.Id);
+                string Thumbnail = null;
                 string Path = "";
+
+                try
+                {
+                    Thumbnail = _unitOfWork.ArticleFiles.GetFirstImage(article.Id);
+                }
+                catch { }
 
                 if (Thumbnail != null)
                 {
