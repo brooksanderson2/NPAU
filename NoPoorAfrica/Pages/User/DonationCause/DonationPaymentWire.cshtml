@@ -95,7 +95,7 @@
 							<a asp-page="Index" class="btn border-warning btn-square form-control">Cancel</a>
 						</div>
 						<div class="ccol-12 col-md-6 pb-1">
-							<button type="submit" id="btnPlaceOrderWire" value="Place Order Wire" class="btn btn-warning form-control">Donate With Wire Transfer</button>
+							<button type="submit" id="btnPlaceOrderWire" onclick="return validateInput()" value="Place Order Wire" class="btn btn-warning form-control">Donate With Wire Transfer</button>
 						</div>
 					</div>
 				</div>
@@ -106,7 +106,6 @@
 
 @section Scripts{
 	<script>
-
 		function anonymous() {
 			if (document.getElementById("txtName").disabled == true) {
 				document.getElementById("txtName").value = "";
@@ -130,5 +129,24 @@
 			return true;
 		}
 
+		function validateInput() {
+			var email = document.getElementById("txtEmail").value;
+			var name = document.getElementById("txtName").value;
+			var phone = document.getElementById("txtPhone").value;
+
+			if (email.toString() == '') {
+				swal("Error", "Please enter an email address", "error");
+				return false;
+			}
+			if (name.toString() == '') {
+				swal("Error", "Please enter a Name", "error");
+				return false;
+			}
+			if (phone.toString() == '' || phone < 1.00) {
+				swal("Error", "Please enter Donation Amount greater than $1", "error");
+				return false;
+			}
+			return true;
+		}
 	</script>
 }

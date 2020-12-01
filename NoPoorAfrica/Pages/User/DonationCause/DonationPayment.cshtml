@@ -110,7 +110,7 @@
 									data-image="/Images/npau.png">
 							</script>
 							<script>document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';</script>
-							<button type="submit" id="btnPlaceOrder" value="Place Order" class="btn btn-warning form-control">Donate With Stripe</button>
+							<button type="submit" id="btnPlaceOrder" onclick="return validateInput()" value="Place Order" class="btn btn-warning form-control">Donate With Stripe</button>
 						</div>
 					</div>
 				</div>
@@ -142,6 +142,26 @@
 				document.getElementById("txtEmailHidden").value = "Anonymous";
 			}
 
+			return true;
+		}
+
+		function validateInput() {
+			var email = document.getElementById("txtEmail").value;
+			var name = document.getElementById("txtName").value;
+			var phone = document.getElementById("txtPhone").value;
+
+			if (email.toString() == '') {
+				swal("Error", "Please enter an email address", "error");
+				return false;
+			}
+			if (name.toString() == '') {
+				swal("Error", "Please enter a Name", "error");
+				return false;
+			}
+			if (phone.toString() == '' || phone < 1.00) {
+				swal("Error", "Please enter Donation Amount greater than $1", "error");
+				return false;
+			}
 			return true;
 		}
 	</script>
