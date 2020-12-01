@@ -77,7 +77,7 @@ namespace NoPoorAfrica.Pages.User.DonationCause
                 EmailSender emailSender;
                 emailSender = new EmailSender(_authOptions);
                 double amount = PendingWire.DonationTotal;
-                emailSender.SendEmailAsync(PendingWire.Email, "Thank you for your donation to No Poor Africa!", "Donation amount: " + amount.ToString("C2") + "\n" + "Donation ID: " + PendingWire.Id);
+                emailSender.SendEmailAsync(PendingWire.Email, "Thank you for your donation to No Poor Africa!", "Donation amount: " + amount.ToString("C2") + "\n" + "Donation ID: " + PendingWire.Id + " IMPORTANT: Your wire transaction on our website is a request only, please contact us for instructions on how to complete your wired donation.");
 
                 HttpContext.Session.Remove("donationCauseId");
                 return RedirectToPage("/User/DonationCause/WireInstructions", new { id = PendingWire.Id });
