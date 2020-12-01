@@ -70,6 +70,7 @@ function loadList() {
 			{ "data": "donationCause.title", "width": "15%" },
 			{ "data": "comments", "width": "15%" },
 			{ "data": "followUp", "width": "15%" },
+			{ "data": "transactionId", "width": "25%" }
 		],
 		"language": {
 			"emptyTable": "no data found."
@@ -80,6 +81,7 @@ function loadList() {
 		"buttons": [
 			'csv', 'pdf', 'print'
 		],
+		"scrollX": true
 	});
 
 
