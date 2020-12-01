@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNetCore.Hosting;
@@ -11,7 +12,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NoPoorAfrica.DataAccess.Data.Repository.IRepository;
 using NoPoorAfrica.Models.Models;
-using NoPoorAfrica.Utility;
 
 namespace NoPoorAfrica.Pages.Admin.Articles
 {
@@ -28,7 +28,9 @@ namespace NoPoorAfrica.Pages.Admin.Articles
 
         [BindProperty]
         public Article ArticleObj { get; set; }
-        public IEnumerable<ArticleFiles> ThumbnailList { get; set; }
+        [BindProperty]
+        public IEnumerable<string> ThumbnailList { get; set; }
+        public IEnumerable<string> UploadList { get; set; }
 
         public IActionResult OnGet(int? id)
         {
@@ -43,12 +45,7 @@ namespace NoPoorAfrica.Pages.Admin.Articles
                     return NotFound();
                 }
 
-                ThumbnailList = _unitOfWork.ArticleFiles.GetAll(f => f.ArticleId == ArticleObj.Id);
-                TempData.Put<IEnumerable<ArticleFiles>>("ThumbnailList", ThumbnailList);
-            }
-            else
-            {
-
+                ThumbnailList = _unitOfWork.ArticleFiles.GetByArticleAscending(ArticleObj.Id);
             }
 
             return Page();
@@ -56,6 +53,8 @@ namespace NoPoorAfrica.Pages.Admin.Articles
 
         public IActionResult OnPost()
         {
+            UploadList = Enumerable.Empty<string>();
+
             //Set times
             if (ArticleObj.Id == 0)
             {
@@ -74,112 +73,51 @@ namespace NoPoorAfrica.Pages.Admin.Articles
             }
 
             ArticleObj.UpdateDate = DateTime.Now;
-            ArticleObj.ArticleCategoryId = 1;
+            ArticleObj.ArticleCategoryId = 1; //TODO: Category ID
 
             if (!ModelState.IsValid)
                 return Page();
 
-            ThumbnailList = TempData.Get<IEnumerable<ArticleFiles>>("ThumbnailList");
+            ThumbnailList = _unitOfWork.ArticleFiles.GetByArticleAscending(ArticleObj.Id);
 
-            if (ArticleObj.Id == 0) 
+
+            if (ArticleObj.Id == 0)
             {
                 _unitOfWork.Article.Add(ArticleObj);
 
                 _unitOfWork.Save();
-                try
-                {
-                    if (ThumbnailList != null) {
-                        //Fix file relationships that were given an ArticleId of 0.
-                        foreach (ArticleFiles file in ThumbnailList)
-                        {
-                            file.ArticleId = ArticleObj.Id;
-
-                            _unitOfWork.ArticleFiles.Add(file);
-                        }
-                    }
-                }
-                catch
-                {
-
-                }
             }
-            else
+            else //Article already exists - user is updating it.
             {
-                var imgList = _unitOfWork.ArticleFiles.GetAll(f => f.ArticleId == ArticleObj.Id);
-                List<int> idList = new List<int>();
-
-                foreach (ArticleFiles imgListFile in imgList)
-                {
-                    idList.Add(imgListFile.Id);
-                }
-
-                try
-                {
-                    foreach (ArticleFiles file in ThumbnailList)
-                    {
-                        file.ArticleId = ArticleObj.Id;
-
-                        if (!idList.Contains(file.Id))
-                            _unitOfWork.ArticleFiles.Add(file);
-                        else
-                            _unitOfWork.ArticleFiles.Update(file);
-                    }
-                }
-                catch
-                {
-                    //Empty
-                }
-
                 _unitOfWork.Article.Update(ArticleObj);
+                _unitOfWork.Save();
             }
-            _unitOfWork.Save();
-            return RedirectToPage("./Index");
-        }
 
-        public IActionResult OnPostUpload(List<IFormFile> files)
-        {
-            if (files != null && files.Count > 0)
+            //Add uploaded images to repository model
+            foreach (var item in HttpContext.Request.Form.Files)
             {
-                string folderName = @"images\ArticleImages\";
-                string webRootPath = _webHostEnvironment.WebRootPath;
-                string newPath = Path.Combine(webRootPath, folderName);
+                //Upload and save image
+                string fileName = Guid.NewGuid().ToString();
+                var uploads = Path.Combine(_webHostEnvironment.WebRootPath, @"images\ArticleImages\");
+                var extension = Path.GetExtension(item.FileName);
 
-                if (!Directory.Exists(newPath))
+                using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
                 {
-                    Directory.CreateDirectory(newPath);
+                    item.CopyTo(fileStream);
                 }
 
-                List<ArticleFiles> list = new List<ArticleFiles>();
-
-                foreach (IFormFile item in files)
+                ArticleFiles UploadedImage = new ArticleFiles
                 {
-                    if (item.Length > 0)
-                    {
-                        string fileName = ContentDispositionHeaderValue.Parse(item.ContentDisposition).FileName.Trim('"');
-                        string fullPath = Path.Combine(newPath, fileName);
-                        string dbPath = @"\" + folderName + fileName;
+                    ArticleId = ArticleObj.Id,
+                    FilePath = "\\images\\ArticleImages\\" + fileName + extension,
+                    OriginalName = item.FileName,
+                    Position = _unitOfWork.ArticleFiles.GetLowestAvailablePosition(ArticleObj.Id)
+                };
 
-                        using (var stream = new FileStream(fullPath, FileMode.Create))
-                        {
-                            item.CopyTo(stream);
-                        }
-
-                        ArticleFiles Relationship = new ArticleFiles()
-                        {
-                            ArticleId = ArticleObj.Id,
-                            FilePath = dbPath
-                        };
-
-                        list.Add(Relationship);
-                    }
-                }
-                ThumbnailList = list;
-                TempData.Put<IEnumerable<ArticleFiles>>("ThumbnailList", list);
-
-                return this.Content("Success");
+                _unitOfWork.ArticleFiles.Add(UploadedImage);
+                _unitOfWork.Save();
             }
-            return this.Content("Fail");
-
+            return RedirectToPage("./Index");
         }
     }
 }

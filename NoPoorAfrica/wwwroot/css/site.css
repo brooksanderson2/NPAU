@@ -280,8 +280,14 @@ hr {
     height: 150px;
 }
 
+.modal-xl {
+    width: 100%;
+    height: 100%;
+}
+
 .ovalImage {
     width: 200px;
     height: 300px;
     border-radius: 50%;
 }
+

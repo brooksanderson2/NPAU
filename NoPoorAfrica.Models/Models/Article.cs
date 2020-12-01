@@ -17,7 +17,7 @@ namespace NoPoorAfrica.Models.Models
         /// </summary>
         [Display(Name = "Title")]
         [Required]
-        public string Title { get; set; }
+        public string Title { get; set; } = "New Article";
 
         /// <summary>
         /// Font family for the title.

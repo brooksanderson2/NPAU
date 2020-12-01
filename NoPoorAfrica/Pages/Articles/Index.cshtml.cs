@@ -12,8 +12,6 @@ namespace NoPoorAfrica.Pages.Articles
 {
     public class IndexModel : PageModel
     {
-        const int PAGESIZE = 3;
-
         private readonly IUnitOfWork _unitOfWork;
 
         public ArticlesVM ArticlesList { get; set; }

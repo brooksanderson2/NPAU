@@ -1,0 +1,26 @@
+﻿@{
+    @model NoPoorAfrica.Models.ViewModels.ArticlesTemplateViewModel
+}
+
+<div class="container">
+    <div class="row">
+        <h1>@Model.Title</h1>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-11 offset-1">
+            <div class="fotorama">
+                @foreach (NoPoorAfrica.Models.Models.ArticleFiles file in Model.ImageGallery)
+                {
+                    <img src="@file.FilePath" />
+                }
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="article-body col-11 offset-1 border rounded border-dark p-4 mb-5">
+            @Html.Raw(@System.Net.WebUtility.HtmlDecode(Model.Body))
+        </div>
+    </div>
+</div>
