@@ -8,7 +8,13 @@ namespace NoPoorAfrica.DataAccess.Data.Repository.IRepository
 {
     public interface IArticleFilesRepository : IRepository<ArticleFiles>
     {
-        IEnumerable<SelectListItem> GetArticleFilesList();
+        IEnumerable<string> GetByArticleAscending(int id);
+
+        public int GetLastPosition(int ArticleId);
+
+        public int GetLowestAvailablePosition(int ArticleId);
+
+        public Dictionary<string, int> GetByArticleWithPosition(int ArticleId);
 
         void Update(ArticleFiles articleFiles);
     }

@@ -1,32 +1,62 @@
 ﻿$(document).ready(function () {
-    prepareButtonUpload();
+
+    //getPositions();
+
+    //prepareButtonUpload();
 });
 
-function prepareButtonUpload() {
-    $('#btnFUpload').on('click', function () {
-        var files = $('#fUpload').prop("files");
-        var fdata = new FormData();
-        for (var i = 0; i < files.length; i++) {
-            fdata.append("files", files[i]);
+async function getPositions() {
+    var dict = {};
+    $.ajax({
+        "url": "/api/articleImages/"+$('#articleId').prop("value"),
+        "type": "GET",
+        "datatype": "json"
+    }).done(function (result) {
+        for (k in result.data) {
+            dict[k] = result.data[k];
         }
-        if (files.length > 0) {
-            $.ajax({
-                type: "POST",
-                url: "?handler=Upload",
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("XSRF-TOKEN",
-                        $('input:hidden[name="__RequestVerificationToken"]').val());
-                },
-                data: fdata,
-                contentType: false,
-                processData: false,
-                success: function (response) {
-                    alert('Image(s) uploaded successfully.')
-                }
-            });
+    });
+
+
+}
+
+function moveLeft(imgPath) {
+    $.ajax({
+        "url": "/api/articleImages/Left/?ArticleId=" + $('#articleId').prop("value") + "&Path=" + imgPath,
+        "type": "PATCH",
+        "datatype": "json"
+    }).done(function (result) {
+        if (result.success == true) {
+            var origin = result.target1.replace(/\\/gi, '').replace('.', '');
+            var swap = result.target2.replace(/\\/gi, '').replace('.', '');
+            $('#card-' + swap).before($('#card-' + origin));
         }
-        else {
-            alert('Please select an image.')
+    });
+}
+
+function moveRight(imgPath) {
+    $.ajax({
+        "url": "/api/articleImages/Right/?ArticleId=" + $('#articleId').prop("value") + "&Path=" + imgPath,
+        "type": "PATCH",
+        "datatype": "json"
+    }).done(function (result) {
+        if (result.success == true) {
+            var origin = result.target1.replace(/\\/gi, '').replace('.', '');
+            var swap = result.target2.replace(/\\/gi, '').replace('.', '');
+            $('#card-' + swap).before($('#card-' + origin));
+        }
+    });
+}
+
+function deleteImage(imgPath){
+    $.ajax({
+        "url": "/api/articleImages/Delete/?ArticleId=" + $('#articleId').prop("value") + "&Path=" + imgPath,
+        "type": "DELETE",
+        "datatype": "json"
+    }).done(function (result) {
+        if (result.success == true) {
+            var origin = result.origin.replace(/\\/gi, '').replace('.', '');
+            $('#card-' + origin).remove();
         }
     });
 }

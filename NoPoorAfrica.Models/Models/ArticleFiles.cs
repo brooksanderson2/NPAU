@@ -16,10 +16,22 @@ namespace NoPoorAfrica.Models.Models
         public virtual int ArticleId { get; set; }
 
         /// <summary>
-        /// Path to file
+        /// Path to file - Uses a GUID to avoid crossover.
         /// </summary>
         [Required]
         public string FilePath { get; set; }
+
+        /// <summary>
+        /// The name of the file when it was uploaded
+        /// </summary>
+        [Required]
+        public string OriginalName { get; set; }
+
+        /// <summary>
+        /// Position in article. 0 is first.
+        /// </summary>
+        [Required]
+        public int Position { get; set; }
 
         /// <summary>
         /// Object of Article FK using ArticleId

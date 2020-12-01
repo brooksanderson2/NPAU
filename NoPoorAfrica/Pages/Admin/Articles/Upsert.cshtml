@@ -1,5 +1,27 @@
 ﻿@page
 @model NoPoorAfrica.Pages.Admin.Articles.UpsertModel
+
+
+<!-- Modal -->
+<div class="modal fade" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="PreviewTitle" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="PreviewTitle">Preview</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          @await Component.InvokeAsync("TemplateControl", new { Template = Model.ArticleObj.Template, Article = Model.ArticleObj })
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <form method="post" enctype="multipart/form-data" asp-controller="fileUpload" asp-action="Upsert">
     <div class="container">
         <div class="row px-1 mx-1 backgroundWhite border">
@@ -19,17 +41,20 @@
                         <input class="form-control" asp-for="ArticleObj.Title" />
                         <span class="text-danger" asp-validation-for="ArticleObj.Title"></span>
                     </div>
+
                     @if (Model.ArticleObj.Id != 0)
                     {
                         <input type="hidden" asp-for="ArticleObj.Id" />
                     }
+                    <input type="hidden" id="articleId" value="@Model.ArticleObj.Id" />
+
                 </div>
                 <div class="form-group row">
                     <div class="col-1">
                         <label class="font-weight-bold" asp-for="ArticleObj.Template"></label>
                     </div>
                     <div class="col-6">
-                        <input type="radio" asp-for="ArticleObj.Template" value="template_1" checked />Template 1  &nbsp;&nbsp;
+                        <input type="radio" asp-for="ArticleObj.Template" value="template_1" />Template 1  &nbsp;&nbsp;
                         <input type="radio" asp-for="ArticleObj.Template" value="template_2" />Template 2  &nbsp;&nbsp;
                         <input type="radio" asp-for="ArticleObj.Template" value="template_3" />Template 3&nbsp;&nbsp;
                     </div>
@@ -39,23 +64,21 @@
                         <input type="file" id="fUpload" name="files" multiple class="form-control" />
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-4">
-                        <input type="button" id="btnFUpload" value="Upload Images" />
-                    </div>
-                </div>
                 @if (Model.ThumbnailList != null && Model.ThumbnailList.Count() > 0)
                 {
                     <hr />
 
-                <div class="image-gallery">
-                    @foreach (NoPoorAfrica.Models.Models.ArticleFiles file in Model.ThumbnailList)
-                    {
-                        <div class="image-gallery-card">
-                            <img class="image-gallery-img" src="@file.FilePath" />
+                    <div class="image-gallery">
+                        @for (int i = 0; i < Model.ThumbnailList.Count(); i++)
+                        {
+                        <div id="card-@Model.ThumbnailList.ElementAt(i).Replace(@"\", "").Replace(".", "")" class="image-gallery-card" style="position: relative;">
+                            <img class="image-gallery-img" src="@Model.ThumbnailList.ElementAt(i)" />
+                            <button onclick='    moveLeft( "@System.Web.HttpUtility.UrlEncode(Model.ThumbnailList.ElementAt(i))" ); ' type="button" class="fas fa-angle-double-left" style="position: absolute; left: 5px; top: 46%; opacity: .5;"></button>
+                            <button onclick='   moveRight( "@System.Web.HttpUtility.UrlEncode(Model.ThumbnailList.ElementAt(i))" ); ' type="button" class="fas fa-angle-double-right" style="position: absolute; right: 5px; top: 46%; opacity: .5;"></button>
+                            <button onclick=' deleteImage( "@System.Web.HttpUtility.UrlEncode(Model.ThumbnailList.ElementAt(i))" ); ' type="button" class="fas fa-trash" style="position: absolute; top: 5px; right: 5px; opacity: .5;"></button>
                         </div>
-                    }
-                </div>
+                        }
+                    </div>
                 <hr />
                 }
                 <br><br>
@@ -68,15 +91,15 @@
                     <div class="col-3">
                         @if (Model.ArticleObj.Id != 0)
                         {
-                            <button type="submit" class="btn btn-warning form-control">Update</button>
+                            <button type="submit" class="btn btn-warning form-control">Save</button>
                         }
                         else
                         {
-                            <button type="submit" class="btn btn-warning form-control" onclick="return ValidateInput()">Publish</button>
+                            <button type="submit" class="btn btn-warning form-control" onclick="return ValidateInput()">Save</button>
                         }
                     </div>
                     <div class="col-6">
-                        <button class="btn btn-primary form-control">Preview</button>
+                        <button class="btn btn-primary col-6" type="button" data-toggle="modal" data-target="#previewModal">Preview</button>
                     </div>
                     <div class="col-3">
                         <a asp-page="./Index" class="btn btn-dark form-control">Back to Articles</a>
