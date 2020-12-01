@@ -10,32 +10,46 @@
 <div class="container">
     @if (Model.DetailedView == false)
     {
-        <div class="row">
+        <div class="row justify-content-between">
             <h1>News Articles</h1>
-        </div><br />
-        <!--for each article provided by controller, add a row here containing an article with a "read more"-->
-        @foreach (NoPoorAfrica.Models.Models.Article article in Model.ArticlesList.Articles)
-        {
-            <div class="row">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-8">
-                            <h2>@article.Title</h2>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-10 ellips">
-                            @Html.Raw(@WebUtility.HtmlDecode(article.Body))
-                        </div>
-                    </div>
-                    <div class="row">
-                        <a asp-page="/Articles/Index" asp-route-id="@article.RouteName">Read more</a>
-                    </div>
-                </div>
+            <div>
+                <a asp-page="/User/DonationCause/Index" class="btn btn-warning btn-lg mt-4 border border-dark rounded" style="height:50px;"><b>Donate</b></a>
             </div>
-            <hr />
-            <br />
-        }
+        </div><br />
+
+        <ul id="posts">
+            <!--for each article provided by controller, add a row here containing an article with a "read more"-->
+            @foreach (NoPoorAfrica.Models.Models.Article article in Model.ArticlesList.Articles)
+            {
+                <li>
+                    <article>
+                        <div class="row">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <h2>@article.Title</h2>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-10 ellips">
+                                        @Html.Raw(@WebUtility.HtmlDecode(article.Body))
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <a asp-page="/Articles/Index" asp-route-id="@article.RouteName">Read more</a>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <br />
+                    </article>
+                </li>
+            }
+
+        </ul>
+        <p id="loading">
+            Loading...
+        </p>
     }
     else
     {
@@ -54,4 +68,29 @@
             nav: 'thumbs'
         });
     </script>
+
+    @*https://www.sitepoint.com/jquery-infinite-scrolling-demos/*@
+    <script>
+        $(document).ready(function () {
+            var win = $(window);
+
+            // Each time the user scrolls
+            win.scroll(function () {
+                // End of the document reached?
+                if ($(document).height() - win.height() == win.scrollTop()) {
+                    $('#loading').show();
+
+                    $.ajax({
+                        url: 'get-post.php',
+                        dataType: 'html',
+                        success: function (html) {
+                            $('#posts').append(html);
+                            $('#loading').hide();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
 }
