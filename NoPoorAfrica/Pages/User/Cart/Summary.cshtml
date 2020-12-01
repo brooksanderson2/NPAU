@@ -101,11 +101,11 @@
                                         <li class="list-group-item d-flex justify-content-between bg-light">
                                             <small class="text-dark">Sales Tax @*(@SD.SalesTaxRate%)*@</small>
                                             @{ var salesTax = Math.Round((total * SD.SalesTaxPercent), 2);}
-                                            <strong class="text-dark">@*$@salesTax.ToString("0.00")*@ 0 </strong>
+                                            <strong class="text-dark">@*$@salesTax.ToString("0.00")*@ $0.00 </strong>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between bg-light">
                                             <small class="text-dark">Shipping</small>
-                                            <strong class="text-dark">@SD.Shipping</strong>
+                                            <strong class="text-dark">$@SD.Shipping.ToString("0.00")</strong>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between bg-light">
                                             <small class="text-dark">Total (USD)</small>
