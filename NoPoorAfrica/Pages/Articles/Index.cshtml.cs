@@ -36,15 +36,20 @@ namespace NoPoorAfrica.Pages.Articles
             {
                 //If no article is selected in url, show recent articles
 
-                ArticlesList.Articles = _unitOfWork.Article.GetAll();
+                ArticlesList.Articles = _unitOfWork.Article.GetAll(i => i.IsPublished == true);
             }
             else
             {
                 //Show article specified in url {id}
                 //Articles?id=articleRoute
 
+
                 DetailedView = true;
                 DetailedArticle = _unitOfWork.Article.GetFirstOrDefault(i => i.RouteName == id);
+
+                //Article is not published. Return not found.
+                if (DetailedArticle.IsPublished == false)
+                    Redirect("./");
 
                 ImageGallery = _unitOfWork.ArticleFiles.GetAll(f => f.ArticleId == DetailedArticle.Id);
 

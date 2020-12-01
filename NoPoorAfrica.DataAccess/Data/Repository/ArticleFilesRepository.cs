@@ -28,6 +28,11 @@ namespace NoPoorAfrica.DataAccess.Data.Repository
             return _db.ArticleFiles.OrderBy(i => i.Position).Where(i => i.ArticleId == ArticleId).Last().Position;
         }
 
+        public string GetFirstImage(int ArticleId)
+        {
+            return _db.ArticleFiles.OrderBy(i => i.Position).Where(i => i.ArticleId == ArticleId).First().FilePath;
+        }
+
         public int GetLowestAvailablePosition(int ArticleId)
         {
             try

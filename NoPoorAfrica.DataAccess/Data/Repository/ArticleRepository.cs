@@ -29,6 +29,16 @@ namespace NoPoorAfrica.DataAccess.Data.Repository
             });
         }
 
+        public List<int> GetArticleIds()
+        {
+            return _db.Article.Select(i => i.Id).ToList();
+        }
+
+        public List<bool> GetPublishStatus()
+        {
+            return _db.Article.Select(i => i.IsPublished).ToList();
+        }
+
         public void Update(Article article)
         {
             var objFromDb = _db.Article.FirstOrDefault(s => s.Id == article.Id);
@@ -40,6 +50,7 @@ namespace NoPoorAfrica.DataAccess.Data.Repository
             objFromDb.PublishDate = article.PublishDate;
             objFromDb.UpdateDate = article.UpdateDate;
             objFromDb.ArticleCategory = article.ArticleCategory;
+            objFromDb.IsPublished = article.IsPublished;
 
             if (objFromDb.Title == article.Title && objFromDb.RouteName != null)
             // Don't change the route name if it's already been set and the title hasn't changed.

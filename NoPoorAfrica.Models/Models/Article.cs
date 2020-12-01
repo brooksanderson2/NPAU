@@ -74,6 +74,13 @@ namespace NoPoorAfrica.Models.Models
         public string RouteName { get; set; }
 
         /// <summary>
+        /// Article does not show up on the feed unless IsPublished == true
+        /// </summary>
+        [Required]
+        [Display(Name = "Published")]
+        public bool IsPublished { get; set; } = false;
+
+        /// <summary>
         /// ArticleCategory foreign key
         /// </summary>
         public int ArticleCategoryId { get; set; }

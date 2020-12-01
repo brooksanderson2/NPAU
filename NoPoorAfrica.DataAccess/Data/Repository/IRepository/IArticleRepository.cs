@@ -10,6 +10,10 @@ namespace NoPoorAfrica.DataAccess.Data.Repository.IRepository
     {
         IEnumerable<SelectListItem> GetArticleList();
 
+        public List<int> GetArticleIds();
+
+        public List<bool> GetPublishStatus();
+
         void Update(Article article);
     }
 }
