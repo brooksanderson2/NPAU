@@ -59,7 +59,7 @@
                                             <label>Address</label>
                                         </div>
                                         <div class="col-9">
-                                            <input asp-for="@Model.OrderDetailsCart.OrderHeader.Address" style="height:100px;" class="form-control" />
+                                            <input id="txtAddress"asp-for="@Model.OrderDetailsCart.OrderHeader.Address" style="height:100px;" class="form-control" />
                                             <span asp-validation-for="OrderDetailsCart.OrderHeader.Address" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -142,33 +142,28 @@
 
     @section Scripts{
         <script>
-            $(function () {
-                $("#datepicker").datepicker({ minDate: 1, maxDate: "+1W" });
-                $("#timepicker").timepicker({ 'minTime': '11:00 AM', 'maxTime': '9:00 PM', step: '30' });
-            });
-
+          
             function validateInput() {
-                var time = document.getElementById("timepicker").value;
-                var dt = document.getElementById("datepicker").value;
+               
                 var name = document.getElementById("txtName").value;
-                var phone = document.getElementById("txtPhone").value;
+                var email = document.getElementById("txtEmail").value;
+                var address = document.getElementById("txtAddress").value;
 
-                if (dt.toString() == '') {
-                    swal("Error", "Please select Delivery Date", "error");
-                    return false;
-                }
-                if (time.toString() == '') {
-                    swal("Error", "Please select Delivery Time", "error");
-                    return false;
-                }
                 if (name.toString() == '') {
                     swal("Error", "Please enter a Name", "error");
                     return false;
                 }
-                if (phone.toString() == '') {
-                    swal("Error", "Please enter Phone Number", "error");
+
+                if (email.toString() == '') {
+                    swal("Error", "Please enter an Email", "error");
                     return false;
                 }
+
+                if (address.toString() == '') {
+                    swal("Error", "Please enter an Address", "error");
+                    return false;
+                }
+
                 return true;
             }
 
