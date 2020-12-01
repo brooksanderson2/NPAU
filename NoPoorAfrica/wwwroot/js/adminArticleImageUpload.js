@@ -26,7 +26,11 @@ function moveLeft(imgPath) {
         "type": "PATCH",
         "datatype": "json"
     }).done(function (result) {
-
+        if (result.success == true) {
+            var origin = result.target1.replace(/\\/gi, '').replace('.', '');
+            var swap = result.target2.replace(/\\/gi, '').replace('.', '');
+            $('#card-' + swap).before($('#card-' + origin));
+        }
     });
 }
 
@@ -36,7 +40,11 @@ function moveRight(imgPath) {
         "type": "PATCH",
         "datatype": "json"
     }).done(function (result) {
-
+        if (result.success == true) {
+            var origin = result.target1.replace(/\\/gi, '').replace('.', '');
+            var swap = result.target2.replace(/\\/gi, '').replace('.', '');
+            $('#card-' + swap).before($('#card-' + origin));
+        }
     });
 }
 

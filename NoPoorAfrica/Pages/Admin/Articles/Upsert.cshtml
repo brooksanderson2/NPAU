@@ -71,7 +71,7 @@
                     <div class="image-gallery">
                         @for (int i = 0; i < Model.ThumbnailList.Count(); i++)
                         {
-                        <div class="image-gallery-card" style="position: relative;">
+                        <div id="card-@Model.ThumbnailList.ElementAt(i).Replace(@"\", "").Replace(".", "")" class="image-gallery-card" style="position: relative;">
                             <img class="image-gallery-img" src="@Model.ThumbnailList.ElementAt(i)" />
                             <button onclick='    moveLeft( "@System.Web.HttpUtility.UrlEncode(Model.ThumbnailList.ElementAt(i))" ); ' type="button" class="fas fa-angle-double-left" style="position: absolute; left: 5px; top: 46%; opacity: .5;"></button>
                             <button onclick='   moveRight( "@System.Web.HttpUtility.UrlEncode(Model.ThumbnailList.ElementAt(i))" ); ' type="button" class="fas fa-angle-double-right" style="position: absolute; right: 5px; top: 46%; opacity: .5;"></button>
@@ -91,11 +91,11 @@
                     <div class="col-3">
                         @if (Model.ArticleObj.Id != 0)
                         {
-                            <button type="submit" class="btn btn-warning form-control">Update</button>
+                            <button type="submit" class="btn btn-warning form-control">Save</button>
                         }
                         else
                         {
-                            <button type="submit" class="btn btn-warning form-control" onclick="return ValidateInput()">Publish</button>
+                            <button type="submit" class="btn btn-warning form-control" onclick="return ValidateInput()">Save</button>
                         }
                     </div>
                     <div class="col-6">

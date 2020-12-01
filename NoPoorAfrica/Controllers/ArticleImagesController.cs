@@ -50,7 +50,7 @@ namespace NoPoorAfrica.Controllers
                         _unitOfWork.ArticleFiles.Update(item);
                         _unitOfWork.Save();
 
-                        return Json( new { success = true, message = "Position updated!" });
+                        return Json(new { success = true, message = "Position updated!", target1 = item.FilePath, target2 = ItemToSwap.FilePath });
                     }
                     catch
                     {
@@ -89,7 +89,7 @@ namespace NoPoorAfrica.Controllers
                         _unitOfWork.ArticleFiles.Update(item);
                         _unitOfWork.Save();
 
-                        return Json( new { success = true, message = "Position updated!" });
+                        return Json( new { success = true, message = "Position updated!", target2 = item.FilePath, target1 = ItemToSwap.FilePath });
                     }
                     catch
                     {
