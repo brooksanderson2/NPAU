@@ -32,7 +32,7 @@ namespace NoPoorAfrica.Pages.Articles
             {
                 //If no article is selected in url, show recent articles
                 ArticlesList = new List<ArticlesViewModel>();
-                var Articles = _unitOfWork.Article.GetAll(i => i.IsPublished == true).OrderBy(i => i.PublishDate);
+                var Articles = _unitOfWork.Article.GetAll(i => i.IsPublished == true).OrderByDescending(i => i.PublishDate);
 
                 foreach (var article in Articles)
                 {
