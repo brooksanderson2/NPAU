@@ -155,11 +155,11 @@
 				return false;
 			}
 			if (name.toString() == '') {
-				swal("Error", "Please enter a Name", "error");
+				swal("Error", "Please enter a name", "error");
 				return false;
 			}
 			if (phone.toString() == '' || phone < 1.00) {
-				swal("Error", "Please enter Donation Amount greater than $1", "error");
+				swal("Error", "Minimum donation amount is $1", "error");
 				return false;
 			}
 			return true;
