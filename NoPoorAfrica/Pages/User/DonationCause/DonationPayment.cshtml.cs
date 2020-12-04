@@ -76,7 +76,7 @@ namespace NoPoorAfrica.Pages.User.DonationCause
                         //Amount in cents
                         Amount = Convert.ToInt32(DonationDetails.DonationTotal * 100),
                         Currency = "usd",
-                        Description = "Donation ID: " + DonationDetails.Id,
+                        Description = "This is a donation. See details for Transaction ID (in the upper right-hand corner of this charge's details page)",
                         Source = stripeToken
                     };
 
