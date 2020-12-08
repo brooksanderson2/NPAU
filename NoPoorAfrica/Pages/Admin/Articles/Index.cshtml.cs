@@ -9,7 +9,7 @@ using NoPoorAfrica.Utility;
 
 namespace NoPoorAfrica.Pages.Admin.Articles
 {
-    //[Authorize(Roles = SD.AdminRole)]
+    [Authorize(Roles = SD.AdminRole)]
     public class IndexModel : PageModel
     {
 

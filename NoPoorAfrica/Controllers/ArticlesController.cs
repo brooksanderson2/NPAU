@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NoPoorAfrica.DataAccess.Data.Repository.IRepository;
 using NoPoorAfrica.Models.Models;
 using NoPoorAfrica.Models.ViewModels;
+using NoPoorAfrica.Utility;
 using System;
 using System.Collections.Generic;
 
@@ -68,6 +70,7 @@ namespace NoPoorAfrica.Controllers
         }
 
         // PATCH api/<ArticlesController>/Publish/id
+        [Authorize(Roles = SD.AdminRole)]
         [HttpPatch]
         [Route("/api/[controller]/Publish")]
         public JsonResult Publish(int id)
@@ -103,6 +106,7 @@ namespace NoPoorAfrica.Controllers
         }
 
         // GET api/<ArticlesController>/id
+        [Authorize(Roles = SD.AdminRole)]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
