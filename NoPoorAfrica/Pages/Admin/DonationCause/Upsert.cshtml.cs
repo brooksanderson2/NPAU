@@ -9,9 +9,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NoPoorAfrica.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using NoPoorAfrica.Utility;
 
 namespace NoPoorAfrica.Pages.Admin.DonationCause
 {
+    [Authorize(Roles = SD.AdminRole)]
     public class UpsertModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;
