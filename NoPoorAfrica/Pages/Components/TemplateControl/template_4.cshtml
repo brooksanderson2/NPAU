@@ -8,15 +8,20 @@
     </div>
     <hr />
     <div class="col-11 row offset-1">
-        <div>
-            <img class="rounded" src="@Model.ImageGallery[0].FilePath" style="height:330px; width:310px;" />
-        </div>
-        <div>
-            <img class="rounded" src="@Model.ImageGallery[1].FilePath" style="height:330px; width:310px;" />
-        </div>
-        <div>
-            <img class="rounded" src="@Model.ImageGallery[2].FilePath" style="height:330px; width:310px;" />
-        </div>
+        @if (Model.ImageGallery.Count >= 3)
+            @for (int i = 0; i < 3; i++)
+            {
+                <div>
+                    <img class="rounded" src="@Model.ImageGallery.OrderBy(i => i.Position).ElementAt(i).FilePath" style="height:330px; width:310px;" />
+                </div>
+            }
+        else
+            @foreach (var item in Model.ImageGallery)
+            {
+                <div>
+                    <img class="rounded" src="@item.FilePath" style="height:330px; width:310px;" />
+                </div>
+            }
     </div>
     <br />
     <div class="row">

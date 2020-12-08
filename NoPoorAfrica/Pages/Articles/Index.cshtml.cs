@@ -76,11 +76,13 @@ namespace NoPoorAfrica.Pages.Articles
                 DetailedView = true;
                 DetailedArticle = _unitOfWork.Article.GetFirstOrDefault(i => i.RouteName == id);
 
+                ImageGallery = _unitOfWork.ArticleFiles.GetAll(f => f.ArticleId == DetailedArticle.Id).OrderBy(f => f.Position);
+
                 //Article is not published. Return not found.
                 if (DetailedArticle.IsPublished == false)
                     Redirect("./");
 
-                ImageGallery = _unitOfWork.ArticleFiles.GetAll(f => f.ArticleId == DetailedArticle.Id);
+                
 
             }
         }

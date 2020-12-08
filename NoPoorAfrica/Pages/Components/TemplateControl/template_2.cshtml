@@ -8,7 +8,7 @@
     </div>
     <hr />
     <div class="row col-11 offset-1 center-screen">
-        @foreach (NoPoorAfrica.Models.Models.ArticleFiles file in Model.ImageGallery)
+        @foreach (NoPoorAfrica.Models.Models.ArticleFiles file in Model.ImageGallery.OrderBy(i => i.Position))
         {
             <div>
                 <img class="rounded" src="@file.FilePath" style="height:300px; width:375px;" />

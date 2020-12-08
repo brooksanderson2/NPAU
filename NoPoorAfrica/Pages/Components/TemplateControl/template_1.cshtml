@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-11 offset-1">
             <div class="fotorama">
-                @foreach (NoPoorAfrica.Models.Models.ArticleFiles file in Model.ImageGallery)
+                @foreach (NoPoorAfrica.Models.Models.ArticleFiles file in Model.ImageGallery.OrderBy(i => i.Position))
                 {
                     <img src="@file.FilePath" />
                 }
