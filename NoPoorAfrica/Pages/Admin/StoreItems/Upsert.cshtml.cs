@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NoPoorAfrica.DataAccess.Data.Repository.IRepository;
 using NoPoorAfrica.Models.ViewModels;
+using NoPoorAfrica.Utility;
 
 namespace NoPoorAfrica.Pages.Admin.StoreItems
 {
+    [Authorize(Roles = SD.AdminRole)]
     public class UpsertModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;
