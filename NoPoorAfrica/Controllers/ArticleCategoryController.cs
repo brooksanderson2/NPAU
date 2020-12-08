@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NoPoorAfrica.DataAccess.Data.Repository.IRepository;
+using NoPoorAfrica.Utility;
 
 namespace NoPoorAfrica.Controllers
 {
+    [Authorize(Roles = SD.AdminRole)]
     [Route("api/[controller]")]
     [ApiController]
     public class ArticleCategoryController : Controller

@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Web;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +14,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NoPoorAfrica.DataAccess.Data.Repository.IRepository;
 using NoPoorAfrica.Models.Models;
+using NoPoorAfrica.Utility;
 
 namespace NoPoorAfrica.Pages.Admin.Articles
 {
+    [Authorize(Roles = SD.AdminRole)]
     public class UpsertModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;
